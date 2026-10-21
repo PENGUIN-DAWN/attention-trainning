@@ -1,0 +1,215 @@
+{
+  "version": "1.50",
+  "checks": [
+    "Dark directory has 16 rectangular cards, actual latest record, no eagerly created frames, decorative float stops on scroll",
+    "320–1280 CSS-pixel layouts and 22px card-title enlargement have no horizontal overflow or cropped names",
+    "Return restores directory scroll; training begins only after page transition and stable layout",
+    "Rapid superseded routes do not stack frames; suspend/resume during both entry and exit renders the final route",
+    "Topmost help closes before directory; settings/record dialogs and explicit/system reduced motion work in parent and child",
+    "12 computed directory/header/body/button text color pairs meet 4.5:1 contrast",
+    "12 real browser pointer presses show transform feedback on subsequent frames; measured software latency is not physical input-to-photon latency",
+    "Mouse hover moves card by compositor transform, reduced mode removes it, and no remote requests occur",
+    "Actual isolated browser interaction recorded to WebM; capture cadence is independent of measured render callbacks"
+  ],
+  "errors": [],
+  "html_sha256": "d099b3746ceb867eb84651cd21cb93a5eaf3ddaa0122ae0d4f5ecf3c59404d43",
+  "environment": {
+    "os": "10.0.26200",
+    "cpu": "13th Gen Intel(R) Core(TM) i9-13980HX",
+    "browser": "Microsoft Edge headless / Playwright",
+    "realAndroid": false,
+    "physicalRefreshRate": "not measured",
+    "rAFIsHardwareMeasurement": false,
+    "browserVersion": "155.0.4283.62",
+    "cpuSlowdown": "CDP 4x software slowdown; not an old-phone emulator"
+  },
+  "observations": {
+    "performance": {
+      "directory-scroll": {
+        "sampleCount": 297,
+        "elapsedMs": 1805.0999999940395,
+        "averageIntervalMs": 6.060942760942762,
+        "observedCallbackFPS": 164.99083384256429,
+        "p50Ms": 6.099999999998545,
+        "p95Ms": 6.200000000000728,
+        "p99Ms": 6.200000000000728,
+        "maxMs": 6.300000000001091,
+        "over50ms": 0,
+        "longTasksMs": []
+      },
+      "navigation-and-dialogs": {
+        "sampleCount": 777,
+        "elapsedMs": 4715.100000008941,
+        "averageIntervalMs": 6.06048906048906,
+        "observedCallbackFPS": 165.00318538967935,
+        "p50Ms": 6.099999999998545,
+        "p95Ms": 6.200000000000728,
+        "p99Ms": 6.299999999999272,
+        "maxMs": 6.699999999998909,
+        "over50ms": 0,
+        "longTasksMs": []
+      },
+      "navigation-4x-cpu-slowdown": {
+        "sampleCount": 268,
+        "elapsedMs": 1671.9000000059605,
+        "averageIntervalMs": 6.196641791044779,
+        "observedCallbackFPS": 161.37773228156794,
+        "p50Ms": 6.099999999998545,
+        "p95Ms": 6.200000000000728,
+        "p99Ms": 12.100000000002183,
+        "maxMs": 24.299999999999272,
+        "over50ms": 0,
+        "longTasksMs": []
+      }
+    },
+    "pageLoadToDirectoryWallMs": 136,
+    "layout320": {
+      "width": 320,
+      "overflow": false,
+      "columns": 1,
+      "clipped": false
+    },
+    "layout360": {
+      "width": 360,
+      "overflow": false,
+      "columns": 2,
+      "clipped": false
+    },
+    "layout390": {
+      "width": 390,
+      "overflow": false,
+      "columns": 2,
+      "clipped": false
+    },
+    "layout480": {
+      "width": 480,
+      "overflow": false,
+      "columns": 2,
+      "clipped": false
+    },
+    "layout768": {
+      "width": 768,
+      "overflow": false,
+      "columns": 2,
+      "clipped": false
+    },
+    "layout1280": {
+      "width": 1280,
+      "overflow": false,
+      "columns": 4,
+      "clipped": false
+    },
+    "contrast": [
+      {
+        "selector": ".brand-title",
+        "ratio": 16.955785319690047
+      },
+      {
+        "selector": ".brand-subtitle",
+        "ratio": 9.010286808397222
+      },
+      {
+        "selector": ".hero h1",
+        "ratio": 16.955785319690047
+      },
+      {
+        "selector": ".hero-copy p",
+        "ratio": 9.010286808397222
+      },
+      {
+        "selector": ".bubble h2",
+        "ratio": 14.619886938604424
+      },
+      {
+        "selector": ".bubble p",
+        "ratio": 7.768992821004549
+      },
+      {
+        "selector": ".card-meta",
+        "ratio": 7.768992821004549
+      },
+      {
+        "selector": ".bubble .enter",
+        "ratio": 9.29430919241518
+      },
+      {
+        "selector": ".today-count",
+        "ratio": 14.619886938604424
+      },
+      {
+        "selector": ".today-right",
+        "ratio": 7.768992821004549
+      },
+      {
+        "selector": ".records-button",
+        "ratio": 14.619886938604424
+      },
+      {
+        "selector": ".app-help-button",
+        "ratio": 9.010286808397222
+      }
+    ],
+    "pointerToNextFrame": [
+      {
+        "ms": 9.099999994039536,
+        "transform": "matrix(0.997476, 0, 0, 0.997476, 0, 0)",
+        "scale": 0.997476
+      },
+      {
+        "ms": 10.5,
+        "transform": "matrix(0.997476, 0, 0, 0.997476, 0, 0)",
+        "scale": 0.997476
+      },
+      {
+        "ms": 2.2000000029802322,
+        "transform": "matrix(0.997433, 0, 0, 0.997433, 0, 0)",
+        "scale": 0.997433
+      },
+      {
+        "ms": 9,
+        "transform": "matrix(0.997433, 0, 0, 0.997433, 0, 0)",
+        "scale": 0.997433
+      },
+      {
+        "ms": 3.7000000029802322,
+        "transform": "matrix(0.997433, 0, 0, 0.997433, 0, 0)",
+        "scale": 0.997433
+      },
+      {
+        "ms": 10.700000002980232,
+        "transform": "matrix(0.997348, 0, 0, 0.997348, 0, 0)",
+        "scale": 0.997348
+      },
+      {
+        "ms": 8.5,
+        "transform": "matrix(0.994056, 0, 0, 0.994056, 0, 0)",
+        "scale": 0.994056
+      },
+      {
+        "ms": 8.299999997019768,
+        "transform": "matrix(0.997433, 0, 0, 0.997433, 0, 0)",
+        "scale": 0.997433
+      },
+      {
+        "ms": 5.4000000059604645,
+        "transform": "matrix(0.997433, 0, 0, 0.997433, 0, 0)",
+        "scale": 0.997433
+      },
+      {
+        "ms": 3.7000000029802322,
+        "transform": "matrix(0.997476, 0, 0, 0.997476, 0, 0)",
+        "scale": 0.997476
+      },
+      {
+        "ms": 6.5,
+        "transform": "matrix(0.99743, 0, 0, 0.99743, 0, 0)",
+        "scale": 0.99743
+      },
+      {
+        "ms": 3.4000000059604645,
+        "transform": "matrix(0.997433, 0, 0, 0.997433, 0, 0)",
+        "scale": 0.997433
+      }
+    ]
+  }
+}

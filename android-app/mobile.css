@@ -1,0 +1,31 @@
+html { overscroll-behavior: none; }
+body { -webkit-text-size-adjust: 100%; }
+.backup-tools { display:flex; gap:12px; margin-top:20px; }
+.backup-tools button { flex:1; border:1px solid #dfd4e8; background:#f2edf6; border-radius:16px; padding:12px; color:#77608e; font-size:12px; }
+.record-management { display:flex; align-items:center; justify-content:space-between; gap:12px; color:#94889f; font-size:11px; margin:4px 0 10px; }
+.record-management button,.record-delete { color:#a1606d; border:1px solid #ead9df; background:#faf0f3; border-radius:12px; min-height:44px; padding:10px 12px; font-size:11px; }
+.record-management button:disabled { opacity:.4; }
+.record-row { display:grid; grid-template-columns:35px minmax(0,1fr) auto; gap:6px 10px; }
+.record-row .record-badge { grid-column:1; grid-row:1 / span 2; }
+.record-row > div { grid-column:2; grid-row:1; min-width:0; }
+.record-row .record-info { overflow-wrap:anywhere; }
+.record-row .record-date { grid-column:2; grid-row:2; margin-left:0; }
+.record-row .record-delete { grid-column:3; grid-row:1 / span 2; }
+.delete-confirm h2 { font-size:20px; font-weight:550; margin:0; }
+.delete-confirm p { font-size:13px; line-height:1.9; color:#94849b; margin:18px 0 24px; }
+.delete-actions { display:flex; justify-content:flex-end; gap:12px; }
+.delete-actions button { border:1px solid #e3dae9; border-radius:14px; background:#f6f1f9; color:#7f6b90; padding:12px 20px; min-height:44px; }
+.delete-actions #confirmDelete { color:#fff; border-color:#ab6a78; background:#ab6a78; }
+.app-help p { font-size:13px; line-height:1.9; color:#7c7188; }
+.app-help .help-note { font-size:11px; color:#a195aa; }
+.app-help-button { background:none; border:0; padding:0; color:#91829f; font-size:10px; }
+@media(max-width:480px) {
+  .site-header { padding-left:18px; padding-right:18px; }
+  .header-actions { gap:12px; }
+  .brand-title { font-size:14px; letter-spacing:1px; }
+  .brand-subtitle { font-size:8px; letter-spacing:1.1px; }
+  .brand { gap:8px; }
+  .brand-mark { width:30px; height:30px; }
+  .hero-copy { max-width:none; }
+  .records-dialog { padding:22px; max-height:80vh; }
+}

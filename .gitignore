@@ -1,0 +1,50 @@
+# Local Android SDK, generated bundles, caches and editor state
+.android-tools/
+android-app/build/
+android-app/assets/
+**/__pycache__/
+*.py[cod]
+.idea/
+.vscode/
+node_modules/
+.cache/
+.DS_Store
+Thumbs.db
+
+# Private signing/account material must never enter this repository
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.key
+signing-config.json
+.env
+.env.*
+!.env.example
+*credentials*.json
+*token*.json
+focus-backup*.json
+
+# Historical website deployment work is separate from the Android app
+focus-universe-site/
+国内发布准备/
+安卓手机版.zip
+_hub/*
+!_hub/hub.template.html
+
+# Raw synthesis intermediates; normalized offline audio is in digits.json
+android-app/audio/raw-*.wav
+
+# Keep historical signed APKs for upgrade/source verification, and 1.50 artifacts
+安卓手机版/*
+!安卓手机版/*.apk
+!安卓手机版/*-1.50.md
+!安卓手机版/*-1.50.json
+!安卓手机版/*-1.50.png
+!安卓手机版/*-1.50.html
+!安卓手机版/*-1.50.webm
+!安卓手机版/专注力小宇宙-1.50-安卓自用版.zip
+!安卓手机版/版本与校验.json
+!安卓手机版/README.md
+安卓手机版/ui-video-150/

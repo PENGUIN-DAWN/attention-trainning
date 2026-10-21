@@ -1,0 +1,16 @@
+{
+  "app": "专注力小宇宙",
+  "version": "1.50",
+  "versionCode": 7,
+  "package": "cn.focusuniverse.offline",
+  "min_android": "8.0",
+  "target_sdk": 35,
+  "apk_bytes": 328729,
+  "sha256": "8ed298506510ebea7f274a5be971a28925153633d50b2d114dbf42e9361e880f",
+  "network_permission": false,
+  "training_modules": 16,
+  "product_baseline": "1.30",
+  "entertainment_entry": false,
+  "backup_version": 4,
+  "offline_digit_audio": "zh-huihui-1"
+}

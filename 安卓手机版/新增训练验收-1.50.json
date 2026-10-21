@@ -1,0 +1,371 @@
+{
+  "version": "1.50",
+  "checks": [
+    "1800 randomized preset cases: unique answers, duplicate counts, object aliases/missing counts, stable tracking identities, collision separation, correct/wrong/timeout scoring",
+    "Reverse: wrong click does not advance, all 25 descending clicks, complete save and 35s timeout boundary; metadata separate from ascending",
+    "Four full new rounds, actual full 8s study and 6s motion, independent response clocks, cancel selection, IME composition guard and simulated keyboard visibility",
+    "Actual 5s and 12s timeout, one-answer lock, rapid starts, suspend abort/restart, interrupted records excluded from best, atomic save failure and exactly-once retry",
+    "v3 export and round trip, v1/v2-compatible data model, malformed import no writes, record filter/delete/cancel/clear, settings preserved and hidden entertainment survives",
+    "320–768px tool layouts, 48px primary/settings controls, 80-character alternative explicitly labeled, reduced motion keeps tracking stimulus, background cancels stale callbacks"
+  ],
+  "timings": {
+    "7": [
+      {
+        "phase": "preparing",
+        "at": 618.2999999970198
+      },
+      {
+        "phase": "preparing",
+        "at": 618.5
+      },
+      {
+        "phase": "mark",
+        "at": 622.5999999940395
+      },
+      {
+        "phase": "motion",
+        "at": 3137.5
+      },
+      {
+        "phase": "preparing",
+        "at": 9155.89999999106
+      },
+      {
+        "phase": "preparing",
+        "at": 9157.79999999702
+      },
+      {
+        "phase": "answer",
+        "at": 9167.70000000298
+      },
+      {
+        "phase": "feedback",
+        "at": 9543.29999999702
+      },
+      {
+        "phase": "preparing",
+        "at": 9562.09999999404
+      },
+      {
+        "phase": "mark",
+        "at": 9567.59999999404
+      },
+      {
+        "phase": "motion",
+        "at": 12082.89999999106
+      },
+      {
+        "phase": "preparing",
+        "at": 18100.89999999106
+      },
+      {
+        "phase": "preparing",
+        "at": 18101.09999999404
+      },
+      {
+        "phase": "answer",
+        "at": 18113.09999999404
+      },
+      {
+        "phase": "feedback",
+        "at": 18204.79999999702
+      },
+      {
+        "phase": "preparing",
+        "at": 18222.20000000298
+      },
+      {
+        "phase": "mark",
+        "at": 18228.09999999404
+      },
+      {
+        "phase": "motion",
+        "at": 20743.5
+      },
+      {
+        "phase": "preparing",
+        "at": 26761.59999999404
+      },
+      {
+        "phase": "preparing",
+        "at": 26761.79999999702
+      },
+      {
+        "phase": "answer",
+        "at": 26773.5
+      },
+      {
+        "phase": "feedback",
+        "at": 26864.79999999702
+      },
+      {
+        "phase": "result",
+        "at": 26889.5
+      }
+    ],
+    "8": [
+      {
+        "phase": "preparing",
+        "at": 593.6000000089407
+      },
+      {
+        "phase": "preparing",
+        "at": 593.9000000059605
+      },
+      {
+        "phase": "preparing",
+        "at": 594.1000000089407
+      },
+      {
+        "phase": "answer",
+        "at": 599.4000000059605
+      },
+      {
+        "phase": "feedback",
+        "at": 1001
+      },
+      {
+        "phase": "preparing",
+        "at": 1025.7999999970198
+      },
+      {
+        "phase": "preparing",
+        "at": 1026.1000000089407
+      },
+      {
+        "phase": "answer",
+        "at": 1029.2000000029802
+      },
+      {
+        "phase": "feedback",
+        "at": 1148
+      },
+      {
+        "phase": "preparing",
+        "at": 1172.7999999970198
+      },
+      {
+        "phase": "preparing",
+        "at": 1173.1000000089407
+      },
+      {
+        "phase": "answer",
+        "at": 1174.9000000059605
+      },
+      {
+        "phase": "feedback",
+        "at": 1292.9000000059605
+      },
+      {
+        "phase": "preparing",
+        "at": 1316.2000000029802
+      },
+      {
+        "phase": "preparing",
+        "at": 1316.7000000029802
+      },
+      {
+        "phase": "answer",
+        "at": 1320.1000000089407
+      },
+      {
+        "phase": "feedback",
+        "at": 1412.1000000089407
+      },
+      {
+        "phase": "preparing",
+        "at": 1431.2000000029802
+      },
+      {
+        "phase": "preparing",
+        "at": 1431.6000000089407
+      },
+      {
+        "phase": "answer",
+        "at": 1441.5
+      },
+      {
+        "phase": "feedback",
+        "at": 1565
+      },
+      {
+        "phase": "result",
+        "at": 1589.6000000089407
+      }
+    ],
+    "9": [
+      {
+        "phase": "preparing",
+        "at": 595.3000000119209
+      },
+      {
+        "phase": "preparing",
+        "at": 595.6000000089407
+      },
+      {
+        "phase": "observe",
+        "at": 608.4000000059605
+      },
+      {
+        "phase": "mask",
+        "at": 8660.20000000298
+      },
+      {
+        "phase": "preparing",
+        "at": 9678.70000000298
+      },
+      {
+        "phase": "answer",
+        "at": 9704.5
+      },
+      {
+        "phase": "feedback",
+        "at": 10048.40000000596
+      },
+      {
+        "phase": "preparing",
+        "at": 10066.90000000596
+      },
+      {
+        "phase": "observe",
+        "at": 10072.300000011921
+      },
+      {
+        "phase": "mask",
+        "at": 18090
+      },
+      {
+        "phase": "preparing",
+        "at": 19108.5
+      },
+      {
+        "phase": "answer",
+        "at": 19120.5
+      },
+      {
+        "phase": "feedback",
+        "at": 19150.70000000298
+      },
+      {
+        "phase": "preparing",
+        "at": 19168.90000000596
+      },
+      {
+        "phase": "observe",
+        "at": 19175
+      },
+      {
+        "phase": "mask",
+        "at": 27193.10000000894
+      },
+      {
+        "phase": "preparing",
+        "at": 28211.5
+      },
+      {
+        "phase": "answer",
+        "at": 28223.60000000894
+      },
+      {
+        "phase": "feedback",
+        "at": 28259.70000000298
+      },
+      {
+        "phase": "result",
+        "at": 28288.20000000298
+      }
+    ],
+    "10": [
+      {
+        "phase": "preparing",
+        "at": 606.7000000029802
+      },
+      {
+        "phase": "preparing",
+        "at": 607
+      },
+      {
+        "phase": "preparing",
+        "at": 607.2000000029802
+      },
+      {
+        "phase": "answer",
+        "at": 618.9000000059605
+      },
+      {
+        "phase": "feedback",
+        "at": 940.1000000089407
+      },
+      {
+        "phase": "preparing",
+        "at": 967
+      },
+      {
+        "phase": "preparing",
+        "at": 967.2999999970198
+      },
+      {
+        "phase": "answer",
+        "at": 969.1000000089407
+      },
+      {
+        "phase": "feedback",
+        "at": 990.2000000029802
+      },
+      {
+        "phase": "preparing",
+        "at": 1016.1000000089407
+      },
+      {
+        "phase": "preparing",
+        "at": 1016.2999999970198
+      },
+      {
+        "phase": "answer",
+        "at": 1017.7999999970198
+      },
+      {
+        "phase": "feedback",
+        "at": 1043.4000000059605
+      },
+      {
+        "phase": "preparing",
+        "at": 1068
+      },
+      {
+        "phase": "preparing",
+        "at": 1068.2999999970198
+      },
+      {
+        "phase": "answer",
+        "at": 1078
+      },
+      {
+        "phase": "feedback",
+        "at": 1098.5
+      },
+      {
+        "phase": "preparing",
+        "at": 1114.5
+      },
+      {
+        "phase": "preparing",
+        "at": 1114.7000000029802
+      },
+      {
+        "phase": "answer",
+        "at": 1120.6000000089407
+      },
+      {
+        "phase": "feedback",
+        "at": 1140.6000000089407
+      },
+      {
+        "phase": "result",
+        "at": 1158.7999999970198
+      }
+    ]
+  },
+  "errors": [],
+  "html_sha256": "d099b3746ceb867eb84651cd21cb93a5eaf3ddaa0122ae0d4f5ecf3c59404d43"
+}

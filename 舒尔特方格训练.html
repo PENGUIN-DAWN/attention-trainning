@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>舒尔特方格 · 专注力训练</title>
+<style>
+:root{font-family:Inter,"Microsoft YaHei",system-ui,sans-serif;color:#24392f;background:#f3f5ef;font-synthesis:none}*{box-sizing:border-box}body{margin:0;padding:32px 20px}main{max-width:1040px;margin:auto}header{margin-bottom:28px}.eyebrow{color:#5b7563;font-size:12px;letter-spacing:3px;font-weight:700}h1{font-size:32px;letter-spacing:-1px;margin:10px 0}header p{color:#647268;line-height:1.7;margin:0}.layout{display:grid;grid-template-columns:minmax(300px,560px) 1fr;gap:28px;align-items:start}.board-card,.side{border:1px solid #dde3d7;background:#fffefb;border-radius:24px;padding:24px;box-shadow:0 12px 40px #263e2a06}.stats{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}.label{font-size:12px;color:#738174;display:block;margin-bottom:6px}.metric{font-size:28px;font-variant-numeric:tabular-nums;font-weight:650}.target{color:#386b4b}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;aspect-ratio:1}.cell{background:#f4f6f0;border:1px solid #e0e7d9;border-radius:12px;color:#293b30;font-size:clamp(21px,4vw,33px);font-family:inherit;font-weight:550;cursor:pointer;touch-action:manipulation;transition:background .12s;min-width:0}.cell:disabled{cursor:default;color:#a1ada0}.cell:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #bd954a;outline-offset:2px}.cell.hit{background:#d7e8d5}.cell.miss{background:#f8d8cd}.cell.wait{color:transparent}.progress{height:5px;background:#e9eee4;border-radius:9px;margin:20px 0 0;overflow:hidden}.progress span{display:block;height:100%;background:#5c8663;width:0;transition:width .2s}.toolbar{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}button,select{font-family:inherit;font-size:14px}.primary,.secondary{padding:13px 19px;border-radius:12px;font-weight:600;cursor:pointer}.primary{background:#315b40;color:white;border:1px solid #315b40;flex:1}.secondary{background:white;color:#52614f;border:1px solid #dbe3d4}.primary:disabled{opacity:.55;cursor:default}.secondary:disabled{opacity:.4;cursor:default}.message{min-height:46px;color:#61715e;font-size:13px;line-height:1.7;margin:16px 0 0}.side h2{font-size:17px;margin:0 0 16px}.side ol{padding-left:21px;color:#647062;font-size:14px;line-height:1.9;margin:0 0 24px}.side li{padding-left:3px;margin-bottom:9px}.side strong{color:#354c39}.mode-label{display:block;font-size:12px;color:#71806d;margin-bottom:9px}select{width:100%;padding:12px;border:1px solid #dbe3d4;border-radius:10px;background:white;color:#354c39;margin-bottom:22px}.result{background:#eff4e9;border-radius:15px;padding:17px;margin-bottom:22px}.result-title{font-size:12px;color:#6b7c63}.result-main{font-size:22px;font-weight:650;line-height:1.6;margin-top:5px}.result-detail{color:#67785f;font-size:13px;line-height:1.7;margin-top:4px}.history{border-top:1px solid #e4e9dd;padding-top:19px}.history h2{margin-bottom:9px}.history p,.record{font-size:13px;color:#74806d;line-height:1.7}.record{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #edf0e7;padding:10px 0}.foot{font-size:12px;color:#85907d;line-height:1.8;margin-top:24px}.toast{position:fixed;left:50%;top:24px;transform:translateX(-50%);padding:12px 20px;background:#315b40;color:white;border-radius:12px;pointer-events:none;opacity:0;transition:opacity .15s}.toast.visible{opacity:1}@media(max-width:760px){body{padding:22px 12px}.layout{grid-template-columns:1fr;gap:18px}.board-card,.side{padding:20px;border-radius:20px}h1{font-size:28px}.grid{gap:6px}.metric{font-size:25px}.cell{font-size:29px}header{margin-bottom:20px}}
+</style>
+</head>
+<body>
+<main>
+<header><div class="eyebrow">ATTENTION PRACTICE · 01</div><h1>舒尔特方格</h1><p>让目光找到下一个数字。按 1 → 25 的顺序，依次点击。</p></header>
+<div class="layout">
+<section class="board-card" aria-label="训练区域">
+<div class="stats"><div><span class="label" id="timeLabel">剩余时间</span><span class="metric" id="time">30.0</span><span> 秒</span></div><div><span class="label">下一个数字</span><span class="metric target" id="next">1</span></div><div><span class="label">点错次数</span><span class="metric" id="errors">0</span></div></div>
+<div class="grid" id="grid" aria-label="5乘5数字方格"></div>
+<div class="progress" aria-hidden="true"><span id="progress"></span></div>
+<div class="toolbar"><button class="primary" id="start">开始第一轮</button><button class="secondary" id="stop" disabled>结束本轮</button></div>
+<p class="message" id="message" role="status" aria-live="polite">准备好后点击开始，数字出现时开始计时。</p>
+</section>
+<aside class="side">
+<h2>这一轮，怎么练？</h2>
+<ol><li>从 <strong>1</strong> 开始，按顺序点击，直到 <strong>25</strong>。</li><li>数字的位置和颜色每轮随机分配。<strong>忽略颜色，只看数字顺序</strong>；点错后继续寻找同一个目标。</li><li>尽量做到准确、连贯。正确的格子只短暂闪一下，随后恢复。</li></ol>
+<label class="mode-label" for="mode">训练方式</label><select id="mode"><option value="challenge">30 秒挑战 · 记录找到几个</option><option value="complete">完成 25 个 · 记录总用时</option></select>
+<div class="result" id="result" hidden aria-live="polite"><div class="result-title" id="resultTitle">本轮结果</div><div class="result-main" id="resultMain"></div><div class="result-detail" id="resultDetail"></div></div>
+<div class="history"><h2>本次练习记录</h2><div id="records"><p>完成第一轮后，结果会显示在这里。</p></div></div>
+<div class="foot">每轮重新打乱 1—25，随机搭配红、蓝、绿、紫、橙五种颜色；本轮内颜色保持固定。<br>这是一份独立练习，记录仅保留在当前页面。</div>
+</aside>
+</div>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const state={running:false,next:1,errors:0,started:0,frame:0,round:0,mode:'challenge',records:[],generation:0};
+let toastTimer;
+const numberColors=['#b33f39','#2c61ae','#287347','#8150a6','#9b6416'];
+function shuffled(values=Array.from({length:25},(_,i)=>i+1)){const a=[...values];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function makeGrid(values,waiting=false){$('grid').replaceChildren();const colors=shuffled(Array.from({length:values.length},(_,i)=>numberColors[i%numberColors.length]));for(const [index,number] of values.entries()){const cell=document.createElement('button');cell.className='cell'+(waiting?' wait':'');cell.textContent=waiting?'·':String(number);if(!waiting)cell.style.color=colors[index];cell.disabled=true;cell.setAttribute('aria-label',waiting?'等待开始':String(number));cell.addEventListener('click',()=>choose(number,cell));$('grid').appendChild(cell);}}
+function elapsed(){return Math.max(0,(performance.now()-state.started)/1000);}
+function paint(seconds){$('time').textContent=(state.mode==='challenge'?Math.max(0,30-seconds):seconds).toFixed(1);$('next').textContent=state.next>25?'完成':String(state.next);$('errors').textContent=String(state.errors);$('progress').style.width=((state.next-1)/25*100)+'%';}
+function tick(){if(!state.running)return;const seconds=elapsed();paint(seconds);if(state.mode==='challenge'&&seconds>=30){finish('timeout');return;}state.frame=requestAnimationFrame(tick);}
+function start(){if(state.running)return;state.mode=$('mode').value;state.generation++;state.next=1;state.errors=0;state.running=true;$('result').hidden=true;$('mode').disabled=true;$('start').disabled=true;$('stop').disabled=false;$('timeLabel').textContent=state.mode==='challenge'?'剩余时间':'已用时间';makeGrid(shuffled());for(const c of $('grid').children)c.disabled=false;$('message').textContent='训练中：从 1 开始，依次点击到 25。';state.started=performance.now();paint(0);state.frame=requestAnimationFrame(tick);}
+function choose(number,cell){if(!state.running)return;const seconds=elapsed();if(state.mode==='challenge'&&seconds>=30){finish('timeout');return;}if(number===state.next){state.next++;cell.classList.add('hit');const generation=state.generation;setTimeout(()=>{if(generation===state.generation)cell.classList.remove('hit');},150);paint(seconds);if(state.next===26)finish('complete');}else{state.errors++;cell.classList.add('miss');setTimeout(()=>cell.classList.remove('miss'),180);$('toast').textContent='继续找 '+state.next;clearTimeout(toastTimer);$('toast').classList.add('visible');toastTimer=setTimeout(()=>$('toast').classList.remove('visible'),650);paint(seconds);}}
+function finish(reason){if(!state.running)return;const seconds=state.mode==='challenge'?Math.min(30,elapsed()):elapsed();state.running=false;cancelAnimationFrame(state.frame);state.round++;for(const cell of $('grid').children)cell.disabled=true;$('mode').disabled=false;$('start').disabled=false;$('start').textContent='换一张，开始下一轮';$('stop').disabled=true;paint(seconds);const found=state.next-1;const complete=reason==='complete';$('result').hidden=false;$('resultTitle').textContent=reason==='timeout'?'30 秒到，本轮结束':complete?'全部找到，本轮完成':'本轮提前结束';$('resultMain').textContent=complete?seconds.toFixed(1)+' 秒 · 完成 25 个':'找到 '+found+' / 25 个';$('resultDetail').textContent='用时 '+seconds.toFixed(1)+' 秒，点错 '+state.errors+' 次。'+(complete?' 下一轮会使用新的数字排列。':' 下一轮仍从 1 开始。');$('message').textContent=complete?'这一轮已完成。准备好后，可以换一张方格再练。':'本轮已记录。先看清结果，再开始下一轮。';state.records.unshift({round:state.round,found,seconds,errors:state.errors,mode:state.mode,reason});$('records').replaceChildren();for(const record of state.records.slice(0,6)){const row=document.createElement('div');row.className='record';const label=document.createElement('span');label.textContent='第 '+record.round+' 轮 · '+(record.mode==='challenge'?'30 秒':'完成计时')+(record.reason==='stopped'?'（提前结束）':'');const detail=document.createElement('span');detail.textContent=record.found+'/25 · '+record.seconds.toFixed(1)+'秒 · 错'+record.errors;row.append(label,detail);$('records').appendChild(row);}}
+$('start').addEventListener('click',start);$('stop').addEventListener('click',()=>finish('stopped'));$('mode').addEventListener('change',()=>{state.mode=$('mode').value;$('timeLabel').textContent=state.mode==='challenge'?'剩余时间':'已用时间';$('time').textContent=state.mode==='challenge'?'30.0':'0.0';});makeGrid(Array.from({length:25},(_,i)=>i+1),true);
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<section id="lobbyView" class="shell-view lobby-view" hidden aria-label="软件大厅">
+  <div class="shell-eyebrow">A LITTLE SPACE, TWO WAYS TO EXPLORE</div>
+  <h1 class="lobby-title">把这一刻，<br>交给<span>小宇宙。</span></h1>
+  <p class="shell-subtitle">认真练习，或轻松玩一会儿。由你选择。</p>
+  <div class="mode-cards">
+    <a class="mode-card mode-training" href="#home"><div class="mode-art training-art" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><i></i></div><div class="mode-copy"><span class="mode-label">FOCUS / 专注</span><h2>专注训练</h2><p>六项练习，按自己的节奏。</p><strong>进入训练 <span>↗</span></strong></div></a>
+    <a class="mode-card mode-arcade" href="#arcade"><div class="mode-art" aria-hidden="true"><div class="mini-planet"><i></i></div><span class="art-star">✦</span><span class="art-spark">✧</span></div><div class="mode-copy"><span class="mode-label">PLAY / 探索</span><h2>星球乐园</h2><p>闯关、探索，装点小宇宙。</p><strong>开始探索 <span>↗</span></strong></div></a>
+  </div>
+  <div class="lobby-note"><span class="offline-light"></span>完全离线 · 进度只保存在本机</div>
+  <div class="shell-tools"><button type="button" id="lobbyBackup">完整备份</button><button type="button" id="lobbyHelp">使用说明</button></div>
+</section>
+<section id="arcadeView" class="shell-view arcade-view" hidden aria-label="星球乐园"></section>
+<dialog id="arcadeGuide" class="records-dialog shell-dialog" aria-labelledby="arcadeGuideTitle"><div class="dialog-head"><h2 id="arcadeGuideTitle">第一次探索</h2><button type="button" class="dialog-close" id="arcadeGuideClose" aria-label="关闭玩法示例">×</button></div><div class="arcade-example" id="arcadeExample"></div><p id="arcadeGuideCopy"></p><div class="shell-action-row"><button type="button" id="arcadeGuideSkip">跳过示例，开始</button><button type="button" class="shell-primary" id="arcadeGuideStart">知道了，开始</button></div></dialog>
+<dialog id="arcadeConfirm" class="records-dialog shell-dialog" aria-labelledby="arcadeConfirmTitle"><h2 id="arcadeConfirmTitle"></h2><p id="arcadeConfirmCopy"></p><div class="shell-action-row"><button type="button" id="arcadeCancel">取消</button><button type="button" id="arcadeAccept" class="shell-danger">确认</button></div></dialog>
+<dialog id="arcadeRecords" class="records-dialog shell-dialog" aria-labelledby="arcadeRecordsTitle"><div class="dialog-head"><h2 id="arcadeRecordsTitle">探索记录</h2><button type="button" class="dialog-close" id="arcadeRecordsClose" aria-label="关闭探索记录">×</button></div><p class="shell-caption">只保存娱乐成绩，最多 200 局。删除成绩不影响星级和装饰。</p><div class="shell-action-row"><button type="button" id="arcadeClearRecords">清空娱乐成绩</button><button type="button" id="arcadeBackup">完整备份</button></div><div id="arcadeRecordList"></div></dialog>
+<dialog id="completeBackup" class="records-dialog shell-dialog" aria-labelledby="completeBackupTitle"><div class="dialog-head"><h2 id="completeBackupTitle">把小宇宙带走</h2><button type="button" class="dialog-close" id="completeBackupClose" aria-label="关闭完整备份">×</button></div><p>完整备份包括六项训练记录与设置、娱乐成绩、星级、装饰和引导状态。文件只会保存到你选择的位置。</p><p class="shell-caption">兼容旧版训练备份。合并旧备份不会清空娱乐进度；合并新版备份时，关卡星级取较高值。重置后再导入以前的备份，可能恢复以前的进度。</p><div class="shell-action-row"><button type="button" id="completeBackupExport" class="shell-primary">导出完整备份</button><button type="button" id="completeBackupImport">导入备份</button></div></dialog>

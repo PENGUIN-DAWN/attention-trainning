@@ -1,0 +1,8 @@
+/* Logical close is immediate; supporting WebViews retain only a noninteractive exit rendering. */
+dialog{opacity:0;transform:translateY(10px);transition:opacity 180ms var(--ui-ease),transform 180ms var(--ui-ease),display 180ms allow-discrete,overlay 180ms allow-discrete}
+dialog[open]{opacity:1;transform:translateY(0)}dialog::backdrop{opacity:0;transition:opacity 160ms,display 160ms allow-discrete,overlay 160ms allow-discrete}dialog[open]::backdrop{opacity:1}
+@starting-style{dialog[open]{opacity:0;transform:translateY(10px)}dialog[open]::backdrop{opacity:0}}
+/* A rule/example must never linger over a newly started formal stimulus. */
+#guideDialog:not([open]),.rules-dialog:not([open]),dialog#rules:not([open]){transition:none!important}
+@media(prefers-reduced-motion:reduce){dialog,dialog::backdrop{transition:none!important;transform:none!important}}
+html[data-reduced=true] dialog,html[data-reduced=true] dialog::backdrop{transition:none!important;transform:none!important}

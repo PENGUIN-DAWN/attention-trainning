@@ -1,0 +1,7 @@
+{
+  "checks": [
+    "390x640 completion actions all visible, next-page scroll stable and challenge timeout boundary; reduced=false",
+    "390x640 completion actions all visible, next-page scroll stable and challenge timeout boundary; reduced=true"
+  ],
+  "html_sha256": "d099b3746ceb867eb84651cd21cb93a5eaf3ddaa0122ae0d4f5ecf3c59404d43"
+}
