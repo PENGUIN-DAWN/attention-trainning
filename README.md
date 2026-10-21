@@ -1,6 +1,6 @@
 # 专注力小宇宙 · Attention Trainning
 
-供自己和朋友使用的安卓离线注意训练工具。当前版本 **1.50 / versionCode 7**，Android 8.0+。包名 `cn.focusuniverse.offline`。
+供自己和朋友使用的安卓离线注意训练工具，目前每个项目还没开始打磨，体验感一般。当前版本 **1.50 / versionCode 7**，Android 8.0+。包名 `cn.focusuniverse.offline`。
 
 使用安卓原生外壳和系统 WebView，十六项训练、音频和页面全部内置。没有账号、广告、支付、服务器或联网权限。训练成绩不作为医学诊断或一般能力评分。
 
