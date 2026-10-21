@@ -14,7 +14,7 @@
 
 ## 覆盖安装
 
-包名：`cn.focusuniverse.offline`。当前versionName为1.50、versionCode为7；WebView来源保持`https://appassets.androidplatform.net/assets/index.html`。
+包名：`cn.focusuniverse.offline`。当前versionName为1.51、versionCode为8；WebView来源保持`https://appassets.androidplatform.net/assets/index.html`。
 
 公开的签名证书SHA-256为：
 

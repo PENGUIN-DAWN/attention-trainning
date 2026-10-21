@@ -1,0 +1,371 @@
+{
+  "version": "1.51",
+  "checks": [
+    "1800 randomized preset cases: unique answers, duplicate counts, object aliases/missing counts, stable tracking identities, collision separation, correct/wrong/timeout scoring",
+    "Reverse: wrong click does not advance, all 25 descending clicks, complete save and 35s timeout boundary; metadata separate from ascending",
+    "Four full new rounds, actual full 8s study and 6s motion, independent response clocks, cancel selection, IME composition guard and simulated keyboard visibility",
+    "Actual 5s and 12s timeout, one-answer lock, rapid starts, suspend abort/restart, interrupted records excluded from best, atomic save failure and exactly-once retry",
+    "v3 export and round trip, v1/v2-compatible data model, malformed import no writes, record filter/delete/cancel/clear, settings preserved and hidden entertainment survives",
+    "320–768px tool layouts, 48px primary/settings controls, 80-character alternative explicitly labeled, reduced motion keeps tracking stimulus, background cancels stale callbacks"
+  ],
+  "timings": {
+    "7": [
+      {
+        "phase": "preparing",
+        "at": 625.4000000059605
+      },
+      {
+        "phase": "preparing",
+        "at": 625.7000000029802
+      },
+      {
+        "phase": "mark",
+        "at": 629
+      },
+      {
+        "phase": "motion",
+        "at": 3144.2000000029802
+      },
+      {
+        "phase": "preparing",
+        "at": 9162.29999999702
+      },
+      {
+        "phase": "preparing",
+        "at": 9164.09999999404
+      },
+      {
+        "phase": "answer",
+        "at": 9174.20000000298
+      },
+      {
+        "phase": "feedback",
+        "at": 9590
+      },
+      {
+        "phase": "preparing",
+        "at": 9613.79999999702
+      },
+      {
+        "phase": "mark",
+        "at": 9616.5
+      },
+      {
+        "phase": "motion",
+        "at": 12131.90000000596
+      },
+      {
+        "phase": "preparing",
+        "at": 18150.20000000298
+      },
+      {
+        "phase": "preparing",
+        "at": 18150.29999999702
+      },
+      {
+        "phase": "answer",
+        "at": 18162.09999999404
+      },
+      {
+        "phase": "feedback",
+        "at": 18261.40000000596
+      },
+      {
+        "phase": "preparing",
+        "at": 18288.90000000596
+      },
+      {
+        "phase": "mark",
+        "at": 18290
+      },
+      {
+        "phase": "motion",
+        "at": 20804.59999999404
+      },
+      {
+        "phase": "preparing",
+        "at": 26822.79999999702
+      },
+      {
+        "phase": "preparing",
+        "at": 26823.09999999404
+      },
+      {
+        "phase": "answer",
+        "at": 26834.70000000298
+      },
+      {
+        "phase": "feedback",
+        "at": 26933.90000000596
+      },
+      {
+        "phase": "result",
+        "at": 26957.79999999702
+      }
+    ],
+    "8": [
+      {
+        "phase": "preparing",
+        "at": 600.4000000059605
+      },
+      {
+        "phase": "preparing",
+        "at": 600.7000000029802
+      },
+      {
+        "phase": "preparing",
+        "at": 601.0999999940395
+      },
+      {
+        "phase": "answer",
+        "at": 614.2999999970198
+      },
+      {
+        "phase": "feedback",
+        "at": 1005.9000000059605
+      },
+      {
+        "phase": "preparing",
+        "at": 1042.7999999970198
+      },
+      {
+        "phase": "preparing",
+        "at": 1043.2999999970198
+      },
+      {
+        "phase": "answer",
+        "at": 1046.7999999970198
+      },
+      {
+        "phase": "feedback",
+        "at": 1139.5999999940395
+      },
+      {
+        "phase": "preparing",
+        "at": 1158.0999999940395
+      },
+      {
+        "phase": "preparing",
+        "at": 1158.5
+      },
+      {
+        "phase": "answer",
+        "at": 1168.0999999940395
+      },
+      {
+        "phase": "feedback",
+        "at": 1265.0999999940395
+      },
+      {
+        "phase": "preparing",
+        "at": 1284
+      },
+      {
+        "phase": "preparing",
+        "at": 1284.2999999970198
+      },
+      {
+        "phase": "answer",
+        "at": 1295.5
+      },
+      {
+        "phase": "feedback",
+        "at": 1391.2999999970198
+      },
+      {
+        "phase": "preparing",
+        "at": 1414
+      },
+      {
+        "phase": "preparing",
+        "at": 1414.2999999970198
+      },
+      {
+        "phase": "answer",
+        "at": 1416.5
+      },
+      {
+        "phase": "feedback",
+        "at": 1517.5999999940395
+      },
+      {
+        "phase": "result",
+        "at": 1547.0999999940395
+      }
+    ],
+    "9": [
+      {
+        "phase": "preparing",
+        "at": 609.5
+      },
+      {
+        "phase": "preparing",
+        "at": 609.7999999970198
+      },
+      {
+        "phase": "observe",
+        "at": 614.7000000029802
+      },
+      {
+        "phase": "mask",
+        "at": 8642.09999999404
+      },
+      {
+        "phase": "preparing",
+        "at": 9660.20000000298
+      },
+      {
+        "phase": "answer",
+        "at": 9684.5
+      },
+      {
+        "phase": "feedback",
+        "at": 10024.70000000298
+      },
+      {
+        "phase": "preparing",
+        "at": 10051.5
+      },
+      {
+        "phase": "observe",
+        "at": 10054.29999999702
+      },
+      {
+        "phase": "mask",
+        "at": 18071.90000000596
+      },
+      {
+        "phase": "preparing",
+        "at": 19090.40000000596
+      },
+      {
+        "phase": "answer",
+        "at": 19102.20000000298
+      },
+      {
+        "phase": "feedback",
+        "at": 19154.40000000596
+      },
+      {
+        "phase": "preparing",
+        "at": 19190.20000000298
+      },
+      {
+        "phase": "observe",
+        "at": 19199.40000000596
+      },
+      {
+        "phase": "mask",
+        "at": 27217.29999999702
+      },
+      {
+        "phase": "preparing",
+        "at": 28235.79999999702
+      },
+      {
+        "phase": "answer",
+        "at": 28247.5
+      },
+      {
+        "phase": "feedback",
+        "at": 28289.59999999404
+      },
+      {
+        "phase": "result",
+        "at": 28320.70000000298
+      }
+    ],
+    "10": [
+      {
+        "phase": "preparing",
+        "at": 607.6000000089407
+      },
+      {
+        "phase": "preparing",
+        "at": 607.9000000059605
+      },
+      {
+        "phase": "preparing",
+        "at": 608.1000000089407
+      },
+      {
+        "phase": "answer",
+        "at": 611.5
+      },
+      {
+        "phase": "feedback",
+        "at": 921.8000000119209
+      },
+      {
+        "phase": "preparing",
+        "at": 939.6000000089407
+      },
+      {
+        "phase": "preparing",
+        "at": 939.8000000119209
+      },
+      {
+        "phase": "answer",
+        "at": 950.6000000089407
+      },
+      {
+        "phase": "feedback",
+        "at": 970.7000000029802
+      },
+      {
+        "phase": "preparing",
+        "at": 994.4000000059605
+      },
+      {
+        "phase": "preparing",
+        "at": 994.6000000089407
+      },
+      {
+        "phase": "answer",
+        "at": 1005.1000000089407
+      },
+      {
+        "phase": "feedback",
+        "at": 1024.800000011921
+      },
+      {
+        "phase": "preparing",
+        "at": 1042.800000011921
+      },
+      {
+        "phase": "preparing",
+        "at": 1043.1000000089407
+      },
+      {
+        "phase": "answer",
+        "at": 1053.6000000089407
+      },
+      {
+        "phase": "feedback",
+        "at": 1074.4000000059605
+      },
+      {
+        "phase": "preparing",
+        "at": 1098.9000000059605
+      },
+      {
+        "phase": "preparing",
+        "at": 1099.2000000029802
+      },
+      {
+        "phase": "answer",
+        "at": 1102
+      },
+      {
+        "phase": "feedback",
+        "at": 1121.5
+      },
+      {
+        "phase": "result",
+        "at": 1139.300000011921
+      }
+    ]
+  },
+  "errors": [],
+  "html_sha256": "13ced1d817d399b99b432c819184630544393a441bd2ba3eb29501195704b508"
+}

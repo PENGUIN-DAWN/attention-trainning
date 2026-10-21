@@ -1,0 +1,13 @@
+{
+  "name": "focus-universe-offline",
+  "private": true,
+  "description": "Development tools only; no runtime npm dependency enters the APK.",
+  "scripts": {
+    "test": "python -X utf8 android-app/dev.py test",
+    "build": "python -X utf8 android-app/dev.py build",
+    "release": "python -X utf8 android-app/dev.py release"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

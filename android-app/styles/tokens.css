@@ -1,0 +1,16 @@
+:root {
+  --ui-bg: #0d121b;
+  --ui-surface: #172131;
+  --ui-raised: #1e2c40;
+  --ui-blue: #8acbff;
+  --ui-text: #eef4fc;
+  --ui-muted: #a7b5c8;
+  --ui-line: #33445b;
+  --ui-danger: #ffb1bb;
+  --ui-success: #a0e4bd;
+  --ui-radius: 20px;
+  --ui-ease: cubic-bezier(.2,.7,.2,1);
+  --ui-press: 110ms;
+  --ui-enter: 240ms;
+  --ui-exit: 160ms;
+}

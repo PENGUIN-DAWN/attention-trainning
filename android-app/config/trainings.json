@@ -1,0 +1,396 @@
+[
+  {
+    "id": 1,
+    "filename": "舒尔特方格训练.html",
+    "title": "舒尔特方格",
+    "description": "在彩色数字中，找到清晰的顺序。",
+    "short": "彩色数字 · 顺序搜索",
+    "ability": "视觉搜索",
+    "accent": "#557e68",
+    "key": "schulte",
+    "engine": "legacy",
+    "rule": "按顺序点击数字，可设置正序或倒序。",
+    "actionAccent": "#40664e",
+    "tint": "#e4eee5",
+    "cardAccent": "#a8d8c0",
+    "icon": "<rect x=\"9\" y=\"8\" width=\"46\" height=\"46\" rx=\"12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"/><path d=\"M32 9v44M10 31h43\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".5\"/><g fill=\"currentColor\" font-family=\"Arial,sans-serif\" font-size=\"14\" text-anchor=\"middle\"><text x=\"21\" y=\"25\">2</text><text x=\"43\" y=\"25\">1</text><text x=\"21\" y=\"47\">4</text><text x=\"43\" y=\"47\">3</text></g>",
+    "settings": {
+      "mode": [
+        "challenge",
+        "complete",
+        "reverse"
+      ]
+    },
+    "example": {
+      "visual": "1 → 2 → 3 → … → 25",
+      "copy": "数字位置和颜色会变化。只看数值，按顺序依次点击。"
+    },
+    "audio": false,
+    "keyboard": false
+  },
+  {
+    "id": 2,
+    "filename": "字色干扰训练.html",
+    "title": "字色干扰",
+    "description": "忽略字的含义，认出真正的颜色。",
+    "short": "忽略字义 · 识别颜色",
+    "ability": "抑制干扰",
+    "accent": "#8564b1",
+    "key": "stroop",
+    "engine": "legacy",
+    "rule": "忽略字义，只回答亮起文字的颜色。",
+    "actionAccent": "#705094",
+    "tint": "#ece3f5",
+    "cardAccent": "#c6b8f3",
+    "icon": "<path d=\"M13 48h38\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\".4\"/><text x=\"31\" y=\"38\" font-family=\"Microsoft YaHei,sans-serif\" font-size=\"34\" fill=\"currentColor\" text-anchor=\"middle\">色</text><circle cx=\"49\" cy=\"16\" r=\"5\" fill=\"#c8a2c4\" opacity=\".7\"/><circle cx=\"11\" cy=\"39\" r=\"3\" fill=\"#a5c5cd\"/>",
+    "settings": {},
+    "example": {
+      "visual": "白  →  选「蓝」",
+      "copy": "当“白”字显示为蓝色时，回答蓝。答的是颜色，不是字义。"
+    },
+    "audio": false,
+    "keyboard": false
+  },
+  {
+    "id": 3,
+    "filename": "数字大小干扰训练.html",
+    "title": "数字大小干扰",
+    "description": "四个数字，按照数值重新排队。",
+    "short": "四个数字 · 数值排序",
+    "ability": "数值判断",
+    "accent": "#43818b",
+    "key": "number-size",
+    "engine": "legacy",
+    "rule": "忽略字号，按数值从小到大选择。",
+    "actionAccent": "#326d77",
+    "tint": "#e1eff0",
+    "cardAccent": "#a3d9e9",
+    "icon": "<text x=\"15\" y=\"42\" font-family=\"Arial,sans-serif\" font-size=\"22\" fill=\"currentColor\" text-anchor=\"middle\">3</text><text x=\"42\" y=\"45\" font-family=\"Arial,sans-serif\" font-size=\"42\" fill=\"currentColor\" text-anchor=\"middle\">7</text><path d=\"m12 52 5 3 5-3m18 2h9\" stroke=\"currentColor\" stroke-width=\"1.2\" fill=\"none\" opacity=\".6\"/>",
+    "settings": {},
+    "example": {
+      "visual": "8　1　7　4\n1 → 4 → 7 → 8",
+      "copy": "不论字写得多大，都按数值从小到大选择四个数字。"
+    },
+    "audio": false,
+    "keyboard": false
+  },
+  {
+    "id": 4,
+    "filename": "六项序列记忆训练.html",
+    "title": "六项序列记忆",
+    "description": "记住六个小伙伴，和它们的出场顺序。",
+    "short": "六个图案 · 顺序回忆",
+    "ability": "序列记忆",
+    "accent": "#b26b87",
+    "key": "sequence-memory",
+    "engine": "legacy",
+    "rule": "记住六项，再按原顺序选出。",
+    "actionAccent": "#944967",
+    "tint": "#f4e3ec",
+    "cardAccent": "#e3b8cd",
+    "icon": "<circle cx=\"18\" cy=\"26\" r=\"9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\"/><path d=\"m36 12 12 20H24Z\" fill=\"currentColor\" opacity=\".18\" stroke=\"currentColor\" stroke-width=\"1.3\"/><rect x=\"35\" y=\"28\" width=\"17\" height=\"17\" rx=\"3\" transform=\"rotate(13 43 37)\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\"/><g fill=\"currentColor\" opacity=\".6\"><circle cx=\"15\" cy=\"54\" r=\"2\"/><circle cx=\"22\" cy=\"54\" r=\"2\"/><circle cx=\"29\" cy=\"54\" r=\"2\"/><circle cx=\"36\" cy=\"54\" r=\"2\"/><circle cx=\"43\" cy=\"54\" r=\"2\"/><circle cx=\"50\" cy=\"54\" r=\"2\"/></g>",
+    "settings": {
+      "category": [
+        "mixed",
+        "animals",
+        "objects"
+      ],
+      "speed": [
+        "1000",
+        "1500",
+        "2000"
+      ]
+    },
+    "example": {
+      "visual": "🐱 → 🍎 → 🐶 → 🚗 → 🐰 → 🕒",
+      "copy": "先依次观察六项，再从打乱的选项中按原顺序选出。提交后才核对。"
+    },
+    "audio": false,
+    "keyboard": false
+  },
+  {
+    "id": 5,
+    "filename": "视觉动态感知训练.html",
+    "title": "视觉动态感知",
+    "description": "看见实际的变化，不被文字带走。",
+    "short": "四种变化 · 动态识别",
+    "ability": "动态感知",
+    "accent": "#5b7db5",
+    "key": "dynamic-perception",
+    "engine": "legacy",
+    "rule": "忽略字义，判断刚才的实际变化。",
+    "actionAccent": "#426395",
+    "tint": "#e1eaf7",
+    "cardAccent": "#9fc9fc",
+    "icon": "<ellipse cx=\"32\" cy=\"32\" rx=\"24\" ry=\"11\" transform=\"rotate(-29 32 32)\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"/><ellipse cx=\"32\" cy=\"32\" rx=\"12\" ry=\"23\" transform=\"rotate(-29 32 32)\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" opacity=\".5\"/><circle cx=\"32\" cy=\"32\" r=\"6\" fill=\"currentColor\" opacity=\".65\"/><circle cx=\"52\" cy=\"22\" r=\"4\" fill=\"#b9c9e3\" stroke=\"currentColor\" stroke-width=\"1\"/>",
+    "settings": {
+      "observationDuration": null
+    },
+    "example": {
+      "visual": "「变小」 ↗\n实际变大 → 选「变大」",
+      "copy": "观察完整过程再作答。可在开始前调整 1–2 秒观察时长；没看清可以重播。"
+    },
+    "audio": false,
+    "keyboard": false
+  },
+  {
+    "id": 6,
+    "filename": "视觉完形整合训练.html",
+    "title": "视觉完形整合",
+    "description": "把分散的部件，拼回完整的汉字。",
+    "short": "分开的部件 · 完整汉字",
+    "ability": "整体识别",
+    "accent": "#ac854a",
+    "key": "visual-completion",
+    "engine": "legacy",
+    "rule": "保持部件位置，在脑中合成一个汉字。",
+    "actionAccent": "#85612f",
+    "tint": "#f3eadc",
+    "cardAccent": "#e5cea6",
+    "icon": "<path d=\"M13 15h15v10c5-4 9-2 9 2s-4 7-9 4v15H13V34c5 3 8 0 8-3s-3-6-8-3Z\" fill=\"currentColor\" opacity=\".19\" stroke=\"currentColor\" stroke-width=\"1.4\"/><path d=\"M38 13h14v32H39V34c-5 3-8 0-8-3s3-6 8-3V13Z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\"/><path d=\"m25 53 5 3 7-7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.3\"/>",
+    "settings": {},
+    "example": {
+      "visual": "女 ＋ 子 → 好",
+      "copy": "保留左右或上下位置，在脑中组合后输入一个汉字。输入法选字不会直接判题。"
+    },
+    "audio": false,
+    "keyboard": true
+  },
+  {
+    "id": 7,
+    "title": "多目标追踪",
+    "short": "记住目标，追踪位置",
+    "accent": "#46689b",
+    "key": "multi-object-tracking",
+    "engine": "tool",
+    "rule": "记住亮起的目标，追踪同色运动后的位置。",
+    "actionAccent": "#46689b",
+    "tint": "#e5eafb",
+    "cardAccent": "#b2c8ee",
+    "icon": "<circle cx=\"18\" cy=\"22\" r=\"7\" fill=\"currentColor\"/><circle cx=\"45\" cy=\"40\" r=\"7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M24 24l15 11\" stroke=\"currentColor\" stroke-width=\"2\"/>",
+    "settings": {
+      "preset": [
+        "normal",
+        "strong"
+      ]
+    },
+    "example": {
+      "visual": "● ● ○ ○",
+      "copy": "记住亮起的目标球。变成同色并运动后，根据停止时的编号多选答案。"
+    },
+    "audio": false,
+    "keyboard": false
+  },
+  {
+    "id": 8,
+    "title": "重复数字搜寻",
+    "short": "找出成对的数字",
+    "accent": "#327462",
+    "key": "duplicate-number",
+    "engine": "tool",
+    "rule": "选出唯一重复数字所在的两个位置。",
+    "actionAccent": "#327462",
+    "tint": "#e0f0ec",
+    "cardAccent": "#a6dccb",
+    "icon": "<rect x=\"8\" y=\"8\" width=\"48\" height=\"48\" rx=\"10\" fill=\"none\" stroke=\"currentColor\"/><text x=\"32\" y=\"39\" text-anchor=\"middle\" fill=\"currentColor\" font-size=\"22\">68</text>",
+    "settings": {
+      "preset": [
+        "15",
+        "12"
+      ]
+    },
+    "example": {
+      "visual": "68　24　68",
+      "copy": "选择两个 68 的位置，再提交；在提交前不揭晓答案。"
+    },
+    "audio": false,
+    "keyboard": false
+  },
+  {
+    "id": 9,
+    "title": "消失的物品",
+    "short": "记住整组，找出缺失",
+    "accent": "#885c24",
+    "key": "missing-objects",
+    "engine": "tool",
+    "rule": "同时记住 12 件物品，找出消失的物品。",
+    "actionAccent": "#885c24",
+    "tint": "#fff0de",
+    "cardAccent": "#e7cca4",
+    "icon": "<path d=\"M14 22h36v32H14ZM10 14h44v9H10M32 15v38\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"2\"/><circle cx=\"44\" cy=\"40\" r=\"14\" fill=\"#fff0de\"/><path d=\"M37 40h14\" stroke=\"currentColor\" stroke-width=\"2\"/>",
+    "settings": {
+      "preset": [
+        "one",
+        "two"
+      ]
+    },
+    "example": {
+      "visual": "钥匙、苹果、杯子 → ？",
+      "copy": "先记住整组物品，重排后输入缺失物品名称。记物品，不记顺序。"
+    },
+    "audio": false,
+    "keyboard": true
+  },
+  {
+    "id": 10,
+    "title": "相似字符找异类",
+    "short": "看清笔画，找到目标",
+    "accent": "#785696",
+    "key": "similar-character",
+    "engine": "tool",
+    "rule": "看清目标字，点击唯一的异类。",
+    "actionAccent": "#785696",
+    "tint": "#eee7fa",
+    "cardAccent": "#cbb9ed",
+    "icon": "<text x=\"32\" y=\"44\" text-anchor=\"middle\" fill=\"currentColor\" font-size=\"38\">末</text>",
+    "settings": {
+      "preset": [
+        "8",
+        "6",
+        "5"
+      ],
+      "grid": [
+        "mobile",
+        "video"
+      ]
+    },
+    "example": {
+      "visual": "未　未　末　未",
+      "copy": "目标是“末”：上横较长。每题点一次，结束后再核对。"
+    },
+    "audio": false,
+    "keyboard": false
+  },
+  {
+    "id": 11,
+    "title": "规则切换",
+    "short": "跟随提示，转换规则",
+    "accent": "#456697",
+    "key": "rule-switching",
+    "engine": "advanced",
+    "rule": "跟随当前提示，判断单双或大小。",
+    "actionAccent": "#456697",
+    "tint": "#e3edf8",
+    "cardAccent": "#a9c9f2",
+    "icon": "<text x=\"32\" y=\"44\" fill=\"currentColor\" text-anchor=\"middle\" font-size=\"36\">↔</text>",
+    "settings": {},
+    "example": {
+      "visual": "单双：7 → 奇数\n大小：8 → 大于 5",
+      "copy": "先看本题规则。可在开始前做 8 题教学，教学不保存正式成绩。"
+    },
+    "audio": false,
+    "keyboard": false
+  },
+  {
+    "id": 12,
+    "title": "呼吸聚焦",
+    "short": "察觉走神，温和返回",
+    "accent": "#406b54",
+    "key": "breath-return",
+    "engine": "advanced",
+    "rule": "关注自然呼吸，察觉走神后温和返回。",
+    "actionAccent": "#406b54",
+    "tint": "#e6f0e8",
+    "cardAccent": "#afd9b7",
+    "icon": "<text x=\"32\" y=\"44\" fill=\"currentColor\" text-anchor=\"middle\" font-size=\"36\">息</text>",
+    "settings": {},
+    "example": {
+      "visual": "自然呼吸 → 察觉 → 返回",
+      "copy": "每段结束如实报告。发现更多走神不表示能力变差；自报不作为自动测量或排名。"
+    },
+    "audio": false,
+    "keyboard": false
+  },
+  {
+    "id": 13,
+    "title": "中央与周边辨认",
+    "short": "兼顾中心，辨认周边",
+    "accent": "#856032",
+    "key": "central-peripheral",
+    "engine": "advanced",
+    "rule": "短暂观察中心与周边，再分别回答。",
+    "actionAccent": "#856032",
+    "tint": "#f7e9d9",
+    "cardAccent": "#e5cca9",
+    "icon": "<text x=\"32\" y=\"44\" fill=\"currentColor\" text-anchor=\"middle\" font-size=\"36\">⊙</text>",
+    "settings": {
+      "preset": [
+        "entry",
+        "middle",
+        "strong"
+      ]
+    },
+    "example": {
+      "visual": "中心 ○ ＋ 右上 ★",
+      "copy": "短暂同时看见中心图形与周边目标，遮挡后分别回答。"
+    },
+    "audio": false,
+    "keyboard": false
+  },
+  {
+    "id": 14,
+    "title": "持续监测",
+    "short": "圆形点击，三角不点",
+    "accent": "#71538a",
+    "key": "go-no-go",
+    "engine": "advanced",
+    "rule": "圆形点击，三角不点击；保持整轮监测。",
+    "actionAccent": "#71538a",
+    "tint": "#eee6f5",
+    "cardAccent": "#c6b8e8",
+    "icon": "<text x=\"32\" y=\"44\" fill=\"currentColor\" text-anchor=\"middle\" font-size=\"36\">△</text>",
+    "settings": {},
+    "example": {
+      "visual": "○ 点击　△ 不点击",
+      "copy": "圆形要按，三角要忍住。每项窗口固定，连点只计首次。可先做 10 题教学。"
+    },
+    "audio": false,
+    "keyboard": false
+  },
+  {
+    "id": 15,
+    "title": "双耳分听",
+    "short": "选择声道，听清目标",
+    "accent": "#326d7b",
+    "key": "dichotic-digits",
+    "engine": "advanced",
+    "rule": "戴立体声耳机，只回答指定耳朵的数字。",
+    "actionAccent": "#326d7b",
+    "tint": "#e1eef1",
+    "cardAccent": "#a3d3de",
+    "icon": "<text x=\"32\" y=\"44\" fill=\"currentColor\" text-anchor=\"middle\" font-size=\"36\">♫</text>",
+    "settings": {
+      "preset": [
+        "left",
+        "right",
+        "switch"
+      ]
+    },
+    "example": {
+      "visual": "左耳 3 / 右耳 8\n只听左耳 → 3",
+      "copy": "先连接立体声耳机并主动完成声道检查。教学可重播，正式题不重播。"
+    },
+    "audio": true,
+    "keyboard": false
+  },
+  {
+    "id": 16,
+    "title": "串行双目标识别",
+    "short": "连续信息，记住双目标",
+    "accent": "#8e4b73",
+    "key": "serial-dual-target",
+    "engine": "advanced",
+    "rule": "同一位置连续呈现，按顺序报告两个数字。",
+    "actionAccent": "#8e4b73",
+    "tint": "#f3e5ee",
+    "cardAccent": "#deb8d1",
+    "icon": "<text x=\"32\" y=\"44\" fill=\"currentColor\" text-anchor=\"middle\" font-size=\"36\">A2</text>",
+    "settings": {},
+    "example": {
+      "visual": "K → 4 → M → 7 → H",
+      "copy": "同一位置连续呈现；结束后分别选出第一个和第二个数字。异常时序单独标记。"
+    },
+    "audio": false,
+    "keyboard": false
+  }
+]

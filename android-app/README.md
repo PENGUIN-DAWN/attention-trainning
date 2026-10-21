@@ -1,14 +1,15 @@
 # 专注力小宇宙安卓离线版
 
-当前版本 **1.50 / versionCode 7**，十六项功能训练、深色界面、离线WebView。
+当前 **1.51 / versionCode 8**，十六项功能训练、深色矩形目录、离线 WebView。
 
 - [工程首页](../README.md)
 - [架构和代码位置](../docs/ARCHITECTURE.md)
-- [Windows构建](../docs/BUILD.md)
-- [当前测试入口](../docs/TESTING.md)
+- [构建发布](../docs/BUILD.md)
+- [测试入口](../docs/TESTING.md)
 - [数据与签名](../docs/DATA-AND-SIGNING.md)
-- [1.50 UI开发说明](UI改版开发说明-1.50.md)
-- [1.40训练扩展说明](工具版开发说明-1.40.md)
-- [历史README，仅供参考](docs/legacy-readme.md)
+- [历史 1.50 UI 参数](UI改版开发说明-1.50.md)
 
-源码仍保留原路径，`assets/`和`build/`为生成目录，不提交。签名私钥不在仓库中。根网页与原训练HTML为当前只读兼容输入，修改安卓UI请从呈现层开始。
+统一入口 `python -X utf8 android-app/dev.py release --jobs 3`，从仓库根目录执行。
+元数据在 config/trainings.json，外框在 templates/app.html，应用功能在 app/，样式在 styles/。
+assets/ 和 build/ 为生成目录；archive/ 为不加载的历史材料。
+原训练引擎、根网页输入和音频保持不变；签名私钥在仓库外。
