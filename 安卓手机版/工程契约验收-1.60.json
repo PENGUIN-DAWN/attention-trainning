@@ -1,0 +1,11 @@
+{
+  "version": "1.60",
+  "html_sha256": "d76a8a38d0302a4ede651d183e608942af91de856d7d3e993d22314b15981635",
+  "checks": [
+    "Sparse registered IDs route by lookup; unknown IDs remain rejected",
+    "Old backup merge is pure/idempotent and retains current new settings/preferences and absent entertainment",
+    "Unsupported, unknown-project and malformed-entertainment imports fail before state/storage mutation",
+    "Protected training engines, published source and old APKs retain their byte hashes"
+  ],
+  "errors": []
+}

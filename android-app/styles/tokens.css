@@ -1,15 +1,16 @@
 :root {
-  --ui-bg: #0d121b;
-  --ui-surface: #172131;
-  --ui-raised: #1e2c40;
-  --ui-blue: #8acbff;
-  --ui-text: #eef4fc;
-  --ui-muted: #a7b5c8;
-  --ui-line: #33445b;
-  --ui-danger: #ffb1bb;
-  --ui-success: #a0e4bd;
+  --ui-bg: #faf6f0;
+  --ui-surface: #ffffff;
+  --ui-raised: #edf5fa;
+  --ui-blue: #67b4ef;
+  --ui-focus: #2787c4;
+  --ui-text: #244b73;
+  --ui-muted: #596f80;
+  --ui-line: #dce6ec;
+  --ui-danger: #ad4351;
+  --ui-success: #287752;
   --ui-radius: 20px;
-  --ui-ease: cubic-bezier(.2,.7,.2,1);
+  --ui-ease: cubic-bezier(.2,.8,.2,1);
   --ui-press: 110ms;
   --ui-enter: 240ms;
   --ui-exit: 160ms;

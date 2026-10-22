@@ -9,17 +9,18 @@ function moduleSource(module) {
   };
   const themed = module.source.replace('</head>', '<style>' + presentation.chrome +
     '</style></head>');
+  const chromeScript = '\n' + presentation.chromeUI + '\ninstallChromeUI(' + module.id + ');';
   if (engineFor(module.id) === 'advanced') {
     if (trainingsById.get(module.id).audio) config.audio = JSON.parse($('digitAudio').textContent);
     return themed.replace('</body>', '<script>installAdvancedUI(' + JSON.stringify(config) + ');<' +
-      '/script></body>');
+      '/script><script>' + chromeScript + '<' + '/script></body>');
   }
   if (engineFor(module.id) !== 'legacy') return themed.replace('</body>', '<script>installToolUI(' +
     JSON.stringify(config) + ');\n' + presentation.chromeStatus + '\ninstallChromeStatus();<' +
-    '/script></body>');
+    '/script><script>' + chromeScript + '<' + '/script></body>');
   return module.source.replace('</head>', '<style>' + presentation.css + '\n' + presentation
     .chrome + '</style></head>').replace('</body>', '<script>' + presentation.js +
-    '\ninstallTrainingUI(' + JSON.stringify(config) + ');<' + '/script></body>');
+    '\ninstallTrainingUI(' + JSON.stringify(config) + ');<' + '/script><script>' + chromeScript + '<' + '/script></body>');
 }
 
 function getFrame(module) {

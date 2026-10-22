@@ -138,9 +138,9 @@ async function measure(p, name, action) {
       await p.goto(URL);
       await p.waitForFunction(() => document.querySelectorAll('.training-card').length === 16);
       report.observations.pageLoadToDirectoryWallMs = Date.now() - start;
-      await screenshot(p, '深色训练目录');
+      await screenshot(p, '浅蓝训练目录');
       await p.screenshot({
-        path: path.join(OUT, `深色首页首屏-${VERSION}.png`),
+        path: path.join(OUT, `浅蓝首页首屏-${VERSION}.png`),
         fullPage: false,
         animations: 'disabled'
       });
@@ -149,14 +149,30 @@ async function measure(p, name, action) {
       assert.equal(await p.locator('.bubble').first().evaluate(e => getComputedStyle(e)
         .borderRadius), '20px');
       assert.equal(await p.locator('body').evaluate(e => getComputedStyle(e).backgroundColor),
-        'rgb(13, 18, 27)');
+        'rgb(250, 246, 240)');
       assert.equal(await p.locator('#recentTitle').textContent(), '舒尔特方格');
+      assert.equal(await p.locator('#preferencesButton svg').count(), 1);
+      assert.equal(await p.locator('#appDock button svg').count(), 3);
+      assert.equal(await p.locator('#welcomeArt svg.planet-art').count(), 1);
+      assert.equal(await p.locator('.visit-mark svg').count(), 16);
+      await p.locator('#dockHelp').click();
+      await p.locator('#appHelp[open]').waitFor();
+      assert.equal(await p.locator('#appHelp .dialog-close svg').count(), 1);
+      await p.locator('#appHelp .dialog-close').click();
+      await p.waitForTimeout(260);
+      await p.locator('#dockRecords').click();
+      await p.locator('#recordsDialog[open]').waitFor();
+      assert.equal(await p.locator('#dockRecords').getAttribute('aria-current'), 'page');
+      assert.equal(await p.locator('#exportBackup svg').count(), 1);
+      await p.locator('#closeRecords').click();
+      await p.waitForTimeout(260);
+      report.checks.push('Inline SVG application icons and three dock actions work; dialogs retain accessible labels and return dock state');
       await p.evaluate(() => window.scrollTo(0, 400));
       await p.waitForTimeout(30);
       assert.equal(await p.locator('#recentCard').evaluate(e => e.classList.contains(
         'recent-float')), false);
       report.checks.push(
-        'Dark directory has 16 rectangular cards, actual latest record, no eagerly created frames, decorative float stops on scroll'
+        'Sky directory has 16 rectangular cards, actual latest record, no eagerly created frames, decorative float stops on scroll'
       );
       for (const w of [320, 360, 390, 480, 768, 1280]) {
         await p.setViewportSize({
@@ -196,10 +212,12 @@ async function measure(p, name, action) {
       await p.evaluate(() => window.scrollTo(0, 700));
       const scroll = await p.evaluate(() => scrollY);
       let f = await go(p, 8);
-      await screenshot(p, '深色训练设置');
+      await screenshot(p, '浅蓝训练设置');
+      assert.equal(await p.locator('#appDock').isVisible(), false);
+      assert.equal(await f.locator('#rules button svg').count(), 1);
       await f.locator('#start').click();
       await f.waitForFunction(() => toolState.phase === 'answer');
-      await screenshot(p, '深色训练题面');
+      await screenshot(p, '浅蓝训练题面');
       await go(p, null);
       assert.ok(Math.abs((await p.evaluate(() => scrollY)) - scroll) < 3);
       report.checks.push(
@@ -217,7 +235,7 @@ async function measure(p, name, action) {
       await f.waitForFunction(() => toolState.phase === 'result');
       await f.waitForFunction(() => document.getElementById('saved').textContent.includes(
         '已保存在本机'));
-      await screenshot(p, '深色训练成绩');
+      await screenshot(p, '浅蓝训练成绩');
       await go(p, null);
       for (const sequence of [
           [7, 11, null],
@@ -261,11 +279,11 @@ async function measure(p, name, action) {
       await p.evaluate(() => focusAndroidBack());
       await go(p, null);
       await p.locator('#recordsButton').click();
-      await screenshot(p, '深色训练记录');
+      await screenshot(p, '浅蓝训练记录');
       await p.evaluate(() => focusAndroidBack());
       await p.waitForTimeout(230);
       await p.locator('#preferencesButton').click();
-      await screenshot(p, '深色界面设置');
+      await screenshot(p, '浅蓝界面设置');
       await p.locator('#reduceMotion').check();
       await p.evaluate(() => focusAndroidBack());
       f = await go(p, 8);
@@ -282,6 +300,7 @@ async function measure(p, name, action) {
       await go(p, null);
       assert.equal(await p.locator('#recentCard').evaluate(e => getComputedStyle(e)
         .animationName), 'none');
+      assert.equal(await p.locator('.home-motion').count(), 0);
       await p.emulateMedia({
         reducedMotion: 'no-preference'
       });
@@ -320,7 +339,7 @@ async function measure(p, name, action) {
             }
             n = n.parentElement;
           }
-          bg ??= [13, 18, 27];
+          bg ??= [250, 246, 240];
           const a = l(fg),
             b = l(bg);
           return {
@@ -429,12 +448,21 @@ async function measure(p, name, action) {
       await d.waitForTimeout(200);
       const after = await card.evaluate(e => getComputedStyle(e).transform);
       assert.notEqual(before, after);
-      await screenshot(d, '深色桌面悬浮');
+      const bounds = await card.boundingBox();
+      await d.mouse.move(bounds.x + 20, bounds.y + 20);
+      await d.waitForTimeout(330);
+      const cornerA = await card.evaluate(e => getComputedStyle(e).transform);
+      await d.mouse.move(bounds.x + bounds.width - 20, bounds.y + bounds.height - 20);
+      await d.waitForTimeout(330);
+      const cornerB = await card.evaluate(e => getComputedStyle(e).transform);
+      assert.notEqual(cornerA, cornerB, 'pointer position changes card tilt');
+      await screenshot(d, '浅蓝桌面悬浮');
       await d.emulateMedia({
         reducedMotion: 'reduce'
       });
       await d.waitForTimeout(50);
       assert.equal(await card.evaluate(e => getComputedStyle(e).transform), 'none');
+      assert.equal(await d.locator('.home-motion').count(), 0);
       await desktop.close();
       assert.deepEqual(remote, []);
       report.checks.push(
@@ -449,7 +477,7 @@ async function measure(p, name, action) {
         isMobile: true,
         hasTouch: true,
         recordVideo: {
-          dir: path.join(OUT, 'ui-video-150'),
+          dir: path.join(OUT, 'ui-video-sky'),
           size: {
             width: 390,
             height: 844

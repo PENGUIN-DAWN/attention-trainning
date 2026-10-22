@@ -1,52 +1,27 @@
+/* Native dialog semantics remain immediate; supported browsers retain the exit surface. */
 dialog {
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 180ms var(--ui-ease),transform 180ms var(--ui-ease),display 180ms allow-discrete,overlay 180ms allow-discrete;
+  transform: translateY(12px) scale(.98);
+  transition: opacity 180ms var(--ui-ease), transform 230ms var(--ui-ease), display 230ms allow-discrete, overlay 230ms allow-discrete;
 }
-dialog[open] {
-  opacity: 1;
-  transform: translateY(0);
+dialog[open] { opacity: 1; transform: translateY(0) scale(1); }
+dialog::backdrop { opacity: 0; transition: opacity 180ms, display 230ms allow-discrete, overlay 230ms allow-discrete; }
+dialog[open]::backdrop { opacity: 1; }
+@starting-style {
+  dialog[open] { opacity: 0; transform: translateY(12px) scale(.98); }
+  dialog[open]::backdrop { opacity: 0; }
 }
-dialog::backdrop {
-  opacity: 0;
-  transition: opacity 160ms,display 160ms allow-discrete,overlay 160ms allow-discrete;
+/* Older WebViews lack discrete transitions; animate entry and close natively. */
+@supports not (transition-behavior: allow-discrete) {
+  dialog[open] { animation: dialogArrival 230ms var(--ui-ease); }
 }
-dialog[open]::backdrop {
-  opacity: 1;
+@keyframes dialogArrival { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes recordArrival { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+#recordsDialog[open] .record-row:nth-child(-n+8) { animation: recordArrival 280ms var(--ui-ease) backwards; }
+#recordsDialog[open] .record-row:nth-child(2) { animation-delay: 30ms; }
+#recordsDialog[open] .record-row:nth-child(3) { animation-delay: 60ms; }
+#recordsDialog[open] .record-row:nth-child(4) { animation-delay: 90ms; }
+@media (prefers-reduced-motion: reduce) {
+  dialog, dialog::backdrop, #recordsDialog .record-row { animation: none !important; transition: none !important; transform: none !important; }
 }
-@starting-style  {
-  dialog[open] {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  dialog[open]::backdrop {
-    opacity: 0;
-  }
-}
-#guideDialog:not([open]) {
-  transition: none !important;
-}
-.rules-dialog:not([open]) {
-  transition: none !important;
-}
-dialog#rules:not([open]) {
-  transition: none !important;
-}
-@media (prefers-reduced-motion:reduce) {
-  dialog {
-    transition: none !important;
-    transform: none !important;
-  }
-  dialog::backdrop {
-    transition: none !important;
-    transform: none !important;
-  }
-}
-html[data-reduced=true] dialog {
-  transition: none !important;
-  transform: none !important;
-}
-html[data-reduced=true] dialog::backdrop {
-  transition: none !important;
-  transform: none !important;
-}
+html[data-reduced=true] dialog, html[data-reduced=true] dialog::backdrop, html[data-reduced=true] #recordsDialog .record-row { animation: none !important; transition: none !important; transform: none !important; }

@@ -1,6 +1,6 @@
 # 开发约定
 
-1. 当前发布为 1.51 / versionCode 8。先读 docs/ARCHITECTURE.md 与 BUILD.md。
+1. 当前发布为 1.60 / versionCode 9。先读 docs/ARCHITECTURE.md 与 BUILD.md。
 2. 从 main 新建 codex/ 功能分支，每个完整改动提交并通过 PR 查看；避免直接推入未经验证的改动。
 3. 新增项目先改 config/trainings.json，再实现所属规则/UI/记录条件，补充真实流程与边界验证。
 4. 稳定编号、字符串项目键和存储键不可挪作他用。规则/难度变化显式升规则版本，分开比较。

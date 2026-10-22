@@ -125,38 +125,38 @@ body {
 }
 .settings-body select {
   background: var(--ui-bg) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 12px !important;
-  color-scheme: dark;
+  color-scheme: light;
 }
 #setup select {
   background: var(--ui-bg) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 12px !important;
-  color-scheme: dark;
+  color-scheme: light;
 }
 #inputs input {
   background: var(--ui-bg) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 12px !important;
-  color-scheme: dark;
+  color-scheme: light;
 }
 .input-row input {
   background: var(--ui-bg) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 12px !important;
-  color-scheme: dark;
+  color-scheme: light;
 }
 #fields select {
   background: var(--ui-bg) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 12px !important;
-  color-scheme: dark;
+  color-scheme: light;
 }
 .input-row input::placeholder {
   color: var(--ui-muted);
@@ -173,89 +173,89 @@ body {
 button.primary {
   background: var(--ui-blue) !important;
   border: 1px solid var(--ui-blue) !important;
-  color: #0d2033 !important;
+  color: #123e60 !important;
   border-radius: 14px !important;
   font-weight: 650;
 }
 .toolbar .primary {
   background: var(--ui-blue) !important;
   border: 1px solid var(--ui-blue) !important;
-  color: #0d2033 !important;
+  color: #123e60 !important;
   border-radius: 14px !important;
   font-weight: 650;
 }
 .input-row #submit {
   background: var(--ui-blue) !important;
   border: 1px solid var(--ui-blue) !important;
-  color: #0d2033 !important;
+  color: #123e60 !important;
   border-radius: 14px !important;
   font-weight: 650;
 }
 .result-actions button:first-child {
   background: var(--ui-blue) !important;
   border: 1px solid var(--ui-blue) !important;
-  color: #0d2033 !important;
+  color: #123e60 !important;
   border-radius: 14px !important;
   font-weight: 650;
 }
 #result .primary {
   background: var(--ui-blue) !important;
   border: 1px solid var(--ui-blue) !important;
-  color: #0d2033 !important;
+  color: #123e60 !important;
   border-radius: 14px !important;
   font-weight: 650;
 }
 .toolbar .secondary {
   background: var(--ui-raised) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 14px !important;
 }
 #stop {
   background: var(--ui-raised) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 14px !important;
 }
 #teach {
   background: var(--ui-raised) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 14px !important;
 }
 #replay {
   background: var(--ui-raised) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 14px !important;
 }
 #retrySave {
   background: var(--ui-raised) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 14px !important;
 }
 #home {
   background: var(--ui-raised) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 14px !important;
 }
 .result-actions button:not(:first-child) {
   background: var(--ui-raised) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 14px !important;
 }
 #inputs~.tool-actions #skip {
   background: var(--ui-raised) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 14px !important;
 }
 .input-row #skip {
   background: var(--ui-raised) !important;
-  border: 1px solid #58738e !important;
+  border: 1px solid #ccdde9 !important;
   color: var(--ui-text) !important;
   border-radius: 14px !important;
 }
@@ -293,11 +293,11 @@ button.primary {
   transition: transform var(--ui-press) var(--ui-ease);
 }
 .tool-stats #stage {
-  background: #20364d !important;
+  background: #e7f3fc !important;
   color: var(--ui-blue) !important;
 }
 .advanced-stats #stage {
-  background: #20364d !important;
+  background: #e7f3fc !important;
   color: var(--ui-blue) !important;
 }
 .tool-card #prompt {
@@ -357,24 +357,24 @@ button.primary {
 #audioCheck button {
   background: var(--ui-raised);
   color: var(--ui-text);
-  border-color: #58738e;
+  border-color: #ccdde9;
 }
 #gridNote {
-  background: #312c20 !important;
-  color: #f3d8a4 !important;
+  background: #fff4df !important;
+  color: #79551e !important;
 }
 .invalid {
-  background: #312c20 !important;
-  color: #f3d8a4 !important;
+  background: #fff4df !important;
+  color: #79551e !important;
 }
 .result {
-  background: #203249 !important;
-  border: 1px solid #456887 !important;
+  background: #edf6fc !important;
+  border: 1px solid #d3e6f3 !important;
   border-radius: 18px !important;
 }
 #result {
-  background: #203249 !important;
-  border: 1px solid #456887 !important;
+  background: #edf6fc !important;
+  border: 1px solid #d3e6f3 !important;
   border-radius: 18px !important;
 }
 .result-main {
@@ -408,11 +408,11 @@ button.primary {
   font-size: 14px !important;
 }
 .result-status {
-  color: #b9e1ff !important;
+  color: #346d93 !important;
   font-size: 14px !important;
 }
 #saved {
-  color: #b9e1ff !important;
+  color: #346d93 !important;
   font-size: 14px !important;
 }
 .result-reveal {
@@ -478,21 +478,21 @@ button.primary {
   color: var(--ui-muted) !important;
 }
 #result #saved {
-  color: #b9e1ff !important;
+  color: #346d93 !important;
 }
 .result .result-status {
-  color: #b9e1ff !important;
+  color: #346d93 !important;
 }
 .rules-dialog {
   background: var(--ui-surface) !important;
   color: var(--ui-text) !important;
-  border: 1px solid #45607b !important;
+  border: 1px solid #d4e4ef !important;
   border-radius: 20px !important;
 }
 dialog {
   background: var(--ui-surface) !important;
   color: var(--ui-text) !important;
-  border: 1px solid #45607b !important;
+  border: 1px solid #d4e4ef !important;
   border-radius: 20px !important;
 }
 .rules-head h2 {
@@ -604,3 +604,21 @@ html[data-reduced=true] #result {
 html[data-reduced=true] button:active {
   transform: none !important;
 }
+
+/* Additional chrome polish only; stimulus selectors and geometry are intentionally absent. */
+.ui-icon { display: inline-block; width: 20px; height: 20px; vertical-align: middle; flex-shrink: 0; }
+.rules-head button { display: inline-flex; align-items: center; justify-content: center; padding: 10px !important; }
+.rules-head button .ui-icon { width: 23px; height: 23px; }
+.result-actions #resultNext { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.result-actions #resultNext .ui-icon { width: 16px; height: 16px; }
+.result-emblem { display: grid; place-items: center; width: 64px; height: 64px; margin: 5px auto 18px; background: #fff4d9; border: 1px solid #f0dfb9; border-radius: 22px; color: #a47720; }
+.result-emblem .ui-icon { width: 34px; height: 34px; }
+.result-status .ui-icon, #saved .ui-icon { width: 16px; height: 16px; margin-right: 5px; }
+.result-actions button, .tool-actions button, .row button { transition: transform 160ms var(--ui-ease), background 180ms, border-color 180ms; }
+.training-settings > summary::after { content: '' !important; width: 18px; height: 18px; background: center / 18px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235e83a0' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); transition: transform 220ms var(--ui-ease); }
+.training-settings[open] > summary::after { transform: rotate(180deg); }
+@media (hover:hover) and (pointer:fine) {
+  .toolbar .primary:hover:not(:disabled), .result-actions button:first-child:hover:not(:disabled), #start:hover:not(:disabled), #again:hover:not(:disabled), #next:hover:not(:disabled), #submit.primary:hover:not(:disabled) { background: #80c2f1 !important; box-shadow: 0 4px 12px #388dc316; }
+  .toolbar .secondary:hover:not(:disabled), #stop:hover:not(:disabled), #teach:hover:not(:disabled), #replay:hover:not(:disabled), #home:hover:not(:disabled), #retrySave:hover:not(:disabled) { border-color: #94bfd9 !important; background: #e3f1fa !important; }
+}
+html[data-reduced=true] .training-settings > summary::after, html[data-reduced=true] .tool-actions button, html[data-reduced=true] .row button { transition: none !important; }

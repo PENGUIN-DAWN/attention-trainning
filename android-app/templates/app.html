@@ -1,67 +1,37 @@
 <!doctype html>
-
 <html lang="zh-CN">
-
 <head>
-
 <meta charset="utf-8">
-
-<meta name="theme-color" content="#0d121b"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-
-<meta name="theme-color" content="#f5f3f8">
-
-<meta name="description" content="十六种专注力练习，在轻盈浮动的气泡之间，找到今天想练的一项。">
-
-<title>专注力小宇宙 · 十六种练习，一个轻盈的开始</title>
-
-
-
+<meta name="theme-color" content="#faf6f0">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="十六项离线注意力练习。按自己的节奏，从一次练习开始。">
+<title>专注力小宇宙</title>
 <style>__APP_STYLES__</style>
 </head>
-
 <body>
-
-
-
 <header class="site-header">
-
-<a class="brand" href="#home" aria-label="专注力小宇宙，返回目录"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span><span class="brand-title">专注力小宇宙</span><span class="brand-subtitle" style="display:block">A LITTLE SPACE TO FOCUS</span></span></a>
-
-<button class="icon-button" id="preferencesButton" type="button" aria-label="界面设置">☷</button><nav class="header-actions" aria-label="主导航"><a class="nav-directory" href="#home">训练目录</a><button class="records-button" id="recordsButton" type="button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 7h14v13H5zM8 4v6m8-6v6M8 14h3m2 0h3m-8 3h3"/></svg>练习足迹</button></nav>
-
+  <a class="brand" href="#home" aria-label="专注力小宇宙，返回目录"><span class="brand-mark" data-icon="orbit"></span><span><span class="brand-title">专注力小宇宙</span><span class="brand-subtitle">A LITTLE SPACE TO FOCUS</span></span></a>
+  <nav class="header-actions" aria-label="主导航"><a class="nav-directory" href="#home">训练目录</a><button class="records-button" id="recordsButton" type="button"><span data-icon="records"></span><span>练习足迹</span></button><button class="icon-button" id="preferencesButton" type="button" aria-label="界面设置"><span data-icon="settings"></span></button></nav>
 </header>
-
 <main>
-
 <section class="home" id="homeView" aria-label="十六项训练目录">
-
-<div class="hero"><div><div class="eyebrow"><span></span>YOUR LITTLE FOCUS UNIVERSE</div><h1>专注此刻，<br><em>从一次练习开始。</em></h1></div><div class="hero-copy"><p>__TRAINING_COUNT__项离线训练。<br>按自己的节奏，选择今天的练习。</p><div class="mini-rule"><i></i>固定条件 · 本机记录 · 完全离线</div></div></div>
-
-<div class="today-strip"><div class="today-left"><span class="today-dot"></span><span class="today-title">今日练习</span><span class="today-count" id="todayCount">0 / __TRAINING_COUNT__ 项</span><span class="tiny-progress" id="todayProgress" aria-hidden="true"></span></div><span class="today-right" id="todayHint">选择一项，给自己一小段专注时间。</span></div>
-
-<a class="recent-card" id="recentCard" hidden href="#home"><span><small>最近使用 · 再练一轮</small><strong id="recentTitle"></strong></span><span>开始 →</span></a><div class="directory-heading"><h2>全部训练</h2><span>__TRAINING_COUNT__ 项专项练习</span></div><div class="bubble-field" id="bubbleField"></div><footer class="home-footer"><span>OFFLINE PRACTICES. ONE PRESENT MOMENT.</span><button id="helpButton" class="app-help-button" type="button">离线版 · 使用说明</button></footer>
-
+  <div class="hero"><div class="hero-content"><div class="eyebrow"><span class="eyebrow-dot"></span>给自己，一小段专注时光</div><h1>专注此刻，<br><em>从一次练习开始。</em></h1><div class="hero-copy"><p>__TRAINING_COUNT__ 项离线训练。按自己的节奏，<br>选择今天的练习。</p><div class="mini-rule"><span><span data-icon="leaf"></span>固定条件</span><span><span data-icon="records"></span>本机记录</span><span><span data-icon="shield"></span>完全离线</span></div></div></div><div id="welcomeArt" class="welcome-art"></div></div>
+  <div class="today-strip"><div class="today-content"><div class="today-left"><span class="today-title">今日练习</span><span class="today-count" id="todayCount">0 / __TRAINING_COUNT__ 项</span></div><span class="tiny-progress" id="todayProgress" aria-hidden="true"></span><span class="today-right" id="todayHint">选择一项，给自己一小段专注时间。</span></div><div class="today-art" id="todayArt"></div></div>
+  <a class="recent-card" id="recentCard" hidden href="#home"><span class="recent-symbol" data-icon="orbit"></span><span class="recent-body"><small>最近使用 · 再练一轮</small><strong id="recentTitle"></strong><span class="recent-caption">熟悉的练习，新的开始</span></span><span class="recent-action">再练一轮 <span data-icon="arrow"></span></span></a>
+  <div class="directory-heading"><div><span class="section-kicker">FIND YOUR FOCUS</span><h2>全部训练 <span class="directory-count">__TRAINING_COUNT__</span></h2></div><span class="directory-note">每一次练习，都是新的开始 <span data-icon="spark"></span></span></div>
+  <div class="bubble-field" id="bubbleField"></div>
+  <footer class="home-footer"><span>一小段练习，一点点专注。</span><button id="helpButton" class="app-help-button" type="button"><span data-icon="help"></span>离线版 · 使用说明</button></footer>
 </section>
-
 <section class="play" id="playView" hidden aria-label="训练页面">
-
-<div class="play-heading"><a class="back-button" href="#home" aria-label="返回训练目录">←</a><div class="play-number" id="playNumber">01</div><div class="play-name"><h1 id="playTitle"></h1><p id="playDescription"></p></div><button class="icon-button" id="rulesButton" type="button" aria-label="查看训练规则">?</button></div>
-
-<nav class="module-tabs" id="moduleTabs" aria-label="选择训练项目"></nav>
-
-<div class="frame-host" id="frameHost"><div class="frame-loading" id="frameLoading"><span class="loader"></span>正在准备练习…</div></div>
-
-<a id="nextModule" hidden href="#home">下一项</a>
-
+  <div class="play-heading"><a class="back-button" href="#home" aria-label="返回训练目录"><span data-icon="back"></span></a><div class="play-number" id="playNumber">01</div><div class="play-name"><h1 id="playTitle"></h1><p id="playDescription"></p></div><button class="icon-button" id="rulesButton" type="button" aria-label="查看训练规则"><span data-icon="help"></span></button></div>
+  <nav class="module-tabs" id="moduleTabs" aria-label="选择训练项目"></nav>
+  <div class="frame-host" id="frameHost"><div class="frame-loading" id="frameLoading"><span class="loader"></span>正在准备练习…</div></div>
+  <a id="nextModule" hidden href="#home">下一项</a>
 </section>
-
 </main>
-
-<dialog class="records-dialog" id="recordsDialog" aria-labelledby="recordsTitle"><div class="dialog-head"><h2 id="recordsTitle">你的练习足迹</h2><button class="dialog-close" id="closeRecords" type="button" aria-label="关闭练习足迹">×</button></div><p class="dialog-copy">每完成一轮，就为今天留下一点小小的印记。</p><div id="recordsList"></div><p class="record-notice">记录保存在当前浏览器中。</p></dialog>
-
+<nav class="app-dock" id="appDock" aria-label="底部导航"><button id="dockHome" class="active" type="button"><span data-icon="home"></span><span>首页</span></button><button id="dockRecords" type="button"><span data-icon="records"></span><span>足迹</span></button><button id="dockHelp" type="button"><span data-icon="help"></span><span>说明</span></button></nav>
+<dialog class="records-dialog" id="recordsDialog" aria-labelledby="recordsTitle"><div class="dialog-head"><div><span class="section-kicker">YOUR PRACTICE JOURNAL</span><h2 id="recordsTitle">你的练习足迹</h2></div><button class="dialog-close" id="closeRecords" type="button" aria-label="关闭练习足迹"><span data-icon="close"></span></button></div><p class="dialog-copy">每一轮专注，都有迹可循。</p><div id="recordsList"></div><p class="record-notice">记录仅保存在本机。</p></dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-
 __DATA_SCRIPTS__
 <script>
 __APP_SCRIPTS__

@@ -6,12 +6,15 @@ function buildDirectory() {
     link.id = 'orb' + module.id;
     link.setAttribute('aria-label', '第' + module.id + '项，' + module.title + '，进入训练');
     link.style.setProperty('--card-accent', trainingsById.get(module.id).cardAccent);
+    link.style.setProperty('--module-ink', module.accent);
+    link.style.setProperty('--module-tint', trainingsById.get(module.id).tint);
     link.innerHTML = '<div class="orb-float"><div class="bubble"><span class="orb-number">' +
       String(module.id).padStart(2, '0') +
       '</span><svg class="orb-icon" viewBox="0 0 64 64" aria-hidden="true">' + trainingsById
       .get(module.id).icon + '</svg><h2>' + module.title + '</h2><p>' + module.short +
       '</p><span class="card-meta" id="cardMeta' + module.id +
-      '">尚未开始</span><span class="enter">进入训练 <span aria-hidden="true">↗</span></span><span class="visit-mark" aria-label="今日已完成">✓</span></div></div>';
+      '">尚未开始</span><span class="enter">进入训练 ' + appIcon('arrow') + '</span><span class="visit-mark" aria-label="今日已完成">' + appIcon('check') + '</span></div></div>';
+    installCardHover(link);
     $('bubbleField').appendChild(link);
     const tab = document.createElement('a');
     tab.className = 'module-tab';

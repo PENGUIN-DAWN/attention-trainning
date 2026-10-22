@@ -60,6 +60,7 @@ function updateMotion() {
         animation.cancel();
       }
     }
+  syncHomeMotion();
 }
 window.focusUpdateSystemMotion = value => {
   systemReduced = Boolean(value);

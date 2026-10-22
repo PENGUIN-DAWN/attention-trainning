@@ -1,0 +1,167 @@
+{
+  "version": "1.60",
+  "checks": [
+    "Real browser clock: full initial 20s breath segment, returned report shortens next to 15s; background stores interrupted/partial actual time with no best or completion",
+    "Real rAF clock: all three 500/350/200ms peripheral conditions and 12×150ms serial intervals; injected 180ms main-thread stall marks sequence invalid without skipping stimuli",
+    "Real 10-cycle monitor tutorial: blank-period clicks at ≥720ms accepted, repeats ignored, complete 1200ms windows retained, teaching never saves formal score",
+    "59-trial fixture + actual final UI answer: quota failure leaves no fake save, background retains finished result/retry, success and repeat retry produce one record",
+    "Legacy v1 backup injected failure after first writes rolls back records/settings/preferences/hidden data together",
+    "320–768px six-module layouts/48px main controls; reduced mode, rapid starts/back/stale-callback cancellation; resize preserves original display snapshot and aborts; audio check/playback stops on suspend, 8 teaching trials/replay never save formal data"
+  ],
+  "observations": {
+    "realBreath20000ms": 20005.7,
+    "realPeripheral": {
+      "entry": {
+        "durations": [
+          503
+        ],
+        "maxGapMs": 6.2999999999999545,
+        "invalid": false
+      },
+      "middle": {
+        "durations": [
+          351.5999999999999
+        ],
+        "maxGapMs": 6.200000000000273,
+        "invalid": false
+      },
+      "strong": {
+        "durations": [
+          200.19999999999982
+        ],
+        "maxGapMs": 6.300000000000182,
+        "invalid": false
+      }
+    },
+    "realSerial": {
+      "durations": [
+        151.5,
+        151.5999999999999,
+        151.4000000000001,
+        151.49999999999977,
+        151.70000000000027,
+        151.4000000000001,
+        151.5999999999999,
+        151.4000000000001,
+        151.5999999999999,
+        151.5999999999999,
+        151.4000000000001,
+        151.4000000000001
+      ],
+      "maxGapMs": 6.400000000000091,
+      "invalid": false
+    },
+    "injectedStall": {
+      "durations": [
+        175.80000000000018,
+        151.5,
+        151.59999999999945,
+        151.5,
+        151.5,
+        151.5,
+        151.5,
+        151.60000000000036,
+        151.39999999999964,
+        151.5,
+        151.60000000000036,
+        151.5
+      ],
+      "maxGapMs": 175.80000000000018,
+      "invalid": true
+    },
+    "realMonitor": [
+      {
+        "go": true,
+        "responseMs": 729.1000000119209,
+        "durations": [
+          600,
+          1206.1
+        ],
+        "invalid": false
+      },
+      {
+        "go": true,
+        "responseMs": 723.7999999940396,
+        "durations": [
+          600.0000000000002,
+          1200.0000000000002
+        ],
+        "invalid": false
+      },
+      {
+        "go": true,
+        "responseMs": 725.2999999940394,
+        "durations": [
+          606,
+          1200
+        ],
+        "invalid": false
+      },
+      {
+        "go": false,
+        "responseMs": 0,
+        "durations": [
+          600,
+          1206
+        ],
+        "invalid": false
+      },
+      {
+        "go": false,
+        "responseMs": 0,
+        "durations": [
+          606,
+          1206
+        ],
+        "invalid": false
+      },
+      {
+        "go": true,
+        "responseMs": 725.7999999940394,
+        "durations": [
+          600,
+          1200
+        ],
+        "invalid": false
+      },
+      {
+        "go": true,
+        "responseMs": 724.3999999880789,
+        "durations": [
+          605.9999999999991,
+          1206.0999999999995
+        ],
+        "invalid": false
+      },
+      {
+        "go": true,
+        "responseMs": 724.9000000119213,
+        "durations": [
+          606,
+          1205.8999999999996
+        ],
+        "invalid": false
+      },
+      {
+        "go": true,
+        "responseMs": 725.7999999940403,
+        "durations": [
+          600.2000000000007,
+          1200.1000000000004
+        ],
+        "invalid": false
+      },
+      {
+        "go": true,
+        "responseMs": 725.5000000059608,
+        "durations": [
+          606.2000000000007,
+          1200
+        ],
+        "invalid": false
+      }
+    ]
+  },
+  "errors": [],
+  "html_sha256": "d76a8a38d0302a4ede651d183e608942af91de856d7d3e993d22314b15981635"
+}

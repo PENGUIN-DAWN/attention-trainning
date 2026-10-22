@@ -20,8 +20,17 @@ function renderRecords() {
     $('recordOverview').textContent = '完成 ' + completed + ' 轮 · 中断 ' + (filtered.length -
       completed) + ' 轮。' + (recordFilter === 12 ? '呼吸自报不设正确率或最佳成绩。' : '仅同条件、时序有效的完整轮次参与最佳比较。');
   }
-  if (!filtered.length) list.appendChild(node('div', 'empty-records', recordFilter ?
-    '这个项目还没有训练记录。' : '第一枚足迹，还在等你。\n完成一轮训练后，记录会出现在这里。'));
+  if (!filtered.length) {
+    const empty = node('div', 'empty-records');
+    empty.innerHTML = '<div class="empty-art">' + planetArt('empty') + appIcon('records') + '</div>';
+    empty.append(node('h3', null, recordFilter ? '这个项目还没有训练记录。' : '第一枚足迹，还在等你。'),
+      node('p', null, '完成一轮训练后，记录会出现在这里。'));
+    const back = node('button', null, '去训练目录');
+    back.type = 'button';
+    back.onclick = () => { $('recordsDialog').close(); navigate(null); };
+    empty.append(back);
+    list.append(empty);
+  }
   for (const r of filtered) {
     const module = modulesById.get(r.module),
       d = cleanDetail(r.module, r.detail),
@@ -48,7 +57,12 @@ function renderRecords() {
           '有误') + (v.hits !== undefined ? ' / 命中 ' + v.hits : '') + ' / 错 ' + v.errors + (v.pair ?
           ' / ' + v.pair : '')).join('；');
     }
-    if (best.has(r.token)) body.appendChild(node('span', 'best-tag', '同条件最佳'));
+    if (best.has(r.token)) {
+      const tag = node('span', 'best-tag');
+      tag.innerHTML = appIcon('check');
+      tag.append(document.createTextNode('同条件最佳'));
+      body.appendChild(tag);
+    }
     const date = node('time', 'record-date', new Intl.DateTimeFormat('zh-CN', {
       timeZone: 'Asia/Shanghai',
       month: 'numeric',
@@ -60,6 +74,7 @@ function renderRecords() {
     const remove = node('button', 'record-delete', '删除');
     remove.type = 'button';
     remove.setAttribute('aria-label', '删除' + module.title + '记录');
+    remove.insertAdjacentHTML('afterbegin', appIcon('trash'));
     remove.onclick = () => requestDelete(r.token);
     row.append(badge, body, date, remove);
     list.appendChild(row);

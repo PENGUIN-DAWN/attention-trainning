@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
-    <group android:name="dotA"><path android:fillColor="#B8CDBD" android:pathData="M42,30a11,11 0,1 1,0 22a11,11 0,1 1,0 -22" /></group>
-    <group android:name="dotB"><path android:fillColor="#C9B9DE" android:pathData="M67,30a11,11 0,1 1,0 22a11,11 0,1 1,0 -22" /></group>
-    <group android:name="dotC"><path android:fillColor="#C4D4E9" android:pathData="M42,55a11,11 0,1 1,0 22a11,11 0,1 1,0 -22" /></group>
-    <group android:name="dotD"><path android:fillColor="#EDD1BD" android:pathData="M67,55a11,11 0,1 1,0 22a11,11 0,1 1,0 -22" /></group>
+    <group android:name="dotA"><path android:fillColor="#67B4EF" android:pathData="M54,29a25,25 0,1 1,0 50a25,25 0,1 1,0 -50" /></group>
+    <group android:name="dotB" android:pivotX="54" android:pivotY="54" android:rotation="-25"><path android:fillColor="#00000000" android:strokeColor="#B2DFFD" android:strokeWidth="4" android:pathData="M13,54a41,10 0,1 0,82 0a41,10 0,1 0,-82 0" /></group>
+    <group android:name="dotC"><path android:fillColor="#D2EEFF" android:pathData="M40,36a4,4 0,1 1,0 8a4,4 0,1 1,0 -8" /></group>
+    <group android:name="dotD"><path android:fillColor="#8CCAF2" android:pathData="M82,22h3v9h-3ZM79,25h9v3h-9ZM25,80h2v6h-2ZM23,82h6v2h-6Z" /></group>
 </vector>
