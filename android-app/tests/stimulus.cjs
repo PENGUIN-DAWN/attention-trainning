@@ -108,7 +108,7 @@ async function collect(browser, file) {
         };
       }
       report.checks.push(
-        '15 visual projects: deterministic first-trial colors, typefaces, sizes, weights, line heights and field borders/radii match 1.40 computed styles; root chrome differs intentionally'
+        '15 visual projects retain original computed stimulus styles, including task 7 field palette and geometry; highlighted spheres and cue separation have dedicated presentation checks'
       );
       report.checks.push(
         'Dichotic audio content is separately byte-identical in APK verification; no physical display or audio claim'

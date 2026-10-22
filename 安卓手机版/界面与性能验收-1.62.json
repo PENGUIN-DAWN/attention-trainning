@@ -1,0 +1,216 @@
+{
+  "version": "1.62",
+  "checks": [
+    "Inline SVG application icons and three dock actions work; dialogs retain accessible labels and return dock state",
+    "Sky directory has 16 rectangular cards, actual latest record, no eagerly created frames, decorative float stops on scroll",
+    "320–1280 CSS-pixel layouts and 22px card-title enlargement have no horizontal overflow or cropped names",
+    "Return restores directory scroll; training begins only after page transition and stable layout",
+    "Rapid superseded routes do not stack frames; suspend/resume during both entry and exit renders the final route",
+    "Topmost help closes before directory; settings/record dialogs and explicit/system reduced motion work in parent and child",
+    "12 computed directory/header/body/button text color pairs meet 4.5:1 contrast",
+    "12 real browser pointer presses show transform feedback on subsequent frames; measured software latency is not physical input-to-photon latency",
+    "Mouse hover moves card by compositor transform, reduced mode removes it, and no remote requests occur",
+    "Actual isolated browser interaction recorded to WebM; capture cadence is independent of measured render callbacks"
+  ],
+  "errors": [],
+  "html_sha256": "0c8cd59e2883b9886b98e184ad996113292feb27748bfa096b85d5d7d93f9802",
+  "environment": {
+    "os": "10.0.26200",
+    "cpu": "13th Gen Intel(R) Core(TM) i9-13980HX",
+    "browser": "Microsoft Edge headless / Playwright",
+    "realAndroid": false,
+    "physicalRefreshRate": "not measured",
+    "rAFIsHardwareMeasurement": false,
+    "browserVersion": "155.0.4283.62",
+    "cpuSlowdown": "CDP 4x software slowdown; not an old-phone emulator"
+  },
+  "observations": {
+    "performance": {
+      "directory-scroll": {
+        "sampleCount": 297,
+        "elapsedMs": 1804.0999999940395,
+        "averageIntervalMs": 6.060848484848485,
+        "observedCallbackFPS": 164.99340026398943,
+        "p50Ms": 6.099999999998545,
+        "p95Ms": 6.200000000000728,
+        "p99Ms": 6.299999999999272,
+        "maxMs": 6.5,
+        "over50ms": 0,
+        "longTasksMs": []
+      },
+      "navigation-and-dialogs": {
+        "sampleCount": 783,
+        "elapsedMs": 4749.800000011921,
+        "averageIntervalMs": 6.060536398467435,
+        "observedCallbackFPS": 165.00189657352377,
+        "p50Ms": 6.099999999998545,
+        "p95Ms": 6.200000000000728,
+        "p99Ms": 6.299999999999272,
+        "maxMs": 6.599999999998545,
+        "over50ms": 0,
+        "longTasksMs": []
+      },
+      "navigation-4x-cpu-slowdown": {
+        "sampleCount": 268,
+        "elapsedMs": 1666.5,
+        "averageIntervalMs": 6.19589552238806,
+        "observedCallbackFPS": 161.3971695272508,
+        "p50Ms": 6.099999999998545,
+        "p95Ms": 6.200000000000728,
+        "p99Ms": 18.200000000000728,
+        "maxMs": 18.200000000000728,
+        "over50ms": 0,
+        "longTasksMs": []
+      }
+    },
+    "pageLoadToDirectoryWallMs": 131,
+    "layout320": {
+      "width": 320,
+      "overflow": false,
+      "columns": 2,
+      "clipped": false
+    },
+    "layout360": {
+      "width": 360,
+      "overflow": false,
+      "columns": 2,
+      "clipped": false
+    },
+    "layout390": {
+      "width": 390,
+      "overflow": false,
+      "columns": 2,
+      "clipped": false
+    },
+    "layout480": {
+      "width": 480,
+      "overflow": false,
+      "columns": 2,
+      "clipped": false
+    },
+    "layout768": {
+      "width": 768,
+      "overflow": false,
+      "columns": 2,
+      "clipped": false
+    },
+    "layout1280": {
+      "width": 1280,
+      "overflow": false,
+      "columns": 4,
+      "clipped": false
+    },
+    "contrast": [
+      {
+        "selector": ".brand-title",
+        "ratio": 7.3463369596984105
+      },
+      {
+        "selector": ".brand-subtitle",
+        "ratio": 4.863878981535235
+      },
+      {
+        "selector": ".hero h1",
+        "ratio": 8.374974192519149
+      },
+      {
+        "selector": ".hero-copy p",
+        "ratio": 4.863878981535235
+      },
+      {
+        "selector": ".bubble h2",
+        "ratio": 9.016724676453867
+      },
+      {
+        "selector": ".bubble p",
+        "ratio": 5.236584212434727
+      },
+      {
+        "selector": ".card-meta",
+        "ratio": 4.664271845584247
+      },
+      {
+        "selector": ".bubble .enter",
+        "ratio": 5.049425458332118
+      },
+      {
+        "selector": ".today-count",
+        "ratio": 8.374974192519149
+      },
+      {
+        "selector": ".today-right",
+        "ratio": 4.991165517349538
+      },
+      {
+        "selector": ".records-button",
+        "ratio": 8.374974192519149
+      },
+      {
+        "selector": ".app-help-button",
+        "ratio": 5.06515428083493
+      }
+    ],
+    "pointerToNextFrame": [
+      {
+        "ms": 9.299999982118607,
+        "transform": "matrix(0.994191, 0, 0, 0.994191, 0, 0)",
+        "scale": 0.994191
+      },
+      {
+        "ms": 1.800000011920929,
+        "transform": "matrix(0.996422, 0, 0, 0.996422, 0, 0)",
+        "scale": 0.996422
+      },
+      {
+        "ms": 5.899999976158142,
+        "transform": "matrix(0.98537, 0, 0, 0.98537, 0, 0)",
+        "scale": 0.98537
+      },
+      {
+        "ms": 1,
+        "transform": "matrix(0.994167, 0, 0, 0.994167, 0, 0)",
+        "scale": 0.994167
+      },
+      {
+        "ms": 0.699999988079071,
+        "transform": "matrix(0.994677, 0, 0, 0.994677, 0, 0)",
+        "scale": 0.994677
+      },
+      {
+        "ms": 5.600000023841858,
+        "transform": "matrix(0.981841, 0, 0, 0.981841, 0, 0)",
+        "scale": 0.981841
+      },
+      {
+        "ms": 2.9000000059604645,
+        "transform": "matrix(0.988576, 0, 0, 0.988576, 0, 0)",
+        "scale": 0.988576
+      },
+      {
+        "ms": 3.5999999940395355,
+        "transform": "matrix(0.988879, 0, 0, 0.988879, 0, 0)",
+        "scale": 0.988879
+      },
+      {
+        "ms": 0.5999999940395355,
+        "transform": "matrix(0.985182, 0, 0, 0.985182, 0, 0)",
+        "scale": 0.985182
+      },
+      {
+        "ms": 0.9000000059604645,
+        "transform": "matrix(0.98408, 0, 0, 0.98408, 0, 0)",
+        "scale": 0.98408
+      },
+      {
+        "ms": 2.699999988079071,
+        "transform": "matrix(0.984108, 0, 0, 0.984108, 0, 0)",
+        "scale": 0.984108
+      },
+      {
+        "ms": 2.7999999821186066,
+        "transform": "matrix(0.984099, 0, 0, 0.984099, 0, 0)",
+        "scale": 0.984099
+      }
+    ]
+  }
+}

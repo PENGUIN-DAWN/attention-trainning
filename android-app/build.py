@@ -55,7 +55,7 @@ def main():
         with zipfile.ZipFile(archive) as z: z.extractall(tools)
     bt, android_jar = paths.android_paths(tools)
     # aapt2/zipalign on Windows need an ASCII staging path for projects with Chinese names.
-    build = Path.home() / '.cache/focus-android-build'; build.mkdir(parents=True, exist_ok=True)
+    build = paths.build_dir(); build.mkdir(parents=True, exist_ok=True)
     classes = build / 'classes'; classes.mkdir(exist_ok=True)
     dex = build / 'dex'; dex.mkdir(exist_ok=True)
     prepare()

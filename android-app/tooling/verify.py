@@ -40,7 +40,7 @@ def verify():
     old_modules = {m['id']: m for m in payload(previous, 'trainingData')}
     expected_sources = {
         'tool': inject(read('tool-page.html'), join(['tool.css', 'tool-motion.css']),
-                       join(['tool-rules.js', 'tool-motion.js', 'tool-ui.js'])),
+                       join(['tool-rules.js', 'tool-motion.js', 'tool-audio.js', 'tool-ui.js'])),
         'advanced': inject(read('advanced-page.html'), read('advanced.css'),
                            join(['advanced-rules.js', 'advanced-clock.js', 'advanced-audio.js', 'advanced-ui.js'])),
     }
@@ -63,14 +63,14 @@ def verify():
         assert 'Verified using v2 scheme (APK Signature Scheme v2): true' in certificate
         fingerprints[candidate.stem] = re.search(r'certificate SHA-256 digest: ([0-9a-f]+)', certificate).group(1)
     assert len(set(fingerprints.values())) == 1
-    staging = Path.home() / f'.cache/focus-android-build/FocusUniverse-{version}.apk'
+    staging = paths.build_dir() / f'FocusUniverse-{version}.apk'
     assert staging.read_bytes() == apk.read_bytes()
     badging = command([tools / 'aapt.exe', 'dump', 'badging', staging])
     assert f"name='{meta['package']}' versionCode='{code}' versionName='{version}'" in badging
     permissions = command([tools / 'aapt.exe', 'dump', 'permissions', staging])
     assert 'uses-permission' not in permissions
     command([tools / 'zipalign.exe', '-c', '-p', '4', staging])
-    assert code > 9, 'Update versionCode must exceed the 1.60 release'
+    assert code > 10, 'Update versionCode must exceed the 1.61 release'
     result = {
         **meta, 'apk_bytes': apk.stat().st_size,
         'sha256': hashlib.sha256(apk.read_bytes()).hexdigest(),
@@ -78,7 +78,7 @@ def verify():
         'baseline_version': BASELINE_VERSION,
         'all_training_engines_equal_baseline': False,
         'training_contract_verified': True,
-        'motion_contract': 'motion-baseline-161.json',
+        'motion_contract': 'motion-baseline-162.json',
         'core_presentation_and_audio_equal_baseline': False,
         'protected_css_and_audio_equal_baseline': True,
         'legacy_sources_and_apks_unchanged': True,

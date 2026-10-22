@@ -1,7 +1,8 @@
 /* Task motion stays live and offline. Physics is independent of display refresh. */
 class FocusTrackingMotion {
-  constructor(balls) {
+  constructor(balls, condition = {}) {
     this.balls = balls;
+    this.condition = condition;
     this.previous = balls.map(b => ({x: b.x, y: b.y}));
     this.positions = balls.map(b => ({x: b.x, y: b.y}));
     this.steps = 0;
@@ -18,7 +19,7 @@ class FocusTrackingMotion {
         this.previous[i].x = this.balls[i].x;
         this.previous[i].y = this.balls[i].y;
       }
-      FocusToolRules.step(this.balls, 1 / 120);
+      FocusToolRules.step(this.balls, 1 / 120, this.condition);
       this.steps++;
     }
     const alpha = final ? 1 : Math.max(0, Math.min(1, target - steps));
@@ -33,15 +34,17 @@ class FocusTrackingMotion {
 
 /* Static background plus small reusable compositor layers; no per-frame canvas paint. */
 class FocusTrackingView {
-  constructor(canvas, question) {
+  constructor(canvas, question, condition) {
     this.question = question;
+    this.condition = condition;
+    this.animations = new Set();
     this.arena = document.createElement('div');
     this.arena.className = 'tracking-arena';
     canvas.before(this.arena);
     this.arena.append(canvas);
     const ctx = canvas.getContext('2d', {alpha: false});
     ctx.fillStyle = '#f3f5fa';
-    ctx.fillRect(0, 0, 600, 600);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     this.layer = document.createElement('div');
     this.layer.className = 'tracking-layer';
     this.layer.setAttribute('aria-hidden', 'true');
@@ -49,9 +52,16 @@ class FocusTrackingView {
     this.nodes = question.balls.map(() => {
       const node = document.createElement('span');
       node.className = 'tracking-ball';
+      const surface = document.createElement('span');surface.className = 'tracking-surface';
+      const label = document.createElement('span');label.className = 'tracking-label';
+      surface.append(label);node.append(surface);
       this.layer.append(node);
       return node;
     });
+    this.countdown = document.createElement('div');
+    this.countdown.className = 'tracking-countdown';this.countdown.setAttribute('aria-hidden', 'true');
+    this.countdown.hidden = true;
+    this.arena.append(this.countdown);
     this.width = this.layer.getBoundingClientRect().width;
     this.observer = new ResizeObserver(entries => {
       this.width = entries[0].contentRect.width;
@@ -59,6 +69,28 @@ class FocusTrackingView {
       if (this.positions) this.move(this.positions);
     });
     this.observer.observe(this.layer);
+  }
+
+  showCountdown(value) { this.countdown.hidden = false;this.countdown.textContent = value; }
+  hideCountdown() { this.countdown.hidden = true; }
+
+  reveal(index, reduced) {
+    const node = this.nodes[index];
+    if (node.classList.contains('visible')) return;
+    node.classList.add('visible');
+    if (reduced) return;
+    const animation = node.querySelector('.tracking-surface').animate([
+      {opacity: 0, transform: 'translateY(7px) scale(.35)'},
+      {opacity: 1, transform: 'translateY(-1px) scale(1.08)', offset: .7},
+      {opacity: 1, transform: 'translateY(0) scale(1)'}
+    ], {duration: this.condition.introPopMs, easing: 'cubic-bezier(.2,.75,.3,1)', fill: 'backwards'});
+    this.animations.add(animation);
+    animation.finished.catch(() => {}).finally(() => this.animations.delete(animation));
+  }
+
+  finishEntrance() {
+    for (const animation of this.animations) { try { animation.finish(); } catch {} }
+    this.animations.clear();
   }
 
   move(positions) {
@@ -76,11 +108,16 @@ class FocusTrackingView {
       for (let i = 0; i < this.nodes.length; i++) {
         const b = this.question.balls[i], node = this.nodes[i];
         node.classList.toggle('target', mode === 'mark' && this.question.targets.includes(b.id));
-        node.textContent = mode === 'labels' ? this.question.labels[b.id] : '';
+        node.querySelector('.tracking-label').textContent = mode === 'labels' ? this.question.labels[b.id] : '';
       }
     }
     this.move(positions);
   }
 
-  destroy() { this.observer.disconnect(); }
+  destroy() {
+    this.observer.disconnect();
+    for (const animation of this.animations) animation.cancel();
+    this.animations.clear();
+    for (const node of this.nodes) node.classList.remove('target');
+  }
 }

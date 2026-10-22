@@ -10,7 +10,7 @@ from prepare_assets import prepare
 from tooling.project import APP, ROOT, OUT, metadata, BASELINE_VERSION
 from tooling import paths
 
-SUITES = ['training', 'tools', 'tool-edges', 'completion', 'advanced', 'advanced-edges', 'stimulus', 'motion']
+SUITES = ['training', 'tools', 'tool-edges', 'completion', 'advanced', 'advanced-edges', 'stimulus', 'motion', 'tracking-presentation']
 
 
 def run(args):
@@ -24,6 +24,8 @@ def baseline_page():
     target.parent.mkdir(exist_ok=True)
     with zipfile.ZipFile(OUT / f'专注力小宇宙-{BASELINE_VERSION}.apk') as archive:
         target.write_bytes(archive.read('assets/index.html'))
+    with zipfile.ZipFile(OUT / '专注力小宇宙-1.61.apk') as archive:
+        (target.parent / 'focus-motion161.html').write_bytes(archive.read('assets/index.html'))
 
 
 def test(suite='all', jobs=1):
@@ -36,12 +38,14 @@ def test(suite='all', jobs=1):
     run([node, APP / 'tests/contracts.cjs'])
     selected = SUITES if suite == 'all' else ([] if suite == 'unit' else [suite])
     with ThreadPoolExecutor(max_workers=jobs) as pool:
-        results = [pool.submit(run, [node, APP / f'tests/{name}.cjs']) for name in selected if name not in {'ui', 'motion'}]
+        results = [pool.submit(run, [node, APP / f'tests/{name}.cjs']) for name in selected if name not in {'ui', 'motion', 'tracking-presentation'}]
         for result in results:
             result.result()
     # Performance checks run after other browsers finish, without concurrent test load.
     if suite in {'all', 'motion'}:
         run([node, APP / 'tests/motion.cjs'])
+    if suite in {'all', 'tracking-presentation'}:
+        run([node, APP / 'tests/tracking-presentation.cjs'])
     if suite in {'all', 'ui'}:
         run([node, APP / 'tests/ui.cjs'])
     if suite == 'all':

@@ -1,0 +1,10 @@
+{
+  "version": "1.62",
+  "versionCode": 11,
+  "package": "cn.focusuniverse.offline",
+  "files": 59,
+  "checks": 70,
+  "apk_sha256": "74cd656c179872785b7da61da23859a430d2b03e03f94c700de50800dda0d76f",
+  "bundle_sha256": "05344b6fc4aeb879b44ded6aaeba274697cdbd60fef831893b1175be7973792c",
+  "html_sha256": "0c8cd59e2883b9886b98e184ad996113292feb27748bfa096b85d5d7d93f9802"
+}
