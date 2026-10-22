@@ -161,8 +161,8 @@ body[data-training=true] .app-dock, body[data-training=true] .site-header { disp
 @keyframes uiSpin { to { transform: rotate(360deg); } }
 @keyframes planetDrift { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-7px) rotate(1deg); } }
 @keyframes starGlow { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
-.home-motion .planet-orbit { animation: planetDrift 7s ease-in-out infinite; }
-.home-motion .planet-stars { animation: starGlow 5s ease-in-out infinite; }
+.home-motion .planet-orbit { transform-box: fill-box; transform-origin: center; will-change: transform; animation: planetDrift 7s ease-in-out infinite; }
+.home-motion .planet-stars { will-change: opacity; animation: starGlow 5s ease-in-out infinite; }
 @media (hover:hover) and (pointer:fine) {
   button:hover:not(:disabled), .back-button:hover { background-color: #e9f4fb; border-color: #b8d9ee; }
   .orb-shell:hover .bubble { transform: translateY(-5px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)); border-color: #b4d8ee; box-shadow: 0 13px 32px #4582a716; }

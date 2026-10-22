@@ -172,13 +172,17 @@
       "preset": [
         "normal",
         "strong"
+      ],
+      "sound": [
+        "on",
+        "off"
       ]
     },
     "example": {
       "visual": "● ● ○ ○",
-      "copy": "记住亮起的目标球。变成同色并运动后，根据停止时的编号多选答案。"
+      "copy": "浅色小球随机均匀分布并逐颗出现后，记住发光目标。发光停止后追踪位置；十球档运动 10 秒，停止后多选编号。入场音效可静音。"
     },
-    "audio": false,
+    "audio": true,
     "keyboard": false
   },
   {

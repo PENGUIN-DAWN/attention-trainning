@@ -44,7 +44,7 @@ for (const id of [7, 8, 9, 10])
         assert.equal(new Set(q.targets).size, c.targets);
         assert.equal(new Set(q.labels).size, c.balls);
         const ids = q.balls.map(b => b.id);
-        for (let k = 0; k < 400; k++) R.step(q.balls, .025);
+        for (let k = 0; k < 400; k++) R.step(q.balls, .025, c);
         assert.deepEqual(q.balls.map(b => b.id), ids);
         for (const b of q.balls) {
           assert.ok(b.x >= .043 && b.x <= .957 && b.y >= .043 && b.y <= .957);
@@ -322,7 +322,7 @@ report.checks.push(
         for (let k = 0; k < phases.length; k++)
           if (phases[k].phase === 'motion') {
             const end = phases.slice(k + 1).find(p => p.phase === 'preparing');
-            assert.ok(end.at - phases[k].at >= 6000, 'full movement time');
+            assert.ok(end.at - phases[k].at >= 10000, 'full ten-ball movement time');
           }
       }
       assert.ok(rec.detail.seconds < 20,
@@ -502,9 +502,10 @@ report.checks.push(
     f = await go(7, 'strong');
     await start(f);
     await f.waitForFunction(() => toolState.phase === 'motion');
-    const positions = await f.evaluate(() => toolState.question.balls.map(b => [b.x, b.y]));
+    // Native playback keeps model positions fixed until the end; inspect the displayed stimulus.
+    const positions = await f.locator('.tracking-ball').evaluateAll(nodes=>nodes.map(node=>getComputedStyle(node).transform));
     await page.waitForTimeout(300);
-    assert.notDeepEqual(await f.evaluate(() => toolState.question.balls.map(b => [b.x, b.y])),
+    assert.notDeepEqual(await f.locator('.tracking-ball').evaluateAll(nodes=>nodes.map(node=>getComputedStyle(node).transform)),
       positions);
     await page.evaluate(() => focusAndroidSuspend());
     await page.waitForTimeout(1000);

@@ -1,0 +1,52 @@
+{
+  "version": "1.62",
+  "checks": [
+    "Schulte 25 colored cells, complete round, structured score and completion actions",
+    "Stroop 20 trials, wrong-answer feedback, all actual colors including white remain legible",
+    "Four-number sorting, all 20 trials, wrong-answer recovery, sizes preserved",
+    "Six-item animal memory, 1000ms full visibility per item, correct recall",
+    "Dynamic 1s, replay 1s, all 20 trials at 2s; essential motion works with reduced animations",
+    "20 split-character trials, Chinese composition Enter guard, simulated keyboard inset and input visibility",
+    "Old records/settings preserved, structured same-condition best tags, all-project filtering, backup compatibility, import deduplication, deletion/cancel/clear across filters and statistics",
+    "Rapid navigation and repeated start, background interruption/resume, 320–768px layouts, 48px primary controls, system and user reduced-motion preferences",
+    "No JavaScript errors and no HTTP(S) requests during browser tests"
+  ],
+  "observations": {
+    "memory1000ms": [
+      1015.1999999880791,
+      1017.9000000059605,
+      1018.3000000119209,
+      1011.0999999940395,
+      1012.5,
+      1012.8000000119209
+    ],
+    "dynamic1000ms": [
+      1002.7999999821186,
+      1000.0999999940395
+    ],
+    "dynamic2000ms": [
+      2006.300000011921,
+      2003.5,
+      2000.199999988079,
+      2005.7999999821186,
+      2005.699999988079,
+      2005.800000011921,
+      2005.800000011921,
+      2005.800000011921,
+      2005.7999999821186,
+      2000,
+      2005.3999999761581,
+      2005.7999999821186,
+      2005.7999999821186,
+      2005.800000011921,
+      2006.0999999940395,
+      2000,
+      2005.9000000059605,
+      2005.800000011921,
+      2000,
+      2005.7999999821186
+    ]
+  },
+  "errors": [],
+  "html_sha256": "0c8cd59e2883b9886b98e184ad996113292feb27748bfa096b85d5d7d93f9802"
+}

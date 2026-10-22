@@ -1,0 +1,41 @@
+{
+  "version": "1.63",
+  "versionCode": 12,
+  "package": "cn.focusuniverse.offline",
+  "complete_run": true,
+  "finished_utc": "2026-10-22T08:38:49.727924+00:00",
+  "html_sha256": "2bf779ff66fd61b8ac7c81023a059db6523e2a98499740d1a7d21430a2bec15b",
+  "checks": 74,
+  "reports": {
+    "构建配置单元验收-1.63.json": "af94ba6d2415132484d1bbdde1dd3c42b77370f04c898172e63ab31381fd8dd0",
+    "工程契约验收-1.63.json": "66a605d623758477e6daedfb2cd78461e810d57e6173ff4519c17c8d72d0978f",
+    "浏览器验收-1.63.json": "a76697a8d94f9b7302eaeb52617f0e09d4d5e7cdb4d9d32081473048f3badfc5",
+    "新增训练验收-1.63.json": "a7f5b48294aea1009d4572991a2393b3418a0c77b3820e07a712e2c739b4cf09",
+    "工具边界验收-1.63.json": "de517876d0003204a35f64b3b4c71d3388ccc661a448d84c2daf1ad42e1ba994",
+    "完成页补充验收-1.63.json": "a90faf2b584b8ba6dd8c785fe68b9042c1497b82aa669d196c62df1b05de994f",
+    "六项新增验收-1.63.json": "dc82c6a2eb56a8d3eb03d03b8d86d973e3ff92646c9490220b57cc7105f70d9a",
+    "六项边界验收-1.63.json": "86372fd46ab624fed2755d6700e8d36d5edc24b3a577fe6c23034246612d2c4a",
+    "题面兼容验收-1.63.json": "badbf2076110a3b106a3b66f6eafb6aa05c2a03619f89c54373f67f7a3bf492d",
+    "界面与性能验收-1.63.json": "df59f12e8d00ab4a4899d821ff41c545437fed2e742d883e866adb38857342a8",
+    "动态训练验收-1.63.json": "65acb295dab12adfd825928dbb605131ee7cf97ced5927d901c99a4bb1d49d95",
+    "小球入场验收-1.63.json": "126f87355b5786d0babaa80aad196eb66445ee743d92095c603211160ac6321e",
+    "小球流畅度验收-1.63.json": "a7543f6661b89ddd3bda8661bc86c9c6bfa8e1dbc591d7b5ddd3ad66fe0b06d3"
+  },
+  "test_sources": {
+    "tests/advanced-edges.cjs": "0c14c28e806a5a5abc28dab10859357925bbc0fec7c202f8756cf34ce7ac89b7",
+    "tests/advanced.cjs": "ad8b1ed865592c3e21dcc8a063d0118585edd80a28069462480d2bd6311d3181",
+    "tests/completion.cjs": "17b9db6f8ee1297046b4c12755493176c0d2eba6134358e499dbda3edbde1d6b",
+    "tests/contracts.cjs": "cd7dff0f24f037cf65766c2a0d83e825321012f007c6be52405d1793df8736c9",
+    "tests/motion.cjs": "593881d1d49010b90006b3cf3ad43ff5a21ccf46be0532314f42daf14f7ddb8b",
+    "tests/stimulus.cjs": "f0194a61badb29afd66820355aa644ede8873e092d3577a675244befc6d7807f",
+    "tests/support.cjs": "93fb4722b7bb50fad863b48c1d4fd2ecc34b994faff2b8d3d577ae7ffd683b17",
+    "tests/tool-edges.cjs": "59fdde3213b01a6d55b0c3dce33c8df672b517cefbf196e385c62b38ff833253",
+    "tests/tools.cjs": "79597a5dbd26c25ae8bfcd4a29202108cff450017fe4d55f5444d57970cc67ca",
+    "tests/tracking-presentation.cjs": "4c215d6972411af6e85b11d6ab7fa9b7bde2ca5e7526e86e1ef5b6585bde66c7",
+    "tests/tracking-quality.cjs": "383563878c3a6dbfb637f267a699fe8b061d88c1f114d35b5496d527c89a2183",
+    "tests/training.cjs": "8ba4d26f80530cf97c67ed608843cb977a73649ca73c35b2615650a3a521067b",
+    "tests/ui.cjs": "90c8922ed41dd42a7f46ee24ecc3ed61a1c63328f37797872bb5d103fc198b52",
+    "tests/run_unit.py": "69b53662f8524756155f771337053933b5afbadbbd3316805c40cc6cf2dcdb69",
+    "tests/test_engineering.py": "b369ff9f34bbe7bb04b429b10ec67533444ecc81492f252a7fbb0ca8e7899813"
+  }
+}

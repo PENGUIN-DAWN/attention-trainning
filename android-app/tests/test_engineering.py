@@ -1,5 +1,6 @@
 """Build/configuration contracts; tests use temporary config, not user data."""
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -8,11 +9,18 @@ from unittest.mock import patch
 
 APP = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(APP))
-from tooling import project
+from tooling import paths, project
 import prepare_assets
 
 
 class EngineeringContracts(unittest.TestCase):
+    def test_native_build_directory_can_be_isolated(self):
+        with patch.dict(os.environ, {'FOCUS_BUILD_DIR': ''}):
+            self.assertEqual(paths.build_dir(), Path.home() / '.cache/focus-android-build')
+        with tempfile.TemporaryDirectory(prefix='focus-staging-test-') as directory:
+            with patch.dict(os.environ, {'FOCUS_BUILD_DIR': directory}):
+                self.assertEqual(paths.build_dir(), Path(directory).resolve())
+
     def test_registry_preserves_stable_identity(self):
         items = project.registry()
         self.assertEqual([r['id'] for r in items], list(range(1, 17)))

@@ -133,14 +133,40 @@ try {
     'Unsupported, unknown-project and malformed-entertainment imports fail before state/storage mutation'
     );
 
-  // The refactor keeps protected engines/read-only legacy inputs byte-identical.
+  // The old snapshot is immutable; explicit motion deltas have their own source contract.
   const baseline = JSON.parse(fs.readFileSync(path.join(APP, 'ui-baseline-150.json'), 'utf8'));
+  const motion = JSON.parse(fs.readFileSync(path.join(APP, 'motion-baseline-161.json'), 'utf8'));
+  assert.deepEqual(Object.keys(motion.changedSources).sort(), [
+    'android-app/advanced-ui.js', 'android-app/tool-rules.js', 'android-app/tool-ui.js', 'android-app/training.js'
+  ]);
+  for (const [name, change] of Object.entries(motion.changedSources)) {
+    assert.equal(change.previous_sha256, baseline[name], name);
+    assert.ok(change.reason);
+    baseline[name] = change.sha256;
+  }
+  Object.assign(baseline, motion.addedSources);
+  const gold = JSON.parse(fs.readFileSync(path.join(APP, 'motion-baseline-162.json'), 'utf8'));
+  assert.deepEqual(Object.keys(gold.changedSources).sort(), [
+    'android-app/tool-motion.css', 'android-app/tool-motion.js', 'android-app/tool-rules.js', 'android-app/tool-ui.js'
+  ]);
+  for (const [name, change] of Object.entries(gold.changedSources)) {
+    assert.equal(change.previous_sha256, baseline[name], name);
+    assert.ok(change.reason);baseline[name] = change.sha256;
+  }
+  assert.deepEqual(Object.keys(gold.addedSources), ['android-app/tool-audio.js']);
+  Object.assign(baseline, gold.addedSources);
+  const soft=JSON.parse(fs.readFileSync(path.join(APP,'motion-baseline-163.json'),'utf8'));
+  assert.deepEqual(Object.keys(soft.changedSources).sort(),Object.keys(gold.changedSources).sort());
+  assert.deepEqual(soft.addedSources,{});
+  for(const [name,change] of Object.entries(soft.changedSources)){
+    assert.equal(change.previous_sha256,baseline[name],name);assert.ok(change.reason);baseline[name]=change.sha256;
+  }
   for (const [name, expected] of Object.entries(baseline)) {
     assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.resolve(APP, '..', name
       .replace(/\\/g, '/')))).digest('hex'), expected, name);
   }
   report.checks.push(
-    'Protected training engines, published source and old APKs retain their byte hashes');
+    'Historical snapshot unchanged; reviewed motion deltas match new hashes; all other protected sources and old APKs retain their hashes');
   console.log('PASS engineering contracts', report.checks.length);
 } catch (error) {
   report.errors.push(error.stack);

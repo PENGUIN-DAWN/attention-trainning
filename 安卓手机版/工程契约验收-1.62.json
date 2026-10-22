@@ -1,0 +1,11 @@
+{
+  "version": "1.62",
+  "html_sha256": "0c8cd59e2883b9886b98e184ad996113292feb27748bfa096b85d5d7d93f9802",
+  "checks": [
+    "Sparse registered IDs route by lookup; unknown IDs remain rejected",
+    "Old backup merge is pure/idempotent and retains current new settings/preferences and absent entertainment",
+    "Unsupported, unknown-project and malformed-entertainment imports fail before state/storage mutation",
+    "Historical snapshot unchanged; reviewed motion deltas match new hashes; all other protected sources and old APKs retain their hashes"
+  ],
+  "errors": []
+}

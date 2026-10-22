@@ -1,0 +1,82 @@
+{
+  "version": "1.61",
+  "scope": "Additional isolated browser visual QA; one frozen live frame, not a hardware ghosting test.",
+  "result": {
+    "phase": "motion",
+    "canvasCount": 1,
+    "expectedBalls": 10,
+    "clearBackground": true,
+    "balls": [
+      {
+        "filter": "none",
+        "boxShadow": "none",
+        "opacity": "1",
+        "transitionDuration": "0s",
+        "label": ""
+      },
+      {
+        "filter": "none",
+        "boxShadow": "none",
+        "opacity": "1",
+        "transitionDuration": "0s",
+        "label": ""
+      },
+      {
+        "filter": "none",
+        "boxShadow": "none",
+        "opacity": "1",
+        "transitionDuration": "0s",
+        "label": ""
+      },
+      {
+        "filter": "none",
+        "boxShadow": "none",
+        "opacity": "1",
+        "transitionDuration": "0s",
+        "label": ""
+      },
+      {
+        "filter": "none",
+        "boxShadow": "none",
+        "opacity": "1",
+        "transitionDuration": "0s",
+        "label": ""
+      },
+      {
+        "filter": "none",
+        "boxShadow": "none",
+        "opacity": "1",
+        "transitionDuration": "0s",
+        "label": ""
+      },
+      {
+        "filter": "none",
+        "boxShadow": "none",
+        "opacity": "1",
+        "transitionDuration": "0s",
+        "label": ""
+      },
+      {
+        "filter": "none",
+        "boxShadow": "none",
+        "opacity": "1",
+        "transitionDuration": "0s",
+        "label": ""
+      },
+      {
+        "filter": "none",
+        "boxShadow": "none",
+        "opacity": "1",
+        "transitionDuration": "0s",
+        "label": ""
+      },
+      {
+        "filter": "none",
+        "boxShadow": "none",
+        "opacity": "1",
+        "transitionDuration": "0s",
+        "label": ""
+      }
+    ]
+  }
+}

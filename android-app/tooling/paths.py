@@ -4,6 +4,12 @@ import os
 import shutil
 
 
+def build_dir():
+    """Allow concurrent worktrees to use independent native staging directories."""
+    explicit = os.environ.get('FOCUS_BUILD_DIR')
+    return Path(explicit).expanduser().resolve() if explicit else Path.home() / '.cache/focus-android-build'
+
+
 def node():
     explicit = os.environ.get('FOCUS_NODE')
     candidates = [Path(explicit)] if explicit else []

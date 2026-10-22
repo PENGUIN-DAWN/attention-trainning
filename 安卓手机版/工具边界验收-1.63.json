@@ -1,0 +1,30 @@
+{
+  "version": "1.63",
+  "checks": [
+    "First-load rapid routes keep frame-ready signal; mark/study interruption cancels callbacks; native back closes child rules before directory",
+    "320px 6×5 cell width ≥48px, all character typography identical, both approved character pairs produce distinct local glyph pixels; Android font still needs device review",
+    "Limit/grid condition keys separated; rule-version mismatch rejected; object survivors always reorder even with an identity shuffle",
+    "v2 backup including hidden entertainment merges; injected failure during multi-key import rolls back all keys and memory; invalid arcade schema rejects before writes",
+    "Background after fifth answer preserves completed result and failed-save retry, without falsely reporting a saved record",
+    "Interrupted journal recovered before records load; damaged hidden entertainment raw retained, old backup import still works and complete export reports error"
+  ],
+  "errors": [],
+  "observations": {
+    "characterMobile": {
+      "styleCount": 1,
+      "distinct1": true,
+      "distinct2": true,
+      "cell": {
+        "x": 11,
+        "y": 97,
+        "width": 53.1875,
+        "height": 48,
+        "top": 97,
+        "right": 64.1875,
+        "bottom": 145,
+        "left": 11
+      }
+    }
+  },
+  "html_sha256": "2bf779ff66fd61b8ac7c81023a059db6523e2a98499740d1a7d21430a2bec15b"
+}
