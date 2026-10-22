@@ -1,5 +1,6 @@
-/* Keep the original blue/brown palette and light field; animate cached surfaces. */
-.tracking-arena { position: relative; }
+/* Soft spheres and a narrow edge halo; the light field stays unchanged. */
+.tracking-arena { position: relative; border-radius: 18px; }
+.tracking-arena::before { content: ''; position: absolute; inset: 0; border: 1px solid #acc8de99; border-radius: inherit; box-shadow: 0 0 5px 1px #a9cce533, inset 0 0 3px #c6dfef40; pointer-events: none; z-index: 2; }
 .tracking-arena canvas { aspect-ratio: 1; }
 .tracking-layer { position: absolute; inset: 1px; pointer-events: none; --track-unit: .5px; }
 .tracking-ball {
@@ -9,7 +10,7 @@
   width: calc(50 * var(--track-unit));
   height: calc(50 * var(--track-unit));
   border-radius: 50%;
-  color: #fff;
+  color: #243f59;
   font: bold calc(23 * var(--track-unit)) system-ui;
   will-change: transform;
   visibility: hidden;
@@ -19,14 +20,14 @@
 .tracking-surface {
   position: absolute; inset: 0; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  background-color: #485f80;
-  background-image: radial-gradient(circle at 27% 22%, #ffffffa0 0%, #ffffff24 28%, #ffffff00 50%), radial-gradient(circle at 35% 28%, #00000000 40%, #13233b66 100%);
-  box-shadow: inset calc(-1.5 * var(--track-unit)) calc(-2 * var(--track-unit)) calc(3 * var(--track-unit)) #172a4340, inset 0 calc(1 * var(--track-unit)) calc(1.5 * var(--track-unit)) #ffffff70;
+  background-color: #96b6ce;
+  background-image: radial-gradient(circle at 27% 22%, #ffffffb0 0%, #ffffff24 28%, #ffffff00 54%), radial-gradient(circle at 35% 28%, #00000000 42%, #51748d40 100%);
+  box-shadow: inset calc(-1.5 * var(--track-unit)) calc(-2 * var(--track-unit)) calc(3 * var(--track-unit)) #55799238, inset 0 calc(1 * var(--track-unit)) calc(1.5 * var(--track-unit)) #ffffff80;
 }
 .tracking-surface::before { content: ''; position: absolute; left: 19%; top: 11%; width: 27%; height: 19%; border-radius: 50%; background: radial-gradient(ellipse, #ffffffb0, #ffffff00 75%); transform: rotate(-28deg); pointer-events: none; }
 .tracking-label { position: relative; z-index: 1; }
 .tracking-ball::after { content: ''; position: absolute; inset: -36%; border-radius: 50%; background: radial-gradient(circle, #f3ca7e00 28%, #f3ca7ecc 40%, #f3ca7e55 55%, #f3ca7e00 72%); opacity: 0; pointer-events: none; }
-.tracking-ball.target .tracking-surface { background-color: #a46124; background-image: radial-gradient(circle at 27% 22%, #ffffffa0 0%, #ffffff24 28%, #ffffff00 50%), radial-gradient(circle at 35% 28%, #00000000 40%, #62381266 100%); }
+.tracking-ball.target .tracking-surface { background-color: #d2ae75; background-image: radial-gradient(circle at 27% 22%, #ffffffb0 0%, #ffffff24 28%, #ffffff00 54%), radial-gradient(circle at 35% 28%, #00000000 42%, #96724540 100%); }
 .tracking-ball.target::after { opacity: .8; animation: trackingConfirm 900ms ease-in-out infinite; will-change: opacity; }
 @keyframes trackingConfirm { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
 .tracking-countdown { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #485f80; font: 400 clamp(38px,12vw,68px) Georgia,serif; }

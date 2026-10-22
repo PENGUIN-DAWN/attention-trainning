@@ -155,6 +155,12 @@ try {
   }
   assert.deepEqual(Object.keys(gold.addedSources), ['android-app/tool-audio.js']);
   Object.assign(baseline, gold.addedSources);
+  const soft=JSON.parse(fs.readFileSync(path.join(APP,'motion-baseline-163.json'),'utf8'));
+  assert.deepEqual(Object.keys(soft.changedSources).sort(),Object.keys(gold.changedSources).sort());
+  assert.deepEqual(soft.addedSources,{});
+  for(const [name,change] of Object.entries(soft.changedSources)){
+    assert.equal(change.previous_sha256,baseline[name],name);assert.ok(change.reason);baseline[name]=change.sha256;
+  }
   for (const [name, expected] of Object.entries(baseline)) {
     assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.resolve(APP, '..', name
       .replace(/\\/g, '/')))).digest('hex'), expected, name);

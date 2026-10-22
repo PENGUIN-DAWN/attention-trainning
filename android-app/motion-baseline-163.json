@@ -1,0 +1,27 @@
+{
+  "version": "1.63",
+  "previous_contract": "motion-baseline-162.json",
+  "changedSources": {
+    "android-app/tool-rules.js": {
+      "previous_sha256": "9f19d5e2ed12bcb26b35430b29116912faa956cfd63605d49050d9616843d52b",
+      "sha256": "956cdc33456e471a856ad272c5d51544a7ba22688cd72ab7b930f04887266ae9",
+      "reason": "V4 records lighter spheres, balanced random placement and continuous collision motion; v1-v3 conditions and generators remain compatible."
+    },
+    "android-app/tool-ui.js": {
+      "previous_sha256": "cd0de70d653404acef2810b234ae57fdeb83f60188f342c2a144cb894087084d",
+      "sha256": "229fc13075726d6740fb43b453b363723cbd8a62b4f5a5c729f2ccb3d72b4fd2",
+      "reason": "Use native synchronized position animations with a shared trajectory fallback, preserving timing, entry, sound and cancellation."
+    },
+    "android-app/tool-motion.js": {
+      "previous_sha256": "18f678f4054cfa0585016b443b8ae6794db4deec7e6f8d0e681c2365afaa3e24",
+      "sha256": "02bb81e07cedbf57c4c7d20ee7b75a7fbd66bb5cb575b6d05d1b3864f1afd2ac",
+      "reason": "Analytic collision endpoints remove correction jumps; native transform paths avoid per-frame DOM writes, with resize, final-position and cancellation handling."
+    },
+    "android-app/tool-motion.css": {
+      "previous_sha256": "ff3458d18373d92b7fe9cc2af410f58a77b67b49ae7fab63c27af566f9d1168c",
+      "sha256": "c5ff36e9a652655cd11e11216055619d6639a0f5d190ec733fb2272616403abd",
+      "reason": "Lighter blue/amber spheres, readable answer labels and a static narrow edge halo; field fill unchanged."
+    }
+  },
+  "addedSources": {}
+}

@@ -28,6 +28,13 @@ def verify_sources():
         expected[name] = change['sha256']
     assert set(latest['addedSources']) == {'android-app/tool-audio.js'}
     expected.update(latest['addedSources'])
+    soft = json.loads((APP / 'motion-baseline-163.json').read_text(encoding='utf-8'))
+    assert set(soft['changedSources']) == set(latest['changedSources'])
+    assert not soft['addedSources']
+    for name, change in soft['changedSources'].items():
+        assert expected[name] == change['previous_sha256'], name
+        assert change['reason'], name
+        expected[name] = change['sha256']
     for name, digest in expected.items():
         assert hashlib.sha256((ROOT / name.replace('\\', '/')).read_bytes()).hexdigest() == digest, name
-    return latest
+    return soft

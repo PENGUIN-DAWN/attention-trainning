@@ -17,7 +17,7 @@ function installToolUI(config){
  const settings=()=>({preset:$('preset').value,...(id===10?{grid:$('gridSize').value}:{}),...(id===7?{sound:$('trackingSound').value}:{})});
  function describe(){const c=R.condition(id,settings());$('condition').textContent=R.label(id,c)+' · 每轮 '+c.rounds+' 题';$('gridNote').hidden=id!==10||c.grid!=='video';}
  for(const field of [$('preset'),$('gridSize'),...(id===7?[$('trackingSound')]:[])])field.onchange=()=>{describe();send('focus:settings',{settings:settings()});};describe();
- const rules={7:'倒数后小球逐个出现，再记住发光目标球。发光停止后开始同色追踪：十球档运动 10 秒，十二球档 8 秒。停止后选择目标对应编号再提交。入场和目标确认不占运动时间，音效可静音；减少动画保留逐颗出现和静态目标提示，球体运动仍是题目内容。',8:'6×6 中恰好一个两位数出现两次。选中这两个位置再提交；提交前可取消选择，限时到后才揭晓答案。',9:'同时记住 12 件物品及名称 8 秒。遮挡后，剩余物品会重新排列。输入缺失物品的名称，顺序不限；想不起来可跳过。',10:'先看指定目标字，再点击方格中唯一的目标。每题只允许一次点击，提交后锁定。8×10 为视频规模，手机上格子较小，推荐使用独立的 6×5 条件。'};
+ const rules={7:'倒数后小球在方框内随机均匀分布并逐个出现，再记住发光目标球。发光停止后开始同色追踪：十球档运动 10 秒，十二球档 8 秒。停止后选择目标对应编号再提交。入场和目标确认不占运动时间，音效可静音；减少动画保留逐颗出现和静态目标提示，球体运动仍是题目内容。',8:'6×6 中恰好一个两位数出现两次。选中这两个位置再提交；提交前可取消选择，限时到后才揭晓答案。',9:'同时记住 12 件物品及名称 8 秒。遮挡后，剩余物品会重新排列。输入缺失物品的名称，顺序不限；想不起来可跳过。',10:'先看指定目标字，再点击方格中唯一的目标。每题只允许一次点击，提交后锁定。8×10 为视频规模，手机上格子较小，推荐使用独立的 6×5 条件。'};
  $('rulesText').textContent=rules[id];$('rulesClose').onclick=()=>$('rules').close();
  const busy=()=>!['idle','result','aborted'].includes(state.phase);
  function height(){send('focus:height',{height:Math.ceil(document.querySelector('main').getBoundingClientRect().height)+3});}
@@ -26,7 +26,7 @@ function installToolUI(config){
  function stable(callback){const gen=state.generation;const a=requestAnimationFrame(()=>{pendingFrames.delete(a);const b=requestAnimationFrame(()=>{pendingFrames.delete(b);if(gen===state.generation&&state.active&&!document.hidden)callback();});pendingFrames.add(b);});pendingFrames.add(a);}
  function cancel(){state.generation++;cancelAnimationFrame(state.frame);for(const f of pendingFrames)cancelAnimationFrame(f);pendingFrames.clear();trackingView?.destroy();trackingView=null;trackingAudio?.stop();}
  function tick(duration,callback,motion=false,onTick=null){
-  const gen=state.generation,clock=$('clock'),movement=motion?new FocusTrackingMotion(state.question.balls,state.condition):null;state.started=performance.now();state.deadline=state.started+duration;let previous=state.started,clockText='';onTick?.(0);
+  const gen=state.generation,clock=$('clock'),movement=motion?new FocusTrackingMotion(state.question.balls,state.condition):null;state.started=performance.now();state.deadline=state.started+duration;let previous=state.started,clockText='';onTick?.(0);if(movement)trackingView.startMotion(movement,duration);
   function frame(now){
    if(gen!==state.generation||!state.active)return;
    if(document.hidden){abort();return;}
@@ -34,7 +34,7 @@ function installToolUI(config){
    const remaining=Math.max(0,state.deadline-now),text=(remaining/1000).toFixed(1)+' 秒';
    if(text!==clockText){clock.textContent=text;clockText=text;}
    onTick?.(Math.min(duration,Math.max(0,now-state.started)));
-   if(movement){const positions=movement.sample(Math.min(duration,now-state.started),now>=state.deadline);if(!positions){abort();return;}drawBalls(positions);}
+   if(movement&&!trackingView.advance(movement,Math.min(duration,now-state.started),now>=state.deadline)){abort();return;}
    previous=now;if(now>=state.deadline){callback();return;}state.frame=requestAnimationFrame(frame);
   }state.frame=requestAnimationFrame(frame);
  }

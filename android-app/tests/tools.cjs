@@ -502,9 +502,10 @@ report.checks.push(
     f = await go(7, 'strong');
     await start(f);
     await f.waitForFunction(() => toolState.phase === 'motion');
-    const positions = await f.evaluate(() => toolState.question.balls.map(b => [b.x, b.y]));
+    // Native playback keeps model positions fixed until the end; inspect the displayed stimulus.
+    const positions = await f.locator('.tracking-ball').evaluateAll(nodes=>nodes.map(node=>getComputedStyle(node).transform));
     await page.waitForTimeout(300);
-    assert.notDeepEqual(await f.evaluate(() => toolState.question.balls.map(b => [b.x, b.y])),
+    assert.notDeepEqual(await f.locator('.tracking-ball').evaluateAll(nodes=>nodes.map(node=>getComputedStyle(node).transform)),
       positions);
     await page.evaluate(() => focusAndroidSuspend());
     await page.waitForTimeout(1000);

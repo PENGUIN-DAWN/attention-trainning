@@ -67,7 +67,7 @@ const report = {version: VERSION, html_sha256: crypto.createHash('sha256').updat
       normal: getComputedStyle(document.querySelector('.tracking-ball:not(.target) .tracking-surface')).backgroundColor,
       target: getComputedStyle(document.querySelector('.tracking-ball.target .tracking-surface')).backgroundColor,
       fieldPixel: [...document.querySelector('canvas').getContext('2d').getImageData(0, 0, 1, 1).data]}));
-    assert.deepEqual(cue, {count: 10, targets: 4, activeEntries: 0, normal: 'rgb(72, 95, 128)', target: 'rgb(164, 97, 36)', fieldPixel: [243, 245, 250, 255]});
+    assert.deepEqual(cue, {count: 10, targets: 4, activeEntries: 0, normal: 'rgb(150, 182, 206)', target: 'rgb(210, 174, 117)', fieldPixel: [243, 245, 250, 255]});
     await page.screenshot({path: path.join(OUT, '小球发光确认-' + VERSION + '.png')});
     await frame.waitForFunction(() => toolState.phase === 'motion');
     await page.waitForTimeout(650);
@@ -94,7 +94,7 @@ const report = {version: VERSION, html_sha256: crypto.createHash('sha256').updat
     assert.equal(flow.tones.filter(t => t.phase === 'motion').length, 0);
     await page.screenshot({path: path.join(OUT, '小球编号作答-' + VERSION + '.png')});
     report.observations.flow = flow;report.observations.cue = cue;
-    report.checks.push('Real-clock countdown, ten distinct pop entrances, full 2.5-second target cue and full 10-second motion are ordered and separate; original ball/target/field colors and circular geometry retained');
+    report.checks.push('Real-clock countdown, ten distinct pop entrances, full 2.5-second target cue and full 10-second motion stay separate; lighter blue/amber spheres, original field color and circular geometry verified');
     report.checks.push('Real AudioContext/Analyser observes non-silent output; one tone per visible entry, no tones during motion; target glow and all identity cues disappear before motion');
     assert.deepEqual(run.requests, []);
     const video = page.video();await run.context.close();await video.saveAs(path.join(OUT, '小球逐颗入场-' + VERSION + '.webm'));await video.delete();

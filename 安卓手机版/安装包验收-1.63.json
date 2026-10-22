@@ -1,0 +1,21 @@
+{
+  "version": "1.63",
+  "versionCode": 12,
+  "package": "cn.focusuniverse.offline",
+  "apk_bytes": 394265,
+  "sha256": "f231dcbf068bf1f452d818920fa67f07aa79f691d7ca6787147a0a48ccc76eb7",
+  "html_sha256": "2bf779ff66fd61b8ac7c81023a059db6523e2a98499740d1a7d21430a2bec15b",
+  "baseline_version": "1.50",
+  "all_training_engines_equal_baseline": false,
+  "training_contract_verified": true,
+  "motion_contract": "motion-baseline-163.json",
+  "core_presentation_and_audio_equal_baseline": false,
+  "protected_css_and_audio_equal_baseline": true,
+  "legacy_sources_and_apks_unchanged": true,
+  "same_signing_certificate_count": 12,
+  "certificate_sha256": "a29e71972abb4c5c1a80ee4df9964261903883f1f5cad09d5fefaffa7299be0a",
+  "apk_signature_verified": true,
+  "zipalign_verified": true,
+  "network_permission": false,
+  "real_device_upgrade_tested": false
+}

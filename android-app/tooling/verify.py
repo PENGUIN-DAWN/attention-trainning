@@ -70,7 +70,7 @@ def verify():
     permissions = command([tools / 'aapt.exe', 'dump', 'permissions', staging])
     assert 'uses-permission' not in permissions
     command([tools / 'zipalign.exe', '-c', '-p', '4', staging])
-    assert code > 10, 'Update versionCode must exceed the 1.61 release'
+    assert code > 11, 'Update versionCode must exceed the 1.62 release'
     result = {
         **meta, 'apk_bytes': apk.stat().st_size,
         'sha256': hashlib.sha256(apk.read_bytes()).hexdigest(),
@@ -78,7 +78,7 @@ def verify():
         'baseline_version': BASELINE_VERSION,
         'all_training_engines_equal_baseline': False,
         'training_contract_verified': True,
-        'motion_contract': 'motion-baseline-162.json',
+        'motion_contract': 'motion-baseline-163.json',
         'core_presentation_and_audio_equal_baseline': False,
         'protected_css_and_audio_equal_baseline': True,
         'legacy_sources_and_apks_unchanged': True,

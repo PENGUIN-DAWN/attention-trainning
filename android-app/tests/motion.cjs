@@ -23,6 +23,11 @@ const previousModules = JSON.parse(previousPage.match(/id="trainingData">([\s\S]
 const previousSandbox = vm.createContext({});
 for (const script of previousModules.find(m => m.id === 7).source.matchAll(/<script>([\s\S]*?)<\/script>/g)) vm.runInContext(script[1], previousSandbox);
 const previousR = previousSandbox.FocusToolRules;
+const spherePage = fs.readFileSync(path.join(require('node:os').homedir(), '.cache/focus-motion162.html'), 'utf8');
+const sphereSandbox = vm.createContext({});
+const sphereModules = JSON.parse(spherePage.match(/id="trainingData">([\s\S]*?)<\/script>/)[1]);
+for (const script of sphereModules.find(m=>m.id===7).source.matchAll(/<script>([\s\S]*?)<\/script>/g)) vm.runInContext(script[1],sphereSandbox);
+const sphereR = sphereSandbox.FocusToolRules;
 const plain = v => JSON.parse(JSON.stringify(v));
 function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 1013904223 >>> 0) / 4294967296); }
 
@@ -32,7 +37,7 @@ function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 101390
     const fixtures = [];
     for (const preset of ['normal', 'strong']) {
       const oldC = oldR.condition(7, {preset}), current = R.condition(7, {preset});
-      assert.equal(current.ruleVersion, 3);
+      assert.equal(current.ruleVersion, 4);
       assert.equal(current.motionMs, preset === 'normal' ? 10000 : 8000);
       assert.ok(Math.abs(current.speed / oldC.speed - 1.5) < 1e-10);
       assert.deepEqual(plain(R.condition(7, {preset}, 1)), plain(oldC));
@@ -41,16 +46,23 @@ function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 101390
       const results = Array.from({length: 3}, () => ({correct: true, timeout: false, skip: false, errors: 0, hits: oldC.targets, responseMs: 400}));
       const d1 = oldR.cleanDetail(7, oldR.detail(7, oldC, results));
       const d2 = previousR.cleanDetail(7, previousR.detail(7, previousC, results));
-      const d3 = R.cleanDetail(7, R.detail(7, current, results));
+      const sphereC = sphereR.condition(7,{preset});
+      assert.deepEqual(plain(R.condition(7,{preset},3)),plain(sphereC));
+      assert.deepEqual(plain(R.generate(7,sphereC,rng())),plain(sphereR.generate(7,sphereC,rng())));
+      const d3 = sphereR.cleanDetail(7,sphereR.detail(7,sphereC,results));
+      const d4 = R.cleanDetail(7, R.detail(7, current, results));
       assert.deepEqual(plain(R.cleanDetail(7, d1)), plain(d1));
       assert.ok(d2 && d2.ruleVersion === 2);
       assert.deepEqual(plain(R.cleanDetail(7, d2)), plain(d2));
       assert.ok(d3 && d3.ruleVersion === 3);
+      assert.deepEqual(plain(R.cleanDetail(7,d3)),plain(d3));
+      assert.ok(d4 && d4.ruleVersion===4);
       assert.equal(R.cleanDetail(7, {...plain(d1), ruleVersion: 2}), undefined);
       assert.equal(R.cleanDetail(7, {...plain(d2), ruleVersion: 1}), undefined);
       assert.equal(R.cleanDetail(7, {...plain(d2), ruleVersion: 3}), undefined);
       assert.equal(R.cleanDetail(7, {...plain(d3), ruleVersion: 4}), undefined);
-      for (const [i, detail] of [d1, d2, d3].entries()) fixtures.push({module: 7, token: preset + '-v' + (i + 1), at: Date.now() + i, summary: '兼容性测试', detail: plain(detail)});
+      assert.equal(R.cleanDetail(7,{...plain(d4),ruleVersion:5}),undefined);
+      for (const [i, detail] of [d1, d2, d3,d4].entries()) fixtures.push({module: 7, token: preset + '-v' + (i + 1), at: Date.now() + i, summary: '兼容性测试', detail: plain(detail)});
       const finalStates = [];
       for (const hz of [60, 90, 120]) {
         const q = R.generate(7, current, rng()), motion = new sandbox.Motion(q.balls, current);
@@ -67,7 +79,27 @@ function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 101390
       assert.deepEqual(finalStates[0], finalStates[1]);
       assert.deepEqual(finalStates[0], finalStates[2]);
     }
-    report.checks.push('Tracking v3 retains v2 speeds, normal motion is 10 seconds and strong is 8; genuine v1/v2 conditions/results unchanged; versions are distinct; rectangular trajectories agree at simulated 60/90/120 Hz');
+    report.checks.push('Tracking v4 retains speed/duration/target counts; genuine v1/v2/v3 conditions and v3 seeded generator unchanged; versions distinct; trajectories agree at simulated 60/90/120 Hz');
+    let minGap=1,maxFrames=0;
+    for(let seed=0;seed<200;seed++) for(const preset of ['normal','strong']) {
+      let n=seed;const random=()=>((n=Math.imul(n,1664525)+1013904223>>>0)/4294967296);
+      const c=R.condition(7,{preset}),q=R.generate(7,c,random),motion=new sandbox.Motion(q.balls,c);
+      const quadrants=[0,0,0,0];q.balls.forEach(b=>quadrants[Number(b.x>=.5)+2*Number(b.y>=.5)]++);
+      assert.ok(Math.max(...quadrants)-Math.min(...quadrants)<=1);
+      assert.equal(new Set(q.balls.map(b=>b.x)).size,c.balls);assert.equal(new Set(q.balls.map(b=>b.y)).size,c.balls);
+      maxFrames=Math.max(maxFrames,motion.plan.frames.length);
+      for(let t=0;t<=c.motionMs;t+=1000/120) {
+        const positions=motion.sample(t);assert.ok(positions);
+        for(let i=0;i<positions.length;i++) {
+          const p=positions[i];assert.ok(p.x>=.044-1e-8&&p.x<=.956+1e-8&&p.y>=.044-1e-8&&p.y<=.956+1e-8);
+          for(let j=i+1;j<positions.length;j++) minGap=Math.min(minGap,Math.hypot(p.x-positions[j].x,p.y-positions[j].y));
+        }
+      }
+      assert.equal(motion.plan.frames.at(-1).ms,c.motionMs);
+    }
+    assert.ok(minGap>=.088-1e-8);assert.ok(maxFrames<250);
+    report.observations.trajectories={seeds:200,presets:2,minGap,maxFrames};
+    report.checks.push('400 seeded paths have balanced random quadrants, unique coordinates, no ball overlaps or wall escapes at 120 Hz sampling; exact collision endpoints use fewer than 250 path frames');
     for (const id of [8, 9, 10]) for (const preset of Object.keys(R.CONFIG[id].presets)) for (const grid of id === 10 ? ['mobile', 'video'] : [undefined]) {
       const c = R.condition(id, {preset, grid});
       assert.deepEqual(plain(c), plain(oldR.condition(id, {preset, grid})));
@@ -93,8 +125,8 @@ function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 101390
       return {context, page, frame, requests};
     }
     const current = await contextFor(HTML, fixtures);
-    assert.equal(await current.page.evaluate(() => records.length), 6);
-    assert.equal(await current.page.evaluate(() => bestRecords().size), 6);
+    assert.equal(await current.page.evaluate(() => records.length), 8);
+    assert.equal(await current.page.evaluate(() => bestRecords().size), 8);
     await current.page.evaluate(() => {
       const original = window.FocusDevice;
       let exported;
@@ -103,9 +135,9 @@ function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 101390
       window.FocusDevice = original;
       focusImportBackup(exported);
     });
-    assert.deepEqual(await current.page.evaluate(() => records.map(r => r.detail.ruleVersion).sort()), [1, 1, 2, 2, 3, 3]);
-    assert.equal(await current.page.evaluate(() => bestRecords().size), 6);
-    report.checks.push('Real v1/v2 and new v3 tracking records survive startup, export/import and deduplication; three rules and two presets form six comparison groups');
+    assert.deepEqual(await current.page.evaluate(() => records.map(r => r.detail.ruleVersion).sort()), [1, 1, 2, 2, 3, 3,4,4]);
+    assert.equal(await current.page.evaluate(() => bestRecords().size), 8);
+    report.checks.push('Real v1/v2/v3 and new v4 records survive startup, export/import and deduplication; four rules and two presets form eight comparison groups');
     await current.context.close();
     async function measure(file, preset, cpuRate) {
       console.log('Measure motion', file === HTML ? 'current' : 'baseline', preset, cpuRate);
@@ -116,21 +148,24 @@ function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 101390
       await frame.locator('#preset').selectOption(preset);
       await frame.locator('#start').click();
       await frame.waitForFunction(() => toolState.phase === 'motion');
+      if(file===HTML)await frame.waitForFunction(()=>document.getAnimations().filter(a=>a.effect?.target?.classList.contains('tracking-ball')).length===toolState.condition.balls);
       const metricsBefore = await cdp.send('Performance.getMetrics');
       const data = await frame.evaluate(() => new Promise(resolve => {
         const state = toolState, intervals = [];
-        let previous = performance.now(), start = previous, paints = 0, clockWrites = 0;
+        let previous = performance.now(), start = previous, paints = 0, clockWrites = 0,transformWrites=0;
         const ctx = document.getElementById('canvas').getContext('2d');
         const fill = ctx.fillRect;
         ctx.fillRect = function(...args) {paints++; return fill.apply(this, args);};
         const observer = new MutationObserver(entries => {clockWrites += entries.length;});
         observer.observe(document.getElementById('clock'), {childList: true});
+        const transforms=new MutationObserver(entries=>{transformWrites+=entries.length;});
+        document.querySelectorAll('.tracking-ball').forEach(node=>transforms.observe(node,{attributes:true,attributeFilter:['style']}));
         function sample(now) {
           intervals.push(now - previous); previous = now;
           if (now - start < 1800) {requestAnimationFrame(sample); return;}
-          ctx.fillRect = fill; observer.disconnect();
+          ctx.fillRect = fill; observer.disconnect();transforms.disconnect();
           const sorted = [...intervals].sort((a, b) => a - b);
-          resolve({samples: intervals.length, p95Ms: sorted[Math.floor(sorted.length * .95)], maxMs: Math.max(...intervals), over50ms: intervals.filter(v => v > 50).length, paints, clockWrites, phase: state.phase, ballLayers: document.querySelectorAll('.tracking-ball').length});
+          resolve({samples: intervals.length, p95Ms: sorted[Math.floor(sorted.length * .95)], maxMs: Math.max(...intervals), over50ms: intervals.filter(v => v > 50).length, paints, clockWrites,transformWrites,nativeMotion:document.getAnimations().filter(a=>a.effect?.target?.classList.contains('tracking-ball')).length,phase: state.phase, ballLayers: document.querySelectorAll('.tracking-ball').length});
         }
         requestAnimationFrame(sample);
       }));
@@ -145,6 +180,8 @@ function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 101390
       assert.deepEqual(run.requests, []);
       if (file === HTML) {
         assert.equal(data.paints, 0, 'moving balls must not repaint canvas');
+        assert.equal(data.transformWrites,0,'native motion must not write each ball transform every frame');
+        assert.equal(data.nativeMotion,preset==='normal'?10:12);
         assert.ok(data.clockWrites <= 22, 'clock should update only when its tenth changes');
         assert.equal(data.ballLayers, preset === 'normal' ? 10 : 12);
         assert.equal(await frame.locator('.tracking-ball.target').count(), 0);
@@ -163,14 +200,16 @@ function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 101390
       return data;
     }
     report.observations.oldNormal = await measure(historical, 'normal', 1);
+    report.observations.previousNormal = await measure(path.join(require('node:os').homedir(), '.cache/focus-motion162.html'), 'normal', 1);
     report.observations.currentNormal = await measure(HTML, 'normal', 1);
     report.observations.currentStrongCpu4 = await measure(HTML, 'strong', 4);
-    report.checks.push('Sequential real-clock browser samples include normal and strong/4x CPU; no HTTP requests, no per-frame canvas paints, bounded clock writes, identical unlabelled balls during motion and exact final label positions');
+    report.checks.push('Sequential real-clock browser samples compare 1.50/1.62/current, normal and strong/4x CPU; no per-frame transform writes with native playback, bounded clocks, no target identity cues and exact final labels');
     const gapRun = await contextFor(HTML);
     await gapRun.frame.locator('#start').click();
     await gapRun.frame.waitForFunction(() => toolState.phase === 'motion' && toolState.deadline - performance.now() > 4000);
     await gapRun.frame.evaluate(() => {const until = performance.now() + 320; while (performance.now() < until) { /* inject one stall */ }});
     await gapRun.frame.waitForFunction(() => toolState.phase === 'aborted');
+    assert.equal(await gapRun.frame.evaluate(()=>document.getAnimations().filter(a=>a.playState==='running').length),0);
     assert.match(await gapRun.frame.locator('#notice').textContent(), /停顿/);
     assert.equal(await gapRun.page.evaluate(() => records.some(r => r.detail?.status === 'complete')), false);
     const frozen = await gapRun.frame.evaluate(() => JSON.stringify(toolState.question.balls));

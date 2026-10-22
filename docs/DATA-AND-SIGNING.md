@@ -16,7 +16,7 @@
 
 ## 覆盖安装
 
-包名：`cn.focusuniverse.offline`。当前versionName为1.62、versionCode为11；WebView来源保持`https://appassets.androidplatform.net/assets/index.html`。
+包名：`cn.focusuniverse.offline`。当前versionName为1.63、versionCode为12；WebView来源保持`https://appassets.androidplatform.net/assets/index.html`。
 
 公开的签名证书SHA-256为：
 
@@ -29,3 +29,5 @@ a29e71972abb4c5c1a80ee4df9964261903883f1f5cad09d5fefaffa7299be0a
 安装前导出备份，直接更新，不先卸载或清除数据。当前签名/包名/版本静态检查通过，真实覆盖安装仍需手机确认。
 
 1.62 第七项新增规则 v3，十球运动 10000ms、十二球仍 8000ms，入场/高光条件显式记录；兼容原 v1/v2 参数，三个规则与两个预设独立比较。设置白名单新增第七项 sound=on/off，使用原设置存储键，旧设置缺失时默认开启；不升级备份格式。
+
+1.63 的规则 v4 显式记录浅色、均衡随机位置和连续碰撞模型，兼容 v1–v3，形成八个条件比较组；不改变备份 v4、存储键或训练身份。
