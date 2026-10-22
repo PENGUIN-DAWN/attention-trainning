@@ -49,6 +49,8 @@ docs/             架构、构建、测试、数据兼容和本次整理说明
 
 ## 开发
 
+项目背景、训练目录、历史决定、验证证据和待确认事项统一从[项目知识库](docs/knowledge-base/README.md)查阅；协作入口见 [AGENTS.md](AGENTS.md)。
+
 先阅读 [构建说明](docs/BUILD.md)、[架构说明](docs/ARCHITECTURE.md)、[测试入口](docs/TESTING.md) 和 [数据与签名边界](docs/DATA-AND-SIGNING.md)。
 
 ```powershell
