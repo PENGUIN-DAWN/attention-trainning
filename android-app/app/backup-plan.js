@@ -33,6 +33,8 @@ const FocusBackup = (() => {
     const incomingSeen = Array.isArray(backup.preferences?.seen) ?
       backup.preferences.seen.filter(adapters.hasTraining) : [];
     const preferences = {
+      effectsMuted: typeof backup.preferences?.effectsMuted === 'boolean' ?
+        backup.preferences.effectsMuted : current.preferences.effectsMuted === true,
       reduced: typeof backup.preferences?.reduced === 'boolean' ?
         backup.preferences.reduced : current.preferences.reduced,
       seen: [...new Set([...current.preferences.seen, ...incomingSeen])],

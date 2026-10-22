@@ -1,0 +1,188 @@
+{
+  "version": "1.62",
+  "html_sha256": "4a947abda1b9f687e9e376ce7fc1dbf2bb7174841b46d03847522b4202e78404",
+  "checks": [
+    "Accepted answer selections and submit use shared click feedback, ignored selections stay silent, and feedback leaves answer timing and scoring unchanged",
+    "Real-clock countdown, ten distinct pop entrances, full 2.5-second target cue and full 10-second motion are ordered and separate; original ball/target/field colors and circular geometry retained",
+    "Real AudioContext/Analyser observes non-silent output; one tone per visible entry, no tones during motion; target glow and all identity cues disappear before motion",
+    "Background interruption during countdown, entrance and target confirmation cancels future reveals, animations and audio and produces no completed score",
+    "Mute creates no audio context and persists after reload; reduced motion keeps sequential reveals and four static target cues without animations; preference changes save",
+    "Unavailable audio fails gracefully with a visible notice while the visual exercise continues offline"
+  ],
+  "errors": [],
+  "observations": {
+    "flow": {
+      "events": [
+        {
+          "phase": "idle",
+          "at": 289.7,
+          "targets": 0
+        },
+        {
+          "phase": "preparing",
+          "at": 326.1,
+          "targets": 0
+        },
+        {
+          "phase": "countdown",
+          "at": 423,
+          "targets": 0
+        },
+        {
+          "phase": "intro",
+          "at": 2041.3,
+          "targets": 0
+        },
+        {
+          "phase": "mark",
+          "at": 3944.2,
+          "targets": 4
+        },
+        {
+          "phase": "motion",
+          "at": 6465.4,
+          "targets": 0
+        },
+        {
+          "phase": "preparing",
+          "at": 16483.5,
+          "targets": 0
+        },
+        {
+          "phase": "answer",
+          "at": 16495.6,
+          "targets": 0
+        }
+      ],
+      "counts": [
+        {
+          "count": 1,
+          "at": 2041.3
+        },
+        {
+          "count": 2,
+          "at": 2204.9
+        },
+        {
+          "count": 3,
+          "at": 2368.5
+        },
+        {
+          "count": 4,
+          "at": 2526.1
+        },
+        {
+          "count": 5,
+          "at": 2683.7
+        },
+        {
+          "count": 6,
+          "at": 2847.3
+        },
+        {
+          "count": 7,
+          "at": 3004.9
+        },
+        {
+          "count": 8,
+          "at": 3168.4
+        },
+        {
+          "count": 9,
+          "at": 3326
+        },
+        {
+          "count": 10,
+          "at": 3483.6
+        }
+      ],
+      "tones": [
+        {
+          "at": 431.90000000596046,
+          "phase": "countdown",
+          "visible": 0
+        },
+        {
+          "at": 1236.4000000059605,
+          "phase": "countdown",
+          "visible": 0
+        },
+        {
+          "at": 2036.9000000059605,
+          "phase": "intro",
+          "visible": 1
+        },
+        {
+          "at": 2200.300000011921,
+          "phase": "intro",
+          "visible": 2
+        },
+        {
+          "at": 2363.7000000178814,
+          "phase": "intro",
+          "visible": 3
+        },
+        {
+          "at": 2521.300000011921,
+          "phase": "intro",
+          "visible": 4
+        },
+        {
+          "at": 2678.800000011921,
+          "phase": "intro",
+          "visible": 5
+        },
+        {
+          "at": 2842.4000000059605,
+          "phase": "intro",
+          "visible": 6
+        },
+        {
+          "at": 3000,
+          "phase": "intro",
+          "visible": 7
+        },
+        {
+          "at": 3163.5999999940395,
+          "phase": "intro",
+          "visible": 8
+        },
+        {
+          "at": 3321.0999999940395,
+          "phase": "intro",
+          "visible": 9
+        },
+        {
+          "at": 3478.7000000178814,
+          "phase": "intro",
+          "visible": 10
+        },
+        {
+          "at": 3939.4000000059605,
+          "phase": "mark",
+          "visible": 10
+        },
+        {
+          "at": 3939.5,
+          "phase": "mark",
+          "visible": 10
+        }
+      ],
+      "maxSignal": 0.05483771860599518,
+      "done": true
+    },
+    "cue": {
+      "count": 10,
+      "targets": 4,
+      "activeEntries": 0,
+      "normal": "rgb(72, 95, 128)",
+      "target": "rgb(164, 97, 36)",
+      "fieldPixel": [
+        243,
+        245,
+        250,
+        255
+      ]
+    }
+  }
+}

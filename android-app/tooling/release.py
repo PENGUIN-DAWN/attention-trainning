@@ -32,18 +32,18 @@ def package():
 
     notes = write('更新说明', f'''# 专注力小宇宙 {version}
 
-本版优化动态训练的绘制，保留浅蓝界面和 {len(registry())} 项训练。
+本版打磨第七项的入场、立体高光与目标确认，保留浅蓝界面和 {len(registry())} 项训练。
 
-- 第七项小球改为复用图层，使用固定 120 Hz 物理步长与显示帧插值，避免每帧重绘整块画布。
-- 第七项普通速度 0.16 → 0.24，加强速度 0.18 → 0.27，均提高 50%；标记、运动时长和目标数量不变。
-- 第七项采用规则 v2；旧 v1 记录仍可查看和导入，按原速度、原规则独立比较。
-- 运动帧停顿超过 250 ms 时中断本轮，不补算一大段不可见运动，不记为完成。
-- 第五项观察进度改用缩放，动态文字保持原变化与观察时长；第五、十一项减少重复倒计时写入。
-- 首页 SVG 装饰增加合成提示；训练、离屏和后台仍停止装饰运动。
-- 减少动画开关与系统偏好继续生效，题目本身必要运动不被关闭。
-- 原存储键、备份 v4 与 v1–v4 导入兼容、来源和隐藏历史数据保留。
+- 十球档正式运动从 6 秒改为 10 秒；十二球档仍为 8 秒，速度保持 0.24 / 0.27。
+- 保留原蓝色小球、棕金色目标与浅色背景、方形场地和原始排列，只借鉴参考视频的呈现效果。
+- 简短倒数后，小球每 160 毫秒逐颗出现；立体高光和内阴影固定在球面，进入运动后只更新位置。
+- 全部出现后，目标发光确认完整 2.5 秒；入场和确认都不占正式运动时间，运动时恢复一致外观。
+- 入场搭配离线合成的轻柔短音，可在设置中静音；没有复制示范视频音乐，也没有联网素材。
+- 减少动画时保留逐颗显示和静态目标光圈，关闭弹出缩放和光圈脉动；正式追踪运动保留。
+- 第七项新记录使用规则 v3；旧 v1/v2 条件、成绩、存储键和备份 v4 继续兼容并分组比较。
+- 返回、切后台或运动长停顿会取消时钟、入场和音效，不算作完成。
 
-除第七项速度与运动实现外，其余训练规则、题量、观察条件、音频及计分保留。未引入 Lottie 播放器：现有运动是实时题目或简单矢量变化，没有待替换的 GIF，固定素材不能直接替代随机追踪。不增加训练剂量或效果承诺。
+其余训练规则、计时、原数字音频和计分保留。没有联网、收费或新增训练项目。
 版本代码 {meta['versionCode']}，包名 `{meta['package']}`。历史 APK 保留。
 ''')
     install = write('安装与使用说明', f'''# 覆盖安装 {version}
@@ -73,7 +73,7 @@ APK SHA-256：`{verification['sha256']}`。
 覆盖原十六项流程、倒序、教学与正式分离、计时/后台/快速操作、记录删除、旧备份合并、
 导入失败与事务写入、保存重试、减少动画、小屏布局、题面兼容与音频离线资源。
 规则随机性质检查沿用既有套件；本次包括 Python 5 项与工程契约 4 组。
-旧原始 HTML、训练 CSS、规则 8–16 和音频保留。第七项运动/速度、第五项绘制适配及第十一项倒计时采用独立 1.61 源码契约，未修改旧哈希快照；详见 docs/MOTION-161.md。
+旧原始 HTML、训练 CSS、规则 8–16 和音频保留。第七项入场、音效和 v3 条件使用独立 1.62 源码契约；旧 1.50/1.61 契约原样保留，详见 docs/MOTION-162.md。
 
 ## 浏览器软件测量
 
@@ -90,9 +90,9 @@ APK SHA-256：`{verification['sha256']}`。
 ## 动态训练补充
 
 第七项约 1.8 秒普通档采样：画布重绘 {motion_before['paints']} → {motion_after['paints']}，布局次数 {motion_before['layoutCount']} → {motion_after['layoutCount']}；
-新旧 p95 回调间隔均约 {motion_after['p95Ms']:.2f} ms。这里能确认减少了绘制/布局工作，没有证明安卓手机帧率或残影改善。
-加强档在 4 倍 CPU 软件限速下完成观察、运动及编号位置检查。规则 v1/v2 的旧记录读入、真实导出/导入和独立比较通过；模拟刷新率的最终轨迹一致。
-另有隔离浏览器单帧边缘核验（不属于 {receipt['checks']} 组完整运行计数）：小球无模糊/阴影/过渡，背景像素没有残留球影。该检查不是手机屏幕拖影验收。
+旧 p95 回调间隔 {motion_before['p95Ms']:.2f} ms，新 {motion_after['p95Ms']:.2f} ms。这里能确认减少了绘制/布局工作，没有证明安卓手机帧率或残影改善。
+加强档在 4 倍 CPU 软件限速下完成观察、运动及编号位置检查。规则 v1/v2/v3 的记录读入、真实导出/导入和六组独立比较通过；模拟刷新率的最终轨迹一致。
+本次小球入场套件验证真实音频图的非静音输出、逐颗出现与声音对应、完整分段时长、原配色、目标提示退出、静音/减少动画、各准备阶段的后台取消和无音频 API 降级。浏览器视频预览不含音轨；实际 App 在入场时实时合成音效。不能据此断言手机硬件已无残影或音量合适。
 
 ## APK 静态检查
 
@@ -118,7 +118,7 @@ APK SHA-256：`{verification['sha256']}`。
 - `android-app/archive/`：历史文件原样留档，不参与当前构建。
 
 应用脚本按显式顺序合成单一离线页面，仍有集中声明的共享状态，尚未改写为 ESM 或彻底解耦所有训练内部代码。
-1.61 对第七项运动及第五项绘制适配建立独立源码契约，详见 docs/MOTION-161.md；其余受保护源文件继续核对旧基线。
+1.62 在 1.61 基础上增加第七项入场、高光、音效及十球 10 秒条件，详见 docs/MOTION-162.md；旧契约与其余训练继续回归。
 备份保持 v4，兼容 v1–v4；缺失新增/隐藏数据的旧备份不会清空当前对应数据。
 
 开发命令详见仓库 docs/BUILD.md 和 docs/TESTING.md。
@@ -129,7 +129,8 @@ APK SHA-256：`{verification['sha256']}`。
     gallery = OUT / f'页面预览-{version}.html'
     figures = ''.join(f'<figure><img loading="lazy" src="{html.escape(p.name)}" alt="{html.escape(p.stem)}"><figcaption>{html.escape(p.stem)}</figcaption></figure>' for p in screenshots)
     gallery.write_text(f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{version} 页面预览</title><style>body{{background:#faf6f0;color:#244b73;font:16px system-ui;margin:24px}}main{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}}figure{{margin:0}}img,video{{max-width:100%;max-height:720px;border-radius:16px;border:1px solid #dce6ec}}p{{color:#596f80}}</style><h1>专注力小宇宙 {version}</h1><p>隔离浏览器真实页面；成绩为测试数据。视频捕获帧率不代表设备渲染帧率。</p><video controls src="{video.name}"></video><main>{figures}</main></html>''', encoding='utf-8')
-    files = [apk, notes, install, report, architecture, gallery, video, *screenshots,
+    tracking_video = OUT / f'小球逐颗入场-{version}.webm'
+    files = [apk, notes, install, report, architecture, gallery, video, tracking_video, *screenshots,
              OUT / f'安装包验收-{version}.json', OUT / f'验收运行-{version}.json',
              *[OUT / f'{name}-{version}.json' for name in REPORT_NAMES]]
     visual_qa = OUT / f'小球运动边缘核验-{version}.json'

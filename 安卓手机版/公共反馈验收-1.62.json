@@ -1,0 +1,14 @@
+{
+  "version": "1.62",
+  "html_sha256": "4a947abda1b9f687e9e376ce7fc1dbf2bb7174841b46d03847522b4202e78404",
+  "realAndroid": false,
+  "checks": [
+    "A delayed audio unlock cannot revive sound after suspension; unsupported/cancelled playback has no task-clock dependency",
+    "An ordinary settings click uses the shared service, emits a real short tone and starts bounded decorative motion; no context exists before a gesture",
+    "Keyboard activation uses the same feedback; mute retains motion, reduced mode cancels it, and mute survives reload and a legacy backup without the field",
+    "Global mute reaches the training and suppresses context creation; an already-cached training receives unmute; navigating away cancels scheduled tones",
+    "Muted decorative feedback leaves the original stereo digit playback available with two-channel content and its own cancellation",
+    "Missing audio API never blocks the ordinary action; suspension cancels decorative animations; all runtime resources remain offline"
+  ],
+  "errors": []
+}

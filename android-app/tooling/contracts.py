@@ -17,6 +17,24 @@ def verify_sources():
         assert change['reason'], name
         expected[name] = change['sha256']
     expected.update(motion['addedSources'])
+    latest = json.loads((APP / 'motion-baseline-162.json').read_text(encoding='utf-8'))
+    assert set(latest['changedSources']) == {
+        'android-app/tool-rules.js', 'android-app/tool-ui.js',
+        'android-app/tool-motion.js', 'android-app/tool-motion.css',
+    }
+    for name, change in latest['changedSources'].items():
+        assert expected[name] == change['previous_sha256'], name
+        assert change['reason'], name
+        expected[name] = change['sha256']
+    assert set(latest['addedSources']) == {'android-app/tool-audio.js'}
+    expected.update(latest['addedSources'])
+    feedback = json.loads((APP / 'feedback-baseline.json').read_text(encoding='utf-8'))
+    assert set(feedback['changedSources']) == {'android-app/tool-ui.js', 'android-app/tool-audio.js'}
+    for name, change in feedback['changedSources'].items():
+        assert expected[name] == change['previous_sha256'], name
+        assert change['reason'], name
+        expected[name] = change['sha256']
+    expected.update(feedback['addedSources'])
     for name, digest in expected.items():
         assert hashlib.sha256((ROOT / name.replace('\\', '/')).read_bytes()).hexdigest() == digest, name
-    return motion
+    return latest

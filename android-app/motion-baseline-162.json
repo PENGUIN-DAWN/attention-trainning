@@ -1,0 +1,29 @@
+{
+  "version": "1.62",
+  "previous_contract": "motion-baseline-161.json",
+  "changedSources": {
+    "android-app/tool-rules.js": {
+      "previous_sha256": "415678a1cbd841461f112fa848c6ec4f8a1598d6efc4e638df96acaf222259d5",
+      "sha256": "9f19d5e2ed12bcb26b35430b29116912faa956cfd63605d49050d9616843d52b",
+      "reason": "Tracking v3 adds 10-second normal motion and explicit entry/cue parameters while preserving original palette, square field and positions; v1/v2 conditions remain valid."
+    },
+    "android-app/tool-ui.js": {
+      "previous_sha256": "d49494d6e99b15088131b2493a2b3c1e6a57e6c78e0558b7e69c2a515469e4fc",
+      "sha256": "cd0de70d653404acef2810b234ae57fdeb83f60188f342c2a144cb894087084d",
+      "reason": "Cancellable countdown, sequential sphere entrance, optional audio and target confirmation precede full motion; mute preference is retained."
+    },
+    "android-app/tool-motion.js": {
+      "previous_sha256": "26bbb4d03ba97f8ea2687ce16e0b7cd3b27b6980f97aa5192ae976419d2be3ab",
+      "sha256": "18f678f4054cfa0585016b443b8ae6794db4deec7e6f8d0e681c2365afaa3e24",
+      "reason": "Reusable highlighted sphere surfaces keep original positions and field colors; independent entry transforms and cue-only glow."
+    },
+    "android-app/tool-motion.css": {
+      "previous_sha256": "04cbfbf0b9a0d84e212335e0d1b5f5d625a553adcdcaf63dfbc5f2df9e78b36c",
+      "sha256": "ff3458d18373d92b7fe9cc2af410f58a77b67b49ae7fab63c27af566f9d1168c",
+      "reason": "Original blue/brown/light palette retained; static highlights and inset shading add depth; glow stops before motion."
+    }
+  },
+  "addedSources": {
+    "android-app/tool-audio.js": "b0eb38e5408f3cfad591686c8bb7682abd8158902c283d8327301c6cdd68c5d2"
+  }
+}

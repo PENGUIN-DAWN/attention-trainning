@@ -18,6 +18,11 @@ const modules = JSON.parse(oldPage.match(/id="trainingData">([\s\S]*?)<\/script>
 const oldSandbox = vm.createContext({});
 for (const script of modules.find(m => m.id === 7).source.matchAll(/<script>([\s\S]*?)<\/script>/g)) vm.runInContext(script[1], oldSandbox);
 const oldR = oldSandbox.FocusToolRules;
+const previousPage = fs.readFileSync(path.join(require('node:os').homedir(), '.cache/focus-motion161.html'), 'utf8');
+const previousModules = JSON.parse(previousPage.match(/id="trainingData">([\s\S]*?)<\/script>/)[1]);
+const previousSandbox = vm.createContext({});
+for (const script of previousModules.find(m => m.id === 7).source.matchAll(/<script>([\s\S]*?)<\/script>/g)) vm.runInContext(script[1], previousSandbox);
+const previousR = previousSandbox.FocusToolRules;
 const plain = v => JSON.parse(JSON.stringify(v));
 function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 1013904223 >>> 0) / 4294967296); }
 
@@ -27,25 +32,33 @@ function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 101390
     const fixtures = [];
     for (const preset of ['normal', 'strong']) {
       const oldC = oldR.condition(7, {preset}), current = R.condition(7, {preset});
-      assert.equal(current.ruleVersion, 2);
+      assert.equal(current.ruleVersion, 3);
+      assert.equal(current.motionMs, preset === 'normal' ? 10000 : 8000);
       assert.ok(Math.abs(current.speed / oldC.speed - 1.5) < 1e-10);
       assert.deepEqual(plain(R.condition(7, {preset}, 1)), plain(oldC));
+      const previousC = previousR.condition(7, {preset});
+      assert.deepEqual(plain(R.condition(7, {preset}, 2)), plain(previousC));
       const results = Array.from({length: 3}, () => ({correct: true, timeout: false, skip: false, errors: 0, hits: oldC.targets, responseMs: 400}));
       const d1 = oldR.cleanDetail(7, oldR.detail(7, oldC, results));
-      const d2 = R.cleanDetail(7, R.detail(7, current, results));
+      const d2 = previousR.cleanDetail(7, previousR.detail(7, previousC, results));
+      const d3 = R.cleanDetail(7, R.detail(7, current, results));
       assert.deepEqual(plain(R.cleanDetail(7, d1)), plain(d1));
       assert.ok(d2 && d2.ruleVersion === 2);
+      assert.deepEqual(plain(R.cleanDetail(7, d2)), plain(d2));
+      assert.ok(d3 && d3.ruleVersion === 3);
       assert.equal(R.cleanDetail(7, {...plain(d1), ruleVersion: 2}), undefined);
       assert.equal(R.cleanDetail(7, {...plain(d2), ruleVersion: 1}), undefined);
       assert.equal(R.cleanDetail(7, {...plain(d2), ruleVersion: 3}), undefined);
-      for (const [i, detail] of [d1, d2].entries()) fixtures.push({module: 7, token: preset + '-v' + (i + 1), at: Date.now() + i, summary: '兼容性测试', detail: plain(detail)});
+      assert.equal(R.cleanDetail(7, {...plain(d3), ruleVersion: 4}), undefined);
+      for (const [i, detail] of [d1, d2, d3].entries()) fixtures.push({module: 7, token: preset + '-v' + (i + 1), at: Date.now() + i, summary: '兼容性测试', detail: plain(detail)});
       const finalStates = [];
       for (const hz of [60, 90, 120]) {
-        const q = R.generate(7, current, rng()), motion = new sandbox.Motion(q.balls);
+        const q = R.generate(7, current, rng()), motion = new sandbox.Motion(q.balls, current);
+        assert.equal(new Set(q.entrance).size, current.balls);
         for (let frame = 1; frame <= current.motionMs * hz / 1000; frame++) {
           const positions = motion.sample(frame * 1000 / hz);
           assert.ok(positions);
-          for (const p of positions) assert.ok(Number.isFinite(p.x) && p.x >= .043 && p.x <= .957 && p.y >= .043 && p.y <= .957);
+          for (const p of positions) assert.ok(Number.isFinite(p.x) && p.x >= .043 && p.x <= .957 && p.y >= .043 && p.y <= 1/current.fieldAspect-.043);
         }
         assert.ok(motion.sample(current.motionMs, true));
         finalStates.push(plain(q.balls));
@@ -54,7 +67,7 @@ function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 101390
       assert.deepEqual(finalStates[0], finalStates[1]);
       assert.deepEqual(finalStates[0], finalStates[2]);
     }
-    report.checks.push('Both tracking presets are 50% faster; genuine v1 records remain byte-equivalent after cleaning; mixed/future versions rejected; fixed-step trajectories agree at simulated 60/90/120 Hz');
+    report.checks.push('Tracking v3 retains v2 speeds, normal motion is 10 seconds and strong is 8; genuine v1/v2 conditions/results unchanged; versions are distinct; rectangular trajectories agree at simulated 60/90/120 Hz');
     for (const id of [8, 9, 10]) for (const preset of Object.keys(R.CONFIG[id].presets)) for (const grid of id === 10 ? ['mobile', 'video'] : [undefined]) {
       const c = R.condition(id, {preset, grid});
       assert.deepEqual(plain(c), plain(oldR.condition(id, {preset, grid})));
@@ -80,8 +93,8 @@ function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 101390
       return {context, page, frame, requests};
     }
     const current = await contextFor(HTML, fixtures);
-    assert.equal(await current.page.evaluate(() => records.length), 4);
-    assert.equal(await current.page.evaluate(() => bestRecords().size), 4);
+    assert.equal(await current.page.evaluate(() => records.length), 6);
+    assert.equal(await current.page.evaluate(() => bestRecords().size), 6);
     await current.page.evaluate(() => {
       const original = window.FocusDevice;
       let exported;
@@ -90,9 +103,9 @@ function rng() { let n = 9042; return () => ((n = Math.imul(n, 1664525) + 101390
       window.FocusDevice = original;
       focusImportBackup(exported);
     });
-    assert.deepEqual(await current.page.evaluate(() => records.map(r => r.detail.ruleVersion).sort()), [1, 1, 2, 2]);
-    assert.equal(await current.page.evaluate(() => bestRecords().size), 4);
-    report.checks.push('Real v1/v2 tracking records survive startup, export/import and deduplication; old/new and normal/strong records form four comparison groups');
+    assert.deepEqual(await current.page.evaluate(() => records.map(r => r.detail.ruleVersion).sort()), [1, 1, 2, 2, 3, 3]);
+    assert.equal(await current.page.evaluate(() => bestRecords().size), 6);
+    report.checks.push('Real v1/v2 and new v3 tracking records survive startup, export/import and deduplication; three rules and two presets form six comparison groups');
     await current.context.close();
     async function measure(file, preset, cpuRate) {
       console.log('Measure motion', file === HTML ? 'current' : 'baseline', preset, cpuRate);

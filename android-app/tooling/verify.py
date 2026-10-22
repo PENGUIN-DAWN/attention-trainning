@@ -40,7 +40,7 @@ def verify():
     old_modules = {m['id']: m for m in payload(previous, 'trainingData')}
     expected_sources = {
         'tool': inject(read('tool-page.html'), join(['tool.css', 'tool-motion.css']),
-                       join(['tool-rules.js', 'tool-motion.js', 'tool-ui.js'])),
+                       join(['tool-rules.js', 'tool-motion.js', 'tool-audio.js', 'tool-ui.js'])),
         'advanced': inject(read('advanced-page.html'), read('advanced.css'),
                            join(['advanced-rules.js', 'advanced-clock.js', 'advanced-audio.js', 'advanced-ui.js'])),
     }
@@ -54,6 +54,7 @@ def verify():
     assert len(payload(page, 'trainingData')) == len(registry())
     before, after = payload(previous, 'trainingPresentation'), payload(page, 'trainingPresentation')
     assert before['css'] == after['css'] and after['js'] == read('training.js')
+    assert after['feedback'] == read('shared/feedback.js')
     assert payload(page, 'digitAudio') == payload(previous, 'digitAudio')
 
     fingerprints = {}
@@ -70,7 +71,7 @@ def verify():
     permissions = command([tools / 'aapt.exe', 'dump', 'permissions', staging])
     assert 'uses-permission' not in permissions
     command([tools / 'zipalign.exe', '-c', '-p', '4', staging])
-    assert code > 9, 'Update versionCode must exceed the 1.60 release'
+    assert code > 10, 'Update versionCode must exceed the 1.61 release'
     result = {
         **meta, 'apk_bytes': apk.stat().st_size,
         'sha256': hashlib.sha256(apk.read_bytes()).hexdigest(),
@@ -78,7 +79,8 @@ def verify():
         'baseline_version': BASELINE_VERSION,
         'all_training_engines_equal_baseline': False,
         'training_contract_verified': True,
-        'motion_contract': 'motion-baseline-161.json',
+        'motion_contract': 'motion-baseline-162.json',
+        'feedback_contract': 'feedback-baseline.json',
         'core_presentation_and_audio_equal_baseline': False,
         'protected_css_and_audio_equal_baseline': True,
         'legacy_sources_and_apks_unchanged': True,

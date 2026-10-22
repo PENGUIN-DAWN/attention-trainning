@@ -80,6 +80,7 @@ try {
       }
     },
     preferences: {
+      effectsMuted: true,
       reduced: true,
       seen: [16]
     }
@@ -100,6 +101,9 @@ try {
   assert.equal(merged.records.length, 2);
   assert.equal(merged.settings[16].preset, 'current');
   assert.equal(merged.preferences.reduced, true);
+  assert.equal(merged.preferences.effectsMuted, true);
+  assert.equal(plan(JSON.stringify({...old, preferences: {effectsMuted: false}}), current,
+    adapters).preferences.effectsMuted, false);
   assert.equal(merged.hasArcade, false);
   assert.equal(merged.entries.length, 3);
   const replay = plan(JSON.stringify(old), {
@@ -145,6 +149,25 @@ try {
     baseline[name] = change.sha256;
   }
   Object.assign(baseline, motion.addedSources);
+  const gold = JSON.parse(fs.readFileSync(path.join(APP, 'motion-baseline-162.json'), 'utf8'));
+  assert.deepEqual(Object.keys(gold.changedSources).sort(), [
+    'android-app/tool-motion.css', 'android-app/tool-motion.js', 'android-app/tool-rules.js', 'android-app/tool-ui.js'
+  ]);
+  for (const [name, change] of Object.entries(gold.changedSources)) {
+    assert.equal(change.previous_sha256, baseline[name], name);
+    assert.ok(change.reason);baseline[name] = change.sha256;
+  }
+  assert.deepEqual(Object.keys(gold.addedSources), ['android-app/tool-audio.js']);
+  Object.assign(baseline, gold.addedSources);
+  const feedback = JSON.parse(fs.readFileSync(path.join(APP, 'feedback-baseline.json'), 'utf8'));
+  assert.deepEqual(Object.keys(feedback.changedSources).sort(), [
+    'android-app/tool-audio.js', 'android-app/tool-ui.js'
+  ]);
+  for (const [name, change] of Object.entries(feedback.changedSources)) {
+    assert.equal(change.previous_sha256, baseline[name], name);
+    assert.ok(change.reason);baseline[name] = change.sha256;
+  }
+  Object.assign(baseline, feedback.addedSources);
   for (const [name, expected] of Object.entries(baseline)) {
     assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.resolve(APP, '..', name
       .replace(/\\/g, '/')))).digest('hex'), expected, name);

@@ -47,8 +47,9 @@ python -X utf8 android-app/dev.py package
 ```
 
 release 顺序执行完整测试、构建、APK 核验和打包。package 拒绝缺失、失败、页面不匹配、测试源或报告改变的完整测试凭据。
-1.61 增加独立动态训练套件并串行采样；源码核验保留旧基线，同时应用明确的 motion-baseline-161.json 差异契约。报告不再声称全部引擎与 1.50 一致，详见 [动态训练优化](MOTION-161.md)。
+1.61/1.62 的动态训练和入场/音效套件串行执行；源码核验保留旧基线，依次应用 motion-baseline-161.json 与 motion-baseline-162.json 差异契约。报告不再声称全部引擎与 1.50 一致，详见 [动态训练优化](MOTION-161.md)。
 prepare 生成 android-app/assets/index.html，不直接编辑或提交它。
+公共反馈接入追加 `feedback-baseline.json` 差异契约；`feedback` 套件串行运行，`公共反馈验收` 纳入完整测试凭据。接口与两个试点见 [统一音效与动效接入](FEEDBACK.md)。
 版本号仅从 AndroidManifest.xml 读取，输出到 `安卓手机版/` 的对应版本文件；不要覆盖历史 APK。
 发布时递增 versionName/versionCode，修改说明文档的当前版本入口。
 
@@ -57,3 +58,5 @@ archive 内历史脚本只供阅读，含旧路径和旧版本，不能作为当
 
 当前 native 编译、签名和 SDK 工具面向 Windows；尚未验证 Linux/macOS 构建。
 版本与校验.json 是最近一次构建元数据；每版另存安装包验收、测试凭据和交付校验。
+
+第七项独立预览为 `小球逐颗入场-版本.webm`，来自隔离浏览器且不含音轨；App 音效在运行时合成。该预览与新版完整报告一起打包，不包含作者提供的原始参考视频。
