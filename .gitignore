@@ -36,15 +36,28 @@ _hub/*
 # Raw synthesis intermediates; normalized offline audio is in digits.json
 android-app/audio/raw-*.wav
 
-# Keep historical signed APKs for upgrade/source verification, and 1.50 artifacts
-安卓手机版/*
+# Historical APKs are retained; ignore only obsolete preview bundles/caches.
+安卓手机版/*-1.0.0.*
+安卓手机版/*-1.0.1.*
+安卓手机版/*-1.1.0.*
+安卓手机版/*-1.2.0.*
+安卓手机版/*-1.30.*
+安卓手机版/*-1.40.*
 !安卓手机版/*.apk
-!安卓手机版/*-1.50.md
-!安卓手机版/*-1.50.json
-!安卓手机版/*-1.50.png
-!安卓手机版/*-1.50.html
-!安卓手机版/*-1.50.webm
-!安卓手机版/专注力小宇宙-1.50-安卓自用版.zip
-!安卓手机版/版本与校验.json
-!安卓手机版/README.md
-安卓手机版/ui-video-150/
+安卓手机版/专注力小宇宙-安卓自用版.zip
+安卓手机版/安装与使用说明.md
+安卓手机版/ui-video-*/
+
+# Non-current local preview/backup leftovers; keep historical APKs above.
+安卓手机版/*-1.0.0-*
+安卓手机版/*-1.0.1-*
+安卓手机版/*-1.1.0-*
+安卓手机版/*-1.2.0-*
+安卓手机版/*-1.30-*
+安卓手机版/*-1.40-*
+安卓手机版/*-tail.json
+安卓手机版/删除确认预览.png
+安卓手机版/安卓界面预览.png
+安卓手机版/输入法调试.png
+安卓手机版/验收预览/
+安卓手机版/验证记录.md

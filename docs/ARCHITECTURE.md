@@ -1,23 +1,45 @@
 # 当前架构与代码入口
 
-本仓库保存1.50实际工程，尚未进行前一轮讨论的完整模块化重构。
+1.51 将应用壳拆分并统一工程入口；原十六项训练引擎继续冻结，未重写规则或时序。
 
-| 层次 | 主要文件 | 职责 |
+| 层次 | 位置 | 职责 |
 | --- | --- | --- |
-| 安卓平台 | `android-app/src/cn/focusuniverse/offline/MainActivity.java` | 内置页面来源、后台、返回、系统文档与减少动画 |
-| 页面合成 | `android-app/prepare_assets.py` | 只读历史输入，合成`assets/index.html`，不改已发布网页 |
-| 应用壳 | `experience.js` | 目录路由、记录、条件比较、设置与v4备份 |
-| 原六项适配 | `training.js`、`training.css`、`descending.py` | 保留原HTML引擎，接入移动UI与倒序模式 |
-| 7–10 | `tool-rules.js`、`tool-ui.js` | 配置、出题、判分与阶段状态 |
-| 11–16 | `advanced-rules.js`、`advanced-ui.js` | 规则、教学/正式流程与记录 |
-| 视觉计时 | `advanced-clock.js` | rAF、稳定布局、取消和时序异常 |
-| 音频 | `advanced-audio.js`、`audio/digits.json` | 内置数字、双声道共同起点、后台停止 |
-| 存储 | `storage.js` | 带恢复日志的事务写入 |
-| 隐藏历史数据 | `arcade-rules.js`、`arcade-store.js` | 只保留历史娱乐备份兼容，无娱乐入口 |
-| UI | `design-tokens.css`、`dark-shell.css`、`dark-training.css`、`directory.js`、`shell-motion.js`、`dialog-motion.css`、`chrome-status.js` | 深色矩形目录、外围样式和动效 |
+| 安卓平台 | `android-app/src/cn/focusuniverse/offline/MainActivity.java` | 内置页面来源、后台、返回、文档与减少动画 |
+| 训练注册表 | `android-app/config/trainings.json` | 稳定 ID/key、引擎族、名称、规则、图标、颜色、设置白名单与示例 |
+| 安卓模板 | `android-app/templates/app.html` | 独立页面骨架与明确插槽，不再替换历史网页文案 |
+| 页面合成 | `android-app/prepare_assets.py` | 校验配置，注入只读训练源，生成单一离线页面 |
+| 应用状态 | `android-app/app/registry.js`、`state.js`、`model-types.js` | 注册查询、集中状态和协议文档 |
+| 导航与平台 | `app/navigation.js`、`bridge.js`、`platform.js` | 懒加载 iframe、路由取消、消息来源、后台/返回/键盘 |
+| 显示交互 | `app/ui-core.js`、`directory.js`、`motion.js`、`guides.js`、`preferences.js`、`start.js` | 目录、动效、首次示例与启动 |
+| 记录与统计 | `app/scores.js`、`records.js` | 原记录校验、条件比较、筛选与删除 |
+| 备份 | `app/backup-plan.js`、`backup.js` | 纯校验合并计划 → 事务写入 → 更新内存和页面 |
+| 存储 | `android-app/storage.js` | 带恢复日志的多键事务 |
+| 1–6 引擎 | `training.js/css`、`descending.py`、原 HTML | 原训练规则、适配和倒序模式 |
+| 7–10 引擎 | `tool-rules.js`、`tool-ui.js`、`tool.css` | 规则与阶段状态 |
+| 11–16 引擎 | `advanced-rules.js`、`advanced-ui.js`、`advanced-clock.js`、`advanced-audio.js` | 规则、帧时序、音频与教学 |
+| 隐藏历史数据 | `arcade-rules.js`、`arcade-store.js` | 只保留历史数据与备份兼容 |
+| 样式 | `android-app/styles/` | tokens、shell、training-chrome、dialog-motion |
+| 工程 | `android-app/tooling/`、`tests/`、`dev.py` | 元数据、路径、测试凭据、核验与发布 |
 
-详细动效参数与实现边界见[1.50开发说明](../android-app/UI改版开发说明-1.50.md)。
+表中 `app/` 是 `android-app/app/` 的缩写。原音频为 `android-app/audio/digits.json`。
 
-历史`arcade.js/css`、`shell.html`和旧版测试保留供历史参考，并不由当前页面合成器加载。原浅色CSS仍作为兼容基础，由当前深色层覆盖。
+## 边界
 
-后续建议顺序：统一训练注册表；减少字符串模板替换；拆分路由/记录/备份；清晰隔离题面样式；统一当前测试与发布入口。每步保持旧数据与训练行为可验证，不在文件整理中顺带重写。
+应用脚本按 prepare_assets.py 的显式顺序合成为单一脚本，不依赖运行时网络或模块加载器。
+函数跨文件共享同一作用域，状态集中在 state.js，尚未完全转换为依赖注入或 ESM。
+备份规划函数不读写 DOM/存储，可独立测试；正式提交仍通过原事务层。
+
+注册表消除了目录、路由和应用记录校验中的最大编号上限；新增训练仍必须实现引擎、结构化记录与测试，不能仅加一条配置就获得玩法。
+原六项分支中的项目专有规则仍按编号分派，这是本次保留的兼容边界。
+
+shell.css 保持原样式优先级顺序，移除同选择器被后续覆盖的声明；正式刺激不受通用字号规则影响。
+原六项 CSS 保留为只读兼容输入，training-chrome 只处理外围呈现；后续不可批量覆盖刺激样式。
+历史 experience/dark-shell 等层与旧发布脚本移至 archive，不参与构建。
+
+根 index.html 仍提供原六项结构化训练源，六个原 HTML 与 ui-baseline-150.json 构成验证基线。
+_hub/hub.template.html 仅作历史留档，当前构建不再读取。独立发布网页不受影响。
+
+## 推荐下一步
+
+每次只改一个训练内核，将其配置/规则/视图再拆分并保留行为回归。训练条件变化须显式升规则版本。
+不要在修改目录或主题时同时重写刺激时序。当前不引入大型框架，也不以重新上框架作为目标。

@@ -12,6 +12,8 @@ import urllib.request
 import zipfile
 import xml.etree.ElementTree as ET
 from prepare_assets import prepare
+from tooling import paths
+from tooling.project import registry
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -28,15 +30,21 @@ def main():
     version = manifest.get('{http://schemas.android.com/apk/res/android}versionName')
     version_code = int(manifest.get('{http://schemas.android.com/apk/res/android}versionCode'))
     parser = argparse.ArgumentParser()
-    parser.add_argument('--java-home', default=os.environ.get('JAVA_HOME', r'C:\Program Files\JetBrains\PyCharm 2026.1\jbr'))
-    parser.add_argument('--tools', type=Path, default=ROOT / '.android-tools')
+    parser.add_argument('--java-home')
+    parser.add_argument('--tools', type=Path, default=paths.android_root(ROOT / '.android-tools'))
     args = parser.parse_args()
-    java_home = Path(args.java_home)
+    java_home = paths.java_home(args.java_home)
     if not (java_home / 'bin' / 'javac.exe').is_file():
         raise SystemExit('A JDK 17+ is required. Set JAVA_HOME or pass --java-home.')
+    signing_dir = Path(os.environ.get('FOCUS_SIGNING_DIR', Path.home() / '.codex/app-signing/focus-universe')).resolve()
+    if signing_dir.is_relative_to(ROOT.resolve()):
+        raise SystemExit('Keep the private signing directory outside the source repository.')
+    if version_code > 1 and not all((signing_dir / name).is_file() for name in ['signing-config.json', 'focus-universe.p12']):
+        raise SystemExit('Original signing files are required for updates; restore them outside the repository or set FOCUS_SIGNING_DIR.')
     tools = args.tools.resolve(); tools.mkdir(parents=True, exist_ok=True)
     for name, checksum in PACKAGES:
-        marker = tools / ('android-15/aapt2.exe' if name.startswith('build') else 'android-35/android.jar')
+        existing_tools, existing_jar = paths.android_paths(tools)
+        marker = existing_tools / 'aapt2.exe' if name.startswith('build') else existing_jar
         if marker.exists(): continue
         archive = tools / name
         if not archive.exists():
@@ -45,8 +53,7 @@ def main():
         if hashlib.sha1(archive.read_bytes()).hexdigest() != checksum:
             raise SystemExit('SDK checksum mismatch: ' + name)
         with zipfile.ZipFile(archive) as z: z.extractall(tools)
-    bt = tools / 'android-15'
-    android_jar = tools / 'android-35/android.jar'
+    bt, android_jar = paths.android_paths(tools)
     # aapt2/zipalign on Windows need an ASCII staging path for projects with Chinese names.
     build = Path.home() / '.cache/focus-android-build'; build.mkdir(parents=True, exist_ok=True)
     classes = build / 'classes'; classes.mkdir(exist_ok=True)
@@ -71,7 +78,6 @@ def main():
     run([bt / 'zipalign.exe', '-f', '-p', '4', unsigned, aligned], env)
 
     # Keep the key OUTSIDE the project and all user-facing archives. Reuse it for every update.
-    signing_dir = Path.home() / '.codex/app-signing/focus-universe'
     signing_dir.mkdir(parents=True, exist_ok=True)
     config_file = signing_dir / 'signing-config.json'
     keystore = signing_dir / 'focus-universe.p12'
@@ -96,7 +102,7 @@ def main():
     run([bt / 'zipalign.exe', '-c', '-p', '4', apk], env)
     delivered = output / ('专注力小宇宙-' + version + '.apk')
     shutil.copy2(apk, delivered)
-    info = {'app':'专注力小宇宙','version':version,'versionCode':version_code,'package':'cn.focusuniverse.offline','min_android':'8.0','target_sdk':35,'apk_bytes':apk.stat().st_size,'sha256':hashlib.sha256(apk.read_bytes()).hexdigest(),'network_permission':False,'training_modules':16,'product_baseline':'1.30','entertainment_entry':False,'backup_version':4,'offline_digit_audio':'zh-huihui-1'}
+    info = {'app':'专注力小宇宙','version':version,'versionCode':version_code,'package':'cn.focusuniverse.offline','min_android':'8.0','target_sdk':35,'apk_bytes':apk.stat().st_size,'sha256':hashlib.sha256(apk.read_bytes()).hexdigest(),'network_permission':False,'training_modules':len(registry()),'product_baseline':'1.50','entertainment_entry':False,'backup_version':4,'offline_digit_audio':'zh-huihui-1'}
     (output / '版本与校验.json').write_text(json.dumps(info, ensure_ascii=False, indent=2), encoding='utf-8')
     print('Built:', delivered, '\nBytes:', info['apk_bytes'], '\nSHA256:', info['sha256'], flush=True)
 

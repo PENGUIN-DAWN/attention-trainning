@@ -1,0 +1,10 @@
+{
+  "version": "1.51",
+  "versionCode": 8,
+  "package": "cn.focusuniverse.offline",
+  "files": 51,
+  "checks": 57,
+  "apk_sha256": "5ac36de602a7a78928a1b958d6774dcf33e395376af941cb3fd8de86859ecee0",
+  "bundle_sha256": "d2a98093e84dbc30697a63441ee4f17be49d867c2791ed2999f56d2de83806f3",
+  "html_sha256": "13ced1d817d399b99b432c819184630544393a441bd2ba3eb29501195704b508"
+}

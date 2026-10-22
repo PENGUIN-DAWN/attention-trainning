@@ -1,0 +1,71 @@
+{
+  "version": "1.51",
+  "checks": [
+    "15 visual projects: deterministic first-trial colors, typefaces, sizes, weights, line heights and field borders/radii match 1.40 computed styles; root chrome differs intentionally",
+    "Dichotic audio content is separately byte-identical in APK verification; no physical display or audio claim"
+  ],
+  "errors": [],
+  "html_sha256": "13ced1d817d399b99b432c819184630544393a441bd2ba3eb29501195704b508",
+  "comparisons": {
+    "1": {
+      "elements": 25,
+      "matchedProperties": 10
+    },
+    "2": {
+      "elements": 20,
+      "matchedProperties": 10
+    },
+    "3": {
+      "elements": 8,
+      "matchedProperties": 10
+    },
+    "4": {
+      "elements": 3,
+      "matchedProperties": 10
+    },
+    "5": {
+      "elements": 2,
+      "matchedProperties": 10
+    },
+    "6": {
+      "elements": 4,
+      "matchedProperties": 10
+    },
+    "7": {
+      "elements": 1,
+      "matchedProperties": 10
+    },
+    "8": {
+      "elements": 36,
+      "matchedProperties": 10
+    },
+    "9": {
+      "elements": 36,
+      "matchedProperties": 10
+    },
+    "10": {
+      "elements": 30,
+      "matchedProperties": 10
+    },
+    "11": {
+      "elements": 1,
+      "matchedProperties": 10
+    },
+    "12": {
+      "elements": 1,
+      "matchedProperties": 10
+    },
+    "13": {
+      "elements": 3,
+      "matchedProperties": 10
+    },
+    "14": {
+      "elements": 2,
+      "matchedProperties": 10
+    },
+    "16": {
+      "elements": 1,
+      "matchedProperties": 10
+    }
+  }
+}
