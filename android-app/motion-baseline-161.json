@@ -1,0 +1,30 @@
+{
+  "version": "1.61",
+  "historical_baseline": "ui-baseline-150.json",
+  "changedSources": {
+    "android-app/tool-rules.js": {
+      "previous_sha256": "5c3cfe91299182c4e8090aef5e88c7a5918e6ba4ce8ca21abec06a045466ff31",
+      "sha256": "415678a1cbd841461f112fa848c6ec4f8a1598d6efc4e638df96acaf222259d5",
+      "reason": "Tracking v2 is 50 percent faster; preserve and validate original v1 conditions and results. Other tool rules stay at v1."
+    },
+    "android-app/tool-ui.js": {
+      "previous_sha256": "7810ae0ebf077c81122fbff8088092ab70940d21aa9b75564c7fd3fee6d7f80a",
+      "sha256": "d49494d6e99b15088131b2493a2b3c1e6a57e6c78e0558b7e69c2a515469e4fc",
+      "reason": "Tracking uses fixed-step interpolated compositor layers, bounded countdown writes and interruption on a gap over 250 ms."
+    },
+    "android-app/training.js": {
+      "previous_sha256": "265aecf4bdf81b01013937c293fbbb2a82bed8df8b6043cafd0df4f005d6eeb0",
+      "sha256": "ca5eb6f5a5c7c0a590884f352e2e8df1c2eea1fb2567d8cc92369f521b9e6b62",
+      "reason": "Dynamic perception uses transform-scaled progress and throttled stats; original stimulus transforms, observation duration and source HTML retained."
+    },
+    "android-app/advanced-ui.js": {
+      "previous_sha256": "6417777bb2d8b1c5d141c02107f33e799ad548717f430972c4e0fcf34b5cb169",
+      "sha256": "303adac3299162a1ceb7879b934df26245859e91b6d06e04fe338d0d6ea9ef72",
+      "reason": "Rule-switching countdown avoids identical text writes; task clocks, rules and stimulus timing retained."
+    }
+  },
+  "addedSources": {
+    "android-app/tool-motion.js": "26bbb4d03ba97f8ea2687ce16e0b7cd3b27b6980f97aa5192ae976419d2be3ab",
+    "android-app/tool-motion.css": "04cbfbf0b9a0d84e212335e0d1b5f5d625a553adcdcaf63dfbc5f2df9e78b36c"
+  }
+}

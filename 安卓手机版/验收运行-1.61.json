@@ -1,0 +1,37 @@
+{
+  "version": "1.61",
+  "versionCode": 10,
+  "package": "cn.focusuniverse.offline",
+  "complete_run": true,
+  "finished_utc": "2026-10-22T01:40:03.169476+00:00",
+  "html_sha256": "7437817ae9dea01e3d3307a82a15e0a5852d0112861a6da23138f1618ff1d1a5",
+  "checks": 64,
+  "reports": {
+    "构建配置单元验收-1.61.json": "2a11d532a656797c397b5c2c2b9457c51ec5eeb3b6af44a40fba751afb33615e",
+    "工程契约验收-1.61.json": "851d4cd2b04fe6a69c58bfb2cc303e68d0fb5f637826f810b9e2d9811e0d6759",
+    "浏览器验收-1.61.json": "e5bf48a6115b522ffde40d10ce32e4b50c096ed034e6ed73c5a23da3ebfe6d5a",
+    "新增训练验收-1.61.json": "0a5729e305a149a56ec4d05b1364c4df571f2f7c0686a35ea1534358682181a9",
+    "工具边界验收-1.61.json": "605ad61dbeb901b3c3c5d37ac003ce07b8e7c11cab0d5c4452b70248d79803c1",
+    "完成页补充验收-1.61.json": "13dae6792096f5e6bdfbf91cb71016f5bbeb384523c89760a90080922a1283c6",
+    "六项新增验收-1.61.json": "7dab5959ab3a8ed385ff26be7526b5629c98b77798890e36ae79928eff96bd8b",
+    "六项边界验收-1.61.json": "9215482f44428dfa5226254b368da84505a92b8280b891398b224dfcc0568d78",
+    "题面兼容验收-1.61.json": "e34f87c68fcf64b18c413e82e5521ffbcff4fb10bf80f995263c7524349cffc8",
+    "界面与性能验收-1.61.json": "0e6409022924bffd495d6e5c1ee20b493b1b0c277bc5cef40134e32c3161ad61",
+    "动态训练验收-1.61.json": "ac817ef867c40c9af450f38989228c6d1b634989f6860144d0908caeba4a65fd"
+  },
+  "test_sources": {
+    "tests/advanced-edges.cjs": "0c14c28e806a5a5abc28dab10859357925bbc0fec7c202f8756cf34ce7ac89b7",
+    "tests/advanced.cjs": "ad8b1ed865592c3e21dcc8a063d0118585edd80a28069462480d2bd6311d3181",
+    "tests/completion.cjs": "17b9db6f8ee1297046b4c12755493176c0d2eba6134358e499dbda3edbde1d6b",
+    "tests/contracts.cjs": "b2bd54c24dc2b9dba07f9ac6a5c9652c06807645d95a96bb85a846ff22a208f0",
+    "tests/motion.cjs": "135c5bc6ca488dfa2701e3cd260c615263e50757f025e08a19547a7c702315a1",
+    "tests/stimulus.cjs": "20f2264d825970d7ed0a1fde07c27e120a9fe855572dee01a7c081fc2090736d",
+    "tests/support.cjs": "93fb4722b7bb50fad863b48c1d4fd2ecc34b994faff2b8d3d577ae7ffd683b17",
+    "tests/tool-edges.cjs": "59fdde3213b01a6d55b0c3dce33c8df672b517cefbf196e385c62b38ff833253",
+    "tests/tools.cjs": "aef74ce0f864852de243969ffa4f533623bb546cb7d55bbc2372fd513f2f68d7",
+    "tests/training.cjs": "8ba4d26f80530cf97c67ed608843cb977a73649ca73c35b2615650a3a521067b",
+    "tests/ui.cjs": "90c8922ed41dd42a7f46ee24ecc3ed61a1c63328f37797872bb5d103fc198b52",
+    "tests/run_unit.py": "69b53662f8524756155f771337053933b5afbadbbd3316805c40cc6cf2dcdb69",
+    "tests/test_engineering.py": "d68f7f3aba29ae97edb0fb7944ddd2eb58c9c3e6d06e41827a80322d94cbeb7b"
+  }
+}

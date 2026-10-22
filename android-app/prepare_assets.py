@@ -47,7 +47,8 @@ def prepare():
         raise ValueError('Legacy trainingData is missing')
     legacy = {item['id']: item for item in json.loads(match.group(1))}
     sources = {
-        'tool': inject(read('tool-page.html'), read('tool.css'), join(['tool-rules.js', 'tool-ui.js'])),
+        'tool': inject(read('tool-page.html'), join(['tool.css', 'tool-motion.css']),
+                       join(['tool-rules.js', 'tool-motion.js', 'tool-ui.js'])),
         'advanced': inject(read('advanced-page.html'), read('advanced.css'),
                            join(['advanced-rules.js', 'advanced-clock.js', 'advanced-audio.js', 'advanced-ui.js'])),
     }

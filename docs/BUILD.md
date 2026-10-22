@@ -47,6 +47,7 @@ python -X utf8 android-app/dev.py package
 ```
 
 release 顺序执行完整测试、构建、APK 核验和打包。package 拒绝缺失、失败、页面不匹配、测试源或报告改变的完整测试凭据。
+1.61 增加独立动态训练套件并串行采样；源码核验保留旧基线，同时应用明确的 motion-baseline-161.json 差异契约。报告不再声称全部引擎与 1.50 一致，详见 [动态训练优化](MOTION-161.md)。
 prepare 生成 android-app/assets/index.html，不直接编辑或提交它。
 版本号仅从 AndroidManifest.xml 读取，输出到 `安卓手机版/` 的对应版本文件；不要覆盖历史 APK。
 发布时递增 versionName/versionCode，修改说明文档的当前版本入口。

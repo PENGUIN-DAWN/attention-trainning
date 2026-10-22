@@ -10,11 +10,13 @@
 
 完整备份仍为v4，导入兼容v1–v4。旧备份缺少新字段时不清空现有新增数据。记录schema、完整条件与规则版本按原实现校验，不补造旧成绩。
 
+1.61 第七项使用规则 v2，旧 v1 的 0.16/0.18 速度条件仍按原值校验和导入，v2 为 0.24/0.27。规则版本与完整参数共同构成比较分组；不会把旧成绩重标为新速度。其余工具训练继续使用规则 v1，备份文件版本不变。
+
 真实个人备份不应提交到公共仓库。仓库中的验收JSON和预览成绩来自自动化测试，与用户真实手机记录无关。
 
 ## 覆盖安装
 
-包名：`cn.focusuniverse.offline`。当前versionName为1.60、versionCode为9；WebView来源保持`https://appassets.androidplatform.net/assets/index.html`。
+包名：`cn.focusuniverse.offline`。当前versionName为1.61、versionCode为10；WebView来源保持`https://appassets.androidplatform.net/assets/index.html`。
 
 公开的签名证书SHA-256为：
 

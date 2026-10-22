@@ -17,24 +17,33 @@ function installToolUI(config){
  const busy=()=>!['idle','result','aborted'].includes(state.phase);
  function height(){send('focus:height',{height:Math.ceil(document.querySelector('main').getBoundingClientRect().height)+3});}
  new ResizeObserver(height).observe(document.querySelector('main'));
- let pendingFrames=new Set();
+ let pendingFrames=new Set(),trackingView=null;
  function stable(callback){const gen=state.generation;const a=requestAnimationFrame(()=>{pendingFrames.delete(a);const b=requestAnimationFrame(()=>{pendingFrames.delete(b);if(gen===state.generation&&state.active&&!document.hidden)callback();});pendingFrames.add(b);});pendingFrames.add(a);}
- function cancel(){state.generation++;cancelAnimationFrame(state.frame);for(const f of pendingFrames)cancelAnimationFrame(f);pendingFrames.clear();}
+ function cancel(){state.generation++;cancelAnimationFrame(state.frame);for(const f of pendingFrames)cancelAnimationFrame(f);pendingFrames.clear();trackingView?.destroy();trackingView=null;}
  function tick(duration,callback,motion=false){
-  const gen=state.generation;state.started=performance.now();state.deadline=state.started+duration;let previous=state.started;
-  function frame(now){if(gen!==state.generation||!state.active)return;const remaining=Math.max(0,state.deadline-now);$('clock').textContent=(remaining/1000).toFixed(1)+' 秒';if(motion){let dt=(now-previous)/1000;while(dt>0){const part=Math.min(.025,dt);R.step(state.question.balls,part);dt-=part;}drawBalls();}previous=now;if(now>=state.deadline){callback();return;}state.frame=requestAnimationFrame(frame);}state.frame=requestAnimationFrame(frame);
+  const gen=state.generation,clock=$('clock'),movement=motion?new FocusTrackingMotion(state.question.balls):null;state.started=performance.now();state.deadline=state.started+duration;let previous=state.started,clockText='';
+  function frame(now){
+   if(gen!==state.generation||!state.active)return;
+   if(document.hidden){abort();return;}
+   if(motion&&now-previous>250){abort();$('notice').textContent='画面停顿过长，本轮已中断，请重新开始。';return;}
+   const remaining=Math.max(0,state.deadline-now),text=(remaining/1000).toFixed(1)+' 秒';
+   if(text!==clockText){clock.textContent=text;clockText=text;}
+   if(movement){const positions=movement.sample(Math.min(duration,now-state.started),now>=state.deadline);if(!positions){abort();return;}drawBalls(positions);}
+   previous=now;if(now>=state.deadline){callback();return;}state.frame=requestAnimationFrame(frame);
+  }state.frame=requestAnimationFrame(frame);
  }
  function elapsed(){return Math.max(0,performance.now()-state.started);}
  function responseReady(limit=0){state.phase='preparing';stable(()=>{state.phase='answer';state.started=performance.now();$('stage').textContent='作答';for(const b of $('stimulus').querySelectorAll('button'))b.disabled=false;for(const i of $('inputs').querySelectorAll('input'))i.disabled=false;updateSubmit();$('skip').disabled=false;if(limit)tick(limit,()=>submit(true));else $('clock').textContent='不限时';});}
  function vector(item){const wrap=document.createElement('div');wrap.className='object';wrap.innerHTML='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="'+item.path+'"/></svg>';const label=document.createElement('span');label.textContent=item.name;wrap.append(label);return wrap;}
  function showObjects(items){$('stimulus').className='object-grid';$('stimulus').replaceChildren(...items.map(vector));}
- function drawBalls(){const q=state.question,c=$('canvas'),ctx=c.getContext('2d');ctx.clearRect(0,0,600,600);ctx.fillStyle='#f3f5fa';ctx.fillRect(0,0,600,600);for(const b of q.balls){const target=state.phase==='mark'&&q.targets.includes(b.id);ctx.beginPath();ctx.arc(b.x*600,b.y*600,25,0,Math.PI*2);ctx.fillStyle=target?'#a46124':'#485f80';ctx.fill();if(target){ctx.lineWidth=5;ctx.strokeStyle='#f3ca7e';ctx.stroke();}if(['answer','preparing','feedback'].includes(state.phase)&&state.labelsVisible){ctx.fillStyle='#fff';ctx.font='bold 23px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(q.labels[b.id],b.x*600,b.y*600);}}}
+ function drawBalls(positions){trackingView.render(state.phase,state.labelsVisible,positions);}
  function button(text,index){const b=document.createElement('button');b.type='button';b.textContent=text;b.dataset.index=index;b.disabled=true;b.onclick=()=>select(index,b);return b;}
  function question(){
   cancel();state.phase='preparing';state.question=R.generate(id,state.condition);state.selected=[];state.labelsVisible=false;$('progress').textContent='第 '+(state.index+1)+' / '+state.condition.rounds+' 题';$('feedback').textContent='';$('next').hidden=true;$('submit').hidden=false;$('submit').disabled=true;$('skip').hidden=id!==9;$('skip').disabled=true;$('inputs').replaceChildren();$('stimulus').replaceChildren();$('clock').textContent='准备中';$('stage').textContent='准备';
   const q=state.question,c=state.condition;
   if(id===7){
    $('stimulus').className='tracking';const canvas=document.createElement('canvas');canvas.id='canvas';canvas.width=600;canvas.height=600;canvas.setAttribute('aria-label','多目标追踪运动区域');$('stimulus').append(canvas);const choices=document.createElement('div');choices.id='numberChoices';choices.className='number-choices';$('stimulus').append(choices);$('prompt').textContent='记住 '+c.targets+' 个金色目标球；停止后才会显示编号。';
+   trackingView=new FocusTrackingView(canvas,q);
    stable(()=>{state.phase='mark';$('stage').textContent='标记目标';drawBalls();stable(()=>tick(c.markMs,()=>{state.phase='motion';$('stage').textContent='同色运动';drawBalls();stable(()=>tick(c.motionMs,()=>{state.phase='preparing';state.labelsVisible=true;drawBalls();choices.replaceChildren(...Array.from({length:c.balls},(_,i)=>button(String(i+1),q.labels.indexOf(i+1))));$('prompt').textContent='选择 '+c.targets+' 个目标球现在的编号，然后提交。';responseReady();},true));}));});
   }else if(id===8){$('stimulus').className='number-grid';$('stimulus').replaceChildren(...q.values.map((n,i)=>button(n,i)));$('prompt').textContent='选择重复数字所在的两个位置。';responseReady(c.limitMs);
   }else if(id===9){$('prompt').textContent='同时记住这 12 件物品，名称也可以帮助记忆。';showObjects(q.items);stable(()=>{state.phase='observe';$('stage').textContent='观察';stable(()=>tick(c.observeMs,()=>{state.phase='mask';$('stage').textContent='遮挡';$('stimulus').className='mask';$('stimulus').textContent='• • •';stable(()=>tick(c.maskMs,()=>{showObjects(q.remaining);$('prompt').textContent='缺少哪 '+c.missing+' 件物品？请输入名称，顺序不限。';for(let i=0;i<c.missing;i++){const label=document.createElement('label');label.textContent='缺失物品 '+(i+1);const input=document.createElement('input');input.type='text';input.maxLength=24;input.placeholder='输入物品名称';input.disabled=true;input.setAttribute('enterkeyhint','done');let composing=false,imeUntil=0;input.oncompositionstart=()=>composing=true;input.oncompositionend=()=>{composing=false;imeUntil=performance.now()+100;};input.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();if(!e.isComposing&&!composing&&e.keyCode!==229&&performance.now()>imeUntil)submit(false);}};input.oninput=updateSubmit;input.onfocus=()=>requestAnimationFrame(()=>{const box=$('recallForm').getBoundingClientRect();send('focus:focus-input',{top:box.top,bottom:box.bottom});});label.append(input);$('inputs').append(label);}$('skip').hidden=false;responseReady();}));}));});

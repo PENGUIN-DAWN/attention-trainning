@@ -33,15 +33,28 @@ def verify():
         assert not any(n.endswith(('.jks', '.p12', '.keystore')) or 'signing-config' in n for n in archive.namelist())
     with zipfile.ZipFile(OUT / f'专注力小宇宙-{BASELINE_VERSION}.apk') as archive:
         previous = archive.read('assets/index.html').decode('utf-8')
-    # Training behavior and core presentation are a compatibility contract for this refactor.
-    assert payload(page, 'trainingData') == payload(previous, 'trainingData')
+    from prepare_assets import inject, read, join
+    from tooling.contracts import verify_sources
+    verify_sources()
+    # Original task sources remain frozen. Shared tool/advanced sources have explicit deltas.
+    old_modules = {m['id']: m for m in payload(previous, 'trainingData')}
+    expected_sources = {
+        'tool': inject(read('tool-page.html'), join(['tool.css', 'tool-motion.css']),
+                       join(['tool-rules.js', 'tool-motion.js', 'tool-ui.js'])),
+        'advanced': inject(read('advanced-page.html'), read('advanced.css'),
+                           join(['advanced-rules.js', 'advanced-clock.js', 'advanced-audio.js', 'advanced-ui.js'])),
+    }
+    for module in payload(page, 'trainingData'):
+        if module['id'] <= 6:
+            assert module == old_modules[module['id']]
+        else:
+            engine = 'tool' if module['id'] <= 10 else 'advanced'
+            assert module['source'] == expected_sources[engine]
+            assert {k: v for k, v in module.items() if k != 'source'} == {k: v for k, v in old_modules[module['id']].items() if k != 'source'}
     assert len(payload(page, 'trainingData')) == len(registry())
     before, after = payload(previous, 'trainingPresentation'), payload(page, 'trainingPresentation')
-    assert before['css'] == after['css'] and before['js'] == after['js']
+    assert before['css'] == after['css'] and after['js'] == read('training.js')
     assert payload(page, 'digitAudio') == payload(previous, 'digitAudio')
-    baseline = json.loads((APP / 'ui-baseline-150.json').read_text(encoding='utf-8'))
-    for name, expected in baseline.items():
-        assert hashlib.sha256((ROOT / name.replace('\\', '/')).read_bytes()).hexdigest() == expected, name
 
     fingerprints = {}
     candidates = sorted(OUT.glob('专注力小宇宙-*.apk'))
@@ -57,14 +70,17 @@ def verify():
     permissions = command([tools / 'aapt.exe', 'dump', 'permissions', staging])
     assert 'uses-permission' not in permissions
     command([tools / 'zipalign.exe', '-c', '-p', '4', staging])
-    assert code > 7, 'Update versionCode must exceed the 1.50 baseline'
+    assert code > 9, 'Update versionCode must exceed the 1.60 release'
     result = {
         **meta, 'apk_bytes': apk.stat().st_size,
         'sha256': hashlib.sha256(apk.read_bytes()).hexdigest(),
         'html_sha256': hashlib.sha256(page_bytes).hexdigest(),
         'baseline_version': BASELINE_VERSION,
-        'all_training_engines_equal_baseline': True,
-        'core_presentation_and_audio_equal_baseline': True,
+        'all_training_engines_equal_baseline': False,
+        'training_contract_verified': True,
+        'motion_contract': 'motion-baseline-161.json',
+        'core_presentation_and_audio_equal_baseline': False,
+        'protected_css_and_audio_equal_baseline': True,
         'legacy_sources_and_apks_unchanged': True,
         'same_signing_certificate_count': len(fingerprints),
         'certificate_sha256': next(iter(fingerprints.values())),

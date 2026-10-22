@@ -31,7 +31,7 @@
 | --- | --- |
 | 目录元数据 | [trainings.json](../../android-app/config/trainings.json)：名称、key、引擎、设置白名单和示例；新增配置本身不会自动实现训练 |
 | 1–6 | [training.js](../../android-app/training.js)、[training.css](../../android-app/training.css)、[descending.py](../../android-app/descending.py)，以及根目录原六项 HTML、[index.html](../../index.html) |
-| 7–10 | [tool-rules.js](../../android-app/tool-rules.js)、[tool-ui.js](../../android-app/tool-ui.js)、[tool.css](../../android-app/tool.css) |
+| 7–10 | [tool-rules.js](../../android-app/tool-rules.js)、[tool-ui.js](../../android-app/tool-ui.js)、[tool-motion.js](../../android-app/tool-motion.js)、[tool-motion.css](../../android-app/tool-motion.css)、[tool.css](../../android-app/tool.css) |
 | 11–16 | [advanced-rules.js](../../android-app/advanced-rules.js)、[advanced-ui.js](../../android-app/advanced-ui.js)、[advanced-clock.js](../../android-app/advanced-clock.js)、[advanced-audio.js](../../android-app/advanced-audio.js) |
 | 记录与比较 | [scores.js](../../android-app/app/scores.js)、[records.js](../../android-app/app/records.js)，以及各引擎记录校验函数 |
 | 页面装配 | [prepare_assets.py](../../android-app/prepare_assets.py)；输出为生成页面，不直接编辑输出 |
@@ -44,7 +44,7 @@
 - 7–10 的题量、运动/观察时间、网格和预设查 `tool-rules.js`；[1.30 验证记录](../../安卓手机版/验证记录-1.30.md)解释了视频改编及边界。
 - 11–16 的固定参数查 `advanced-rules.js`；[1.40 发布说明](../../安卓手机版/更新说明-1.40.md)有完整参数表、教学与计分解释。这些为 App 实现参数，不是治疗剂量。
 - 记录的 `module` 是稳定 ID，不是数组下标；`token` 用于轮次去重；历史记录可能只有摘要，不能补造试次。协议见 [model-types.js](../../android-app/app/model-types.js)。
-- 7–10 的 detail 为 schema 2，11–16 为 schema 3，当前相应规则版本为 1；备份文件 v4 是另一层版本，不应混淆。以各规则文件的校验实现为准。
+- 7–10 的 detail 为 schema 2，11–16 为 schema 3。1.61 第七项新训练使用规则 v2（速度 0.24/0.27），兼容 v1（0.16/0.18）并分开比较；其余规则版本为 1。备份文件 v4 是另一层版本，不应混淆。见 [动态训练优化](../MOTION-161.md)。
 - 训练 6、9 涉及中文输入法；15 为有声项目。实际手机输入法和耳机仍在[真机待验清单](EVIDENCE.md)中。
 
 ## 研究与来源材料怎么用

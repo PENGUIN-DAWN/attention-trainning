@@ -1,0 +1,63 @@
+{
+  "version": "1.61",
+  "html_sha256": "7437817ae9dea01e3d3307a82a15e0a5852d0112861a6da23138f1618ff1d1a5",
+  "checks": [
+    "Both tracking presets are 50% faster; genuine v1 records remain byte-equivalent after cleaning; mixed/future versions rejected; fixed-step trajectories agree at simulated 60/90/120 Hz",
+    "Shared tools engine preserves conditions and seeded generators for 8–10 across all presets/grids",
+    "Real v1/v2 tracking records survive startup, export/import and deduplication; old/new and normal/strong records form four comparison groups",
+    "Sequential real-clock browser samples include normal and strong/4x CPU; no HTTP requests, no per-frame canvas paints, bounded clock writes, identical unlabelled balls during motion and exact final label positions",
+    "Injected 320 ms main-thread stall interrupts tracking without completing or silently simulating unseen motion; callbacks stay cancelled",
+    "Dynamic perception observes for the full requested interval with a fixed-width compositor-scaled progress bar and cancels on background"
+  ],
+  "errors": [],
+  "observations": {
+    "oldNormal": {
+      "samples": 298,
+      "p95Ms": 6.200000000000273,
+      "maxMs": 6.399999999999636,
+      "over50ms": 0,
+      "paints": 296,
+      "clockWrites": 296,
+      "phase": "motion",
+      "ballLayers": 0,
+      "layoutCount": 296,
+      "taskMs": 203.68000000000004,
+      "cpuThrottle": 1,
+      "preset": "normal"
+    },
+    "currentNormal": {
+      "samples": 298,
+      "p95Ms": 6.200000000000273,
+      "maxMs": 6.300000000000182,
+      "over50ms": 0,
+      "paints": 0,
+      "clockWrites": 19,
+      "phase": "motion",
+      "ballLayers": 10,
+      "layoutCount": 19,
+      "taskMs": 180.883,
+      "cpuThrottle": 1,
+      "preset": "normal"
+    },
+    "currentStrongCpu4": {
+      "samples": 298,
+      "p95Ms": 6.199999999999818,
+      "maxMs": 6.899999999999636,
+      "over50ms": 0,
+      "paints": 0,
+      "clockWrites": 19,
+      "phase": "motion",
+      "ballLayers": 12,
+      "layoutCount": 19,
+      "taskMs": 468.9889999999999,
+      "cpuThrottle": 4,
+      "preset": "strong"
+    },
+    "dynamic": {
+      "elapsed": 1602.7999999821186,
+      "planned": 1600,
+      "widthCount": 1,
+      "transformCount": 265
+    }
+  }
+}

@@ -118,10 +118,39 @@ function installTrainingUI(config) {
     };
   }
   if (config.id===5) {
+    // Keep the task's transform/duration, but avoid layout writes on every frame.
+    const word=document.getElementById('word'),bar=document.getElementById('observationProgress');
+    const time=document.getElementById('time'),errors=document.getElementById('errors');
+    let lastStats=-Infinity;
+    bar.style.transformOrigin='left';bar.style.willChange='transform';
+    tick=function(){
+      if(!state.running)return;
+      const now=performance.now();
+      if(now-lastStats>=100){
+        const value=Math.max(0,(now-state.started)/1000).toFixed(1);
+        if(time.textContent!==value)time.textContent=value;
+        const errorCount=String(state.errors);if(errors.textContent!==errorCount)errors.textContent=errorCount;
+        lastStats=now;
+      }
+      if(state.phase==='observing'){
+        const progress=Math.min(1,Math.max(0,(now-state.observationStarted)/state.observationMs));
+        word.style.transform=motionTransform(state.items[state.index].motion,progress);
+        bar.style.transform='scaleX('+progress+')';
+        if(progress>=1){
+          state.phase='ready';if(state.readyStarted===null)state.readyStarted=now;
+          document.getElementById('phaseLabel').textContent='请作答 · 刚才实际怎样变化？';
+          document.getElementById('caption').textContent='画面已停住，请回想刚才的完整过程。';
+          document.getElementById('feedback').textContent='请选择实际变化。没看清可以重播。';enableAnswers(true);
+        }
+      }
+      state.frame=requestAnimationFrame(tick);
+    };
+    const originalPrepare=prepareQuestion;
+    prepareQuestion=function(){originalPrepare();bar.style.transform='scaleX(0)';};
     const originalPlay=playObservation;
     playObservation=function(replay){
       if(!state.running||(replay&&state.phase!=='ready'))return;
-      originalPlay(replay);state.phase='presenting';const ticket=state.generation;
+      originalPlay(replay);bar.style.width='100%';bar.style.transform='scaleX(0)';state.phase='presenting';const ticket=state.generation;
       requestAnimationFrame(()=>requestAnimationFrame(()=>{
         if(active&&state.running&&ticket===state.generation&&state.phase==='presenting'){
           state.observationStarted=performance.now();state.phase='observing';

@@ -19,8 +19,8 @@ def package():
     verification = json.loads((OUT / f'安装包验收-{version}.json').read_text(encoding='utf-8'))
     assert verification['sha256'] == sha(apk)
     assert verification['html_sha256'] == receipt['html_sha256']
-    assert verification['apk_signature_verified'] and verification['all_training_engines_equal_baseline']
-    assert verification['core_presentation_and_audio_equal_baseline']
+    assert verification['apk_signature_verified'] and verification['training_contract_verified']
+    assert verification['protected_css_and_audio_equal_baseline']
     assert not verification['network_permission']
     with zipfile.ZipFile(apk) as archive:
         assert hashlib.sha256(archive.read('assets/index.html')).hexdigest() == receipt['html_sha256']
@@ -32,18 +32,18 @@ def package():
 
     notes = write('更新说明', f'''# 专注力小宇宙 {version}
 
-本版参考作者提供的 UI 设计稿，改用奶油底色、浅蓝强调色和白色卡片，保留 {len(registry())} 项训练。
+本版优化动态训练的绘制，保留浅蓝界面和 {len(registry())} 项训练。
 
-- 首页增加离线 SVG 星球插画和首页 / 足迹 / 说明底部导航。
-- 卡片保留鼠标悬停，增加跟随指针的轻微倾斜、箭头移动和触摸按压反馈。
-- 目录逐批入场，页面进出、结果和弹窗过渡独立于训练时钟；离屏及后台停止装饰运动。
-- 导航、关闭、删除、备份等应用图标统一为内联 SVG；训练素材与项目图标保留。
-- 记录、空状态、删除确认、备份、规则、首次示例和设置统一浅色风格。
-- 启动与系统栏配色同步；原生图形使用 Android VectorDrawable，不引入位图或联网素材。
+- 第七项小球改为复用图层，使用固定 120 Hz 物理步长与显示帧插值，避免每帧重绘整块画布。
+- 第七项普通速度 0.16 → 0.24，加强速度 0.18 → 0.27，均提高 50%；标记、运动时长和目标数量不变。
+- 第七项采用规则 v2；旧 v1 记录仍可查看和导入，按原速度、原规则独立比较。
+- 运动帧停顿超过 250 ms 时中断本轮，不补算一大段不可见运动，不记为完成。
+- 第五项观察进度改用缩放，动态文字保持原变化与观察时长；第五、十一项减少重复倒计时写入。
+- 首页 SVG 装饰增加合成提示；训练、离屏和后台仍停止装饰运动。
 - 减少动画开关与系统偏好继续生效，题目本身必要运动不被关闭。
 - 原存储键、备份 v4 与 v1–v4 导入兼容、来源和隐藏历史数据保留。
 
-规则、题量、观察条件、音频、计分与 {BASELINE_VERSION} 一致，不增加训练剂量或效果承诺。
+除第七项速度与运动实现外，其余训练规则、题量、观察条件、音频及计分保留。未引入 Lottie 播放器：现有运动是实时题目或简单矢量变化，没有待替换的 GIF，固定素材不能直接替代随机追踪。不增加训练剂量或效果承诺。
 版本代码 {meta['versionCode']}，包名 `{meta['package']}`。历史 APK 保留。
 ''')
     install = write('安装与使用说明', f'''# 覆盖安装 {version}
@@ -62,6 +62,9 @@ APK SHA-256：`{verification['sha256']}`。
     perf_rows = '\n'.join(
         f"| {name} | {data['sampleCount']} | {data['p95Ms']:.2f} | {data['maxMs']:.2f} | {data['over50ms']} |"
         for name, data in ui['observations']['performance'].items())
+    motion = json.loads((OUT / f'动态训练验收-{version}.json').read_text(encoding='utf-8'))
+    motion_before = motion['observations']['oldNormal']
+    motion_after = motion['observations']['currentNormal']
     report = write('验证记录', f'''# {version} 实际验证
 
 完整运行 {receipt['checks']} 组检查，所有报告无错误，绑定同一页面 SHA-256：
@@ -70,7 +73,7 @@ APK SHA-256：`{verification['sha256']}`。
 覆盖原十六项流程、倒序、教学与正式分离、计时/后台/快速操作、记录删除、旧备份合并、
 导入失败与事务写入、保存重试、减少动画、小屏布局、题面兼容与音频离线资源。
 规则随机性质检查沿用既有套件；本次包括 Python 5 项与工程契约 4 组。
-训练嵌入引擎、核心题面 CSS/JS、内置音频与 {BASELINE_VERSION} 一致，受保护源文件哈希一致。
+旧原始 HTML、训练 CSS、规则 8–16 和音频保留。第七项运动/速度、第五项绘制适配及第十一项倒计时采用独立 1.61 源码契约，未修改旧哈希快照；详见 docs/MOTION-161.md。
 
 ## 浏览器软件测量
 
@@ -84,6 +87,13 @@ APK SHA-256：`{verification['sha256']}`。
 这是浏览器 rAF 软件回调间隔，不是安卓物理刷新率或输入到光子的延迟。
 4 倍 CPU 限速是 CDP 软件模拟，不等同旧安卓手机。WebM 录制帧率也不代表实际渲染帧率。
 
+## 动态训练补充
+
+第七项约 1.8 秒普通档采样：画布重绘 {motion_before['paints']} → {motion_after['paints']}，布局次数 {motion_before['layoutCount']} → {motion_after['layoutCount']}；
+新旧 p95 回调间隔均约 {motion_after['p95Ms']:.2f} ms。这里能确认减少了绘制/布局工作，没有证明安卓手机帧率或残影改善。
+加强档在 4 倍 CPU 软件限速下完成观察、运动及编号位置检查。规则 v1/v2 的旧记录读入、真实导出/导入和独立比较通过；模拟刷新率的最终轨迹一致。
+另有隔离浏览器单帧边缘核验（不属于 {receipt['checks']} 组完整运行计数）：小球无模糊/阴影/过渡，背景像素没有残留球影。该检查不是手机屏幕拖影验收。
+
 ## APK 静态检查
 
 签名验证、zipalign、包名和递增版本代码、资源页一致、无权限均通过。
@@ -94,7 +104,7 @@ APK SHA-256：`{verification['sha256']}`。
 
 未连接安卓真机，不能宣称已通过真机安装、覆盖升级、系统返回/后台、中文输入法、
 耳机物理左右声道、音量舒适度、显示器硬件刺激时序或 60/90/120 FPS 验收。
-发布前应在自己的手机上核对这些项目。原训练引擎保持冻结，并不表示所有历史缺陷均已消除。
+请在自己的手机上核对这些项目，特别是小球主观流畅度；浏览器通过不表示手机卡顿已经解决。
 ''')
     architecture = write('工程整理说明', '''# 工程入口
 
@@ -108,7 +118,7 @@ APK SHA-256：`{verification['sha256']}`。
 - `android-app/archive/`：历史文件原样留档，不参与当前构建。
 
 应用脚本按显式顺序合成单一离线页面，仍有集中声明的共享状态，尚未改写为 ESM 或彻底解耦所有训练内部代码。
-这次不重写冻结的十六项训练引擎，后续应按项目逐个拆解并回归，避免一次性改动训练时序。
+1.61 对第七项运动及第五项绘制适配建立独立源码契约，详见 docs/MOTION-161.md；其余受保护源文件继续核对旧基线。
 备份保持 v4，兼容 v1–v4；缺失新增/隐藏数据的旧备份不会清空当前对应数据。
 
 开发命令详见仓库 docs/BUILD.md 和 docs/TESTING.md。
@@ -122,6 +132,9 @@ APK SHA-256：`{verification['sha256']}`。
     files = [apk, notes, install, report, architecture, gallery, video, *screenshots,
              OUT / f'安装包验收-{version}.json', OUT / f'验收运行-{version}.json',
              *[OUT / f'{name}-{version}.json' for name in REPORT_NAMES]]
+    visual_qa = OUT / f'小球运动边缘核验-{version}.json'
+    if visual_qa.is_file():
+        files.append(visual_qa)
     bundle = OUT / f'专注力小宇宙-{version}-安卓自用版.zip'
     with zipfile.ZipFile(bundle, 'w', zipfile.ZIP_DEFLATED) as archive:
         for path in files:

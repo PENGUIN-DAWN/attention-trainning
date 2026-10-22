@@ -49,7 +49,7 @@ function installAdvancedUI(config){
   if(id===11){
    const parity=q.rule==='parity';$('prompt').textContent=parity?'当前规则：判断单双':'当前规则：判断大小';setStimulus('准备');choice(parity?'奇数':'小于 5',0,v=>respond(v));choice(parity?'偶数':'大于 5',1,v=>respond(v));
    if(!await waitSpan(()=>phase('cue','规则提示'),c.cueMs)||!live(t))return;setStimulus(String(q.value));if(!await openAnswer(t))return;
-   const start=state.started;while(live(t)&&state.phase==='answer'){const now=await clock.frame();if(now===false)return;if(now-start>=c.limitMs){respond(null,true);return;}$('clock').textContent=Math.max(0,(c.limitMs-(now-start))/1000).toFixed(1)+' 秒';}
+   const start=state.started;let clockText='';while(live(t)&&state.phase==='answer'){const now=await clock.frame();if(now===false)return;if(now-start>=c.limitMs){respond(null,true);return;}const text=Math.max(0,(c.limitMs-(now-start))/1000).toFixed(1)+' 秒';if(text!==clockText){$('clock').textContent=text;clockText=text;}}
   }else if(id===12){
    const remaining=c.practiceMs-state.practiceMs;if(remaining<=0){finish();return;}const segmentMs=Math.min(state.segmentMs,remaining);state.segmentStarted=null;state.breathPending=null;$('prompt').textContent='自然呼吸，无需控制节奏。';
    const timing=await waitSpan(()=>{phase('breath','关注呼吸');state.segmentStarted=performance.now();setStimulus('关注自然呼吸的感觉\n察觉走神，温和返回','breath');},segmentMs);

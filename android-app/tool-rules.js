@@ -1,9 +1,9 @@
 /* Functional tools: portable configuration, generators, scoring and validation. */
 (function(root){
  'use strict';
- const VERSION=1;
+ const VERSION=1,TRACKING_VERSION=2;
  const CONFIG={
-  7:{key:'multi-object-tracking',rounds:3,presets:{normal:{balls:10,targets:4,markMs:2500,motionMs:6000,speed:.16},strong:{balls:12,targets:5,markMs:2500,motionMs:8000,speed:.18}}},
+  7:{key:'multi-object-tracking',rounds:3,presets:{normal:{balls:10,targets:4,markMs:2500,motionMs:6000,speed:.24},strong:{balls:12,targets:5,markMs:2500,motionMs:8000,speed:.27}}},
   8:{key:'duplicate-number',rounds:5,rows:6,cols:6,min:10,max:99,presets:{'15':{limitMs:15000},'12':{limitMs:12000}}},
   9:{key:'missing-objects',rounds:3,count:12,observeMs:8000,maskMs:1000,presets:{one:{missing:1},two:{missing:2}}},
   10:{key:'similar-character',rounds:5,presets:{'8':{limitMs:8000},'6':{limitMs:6000},'5':{limitMs:5000}},grids:{mobile:{rows:6,cols:5},video:{rows:8,cols:10}}}
@@ -31,7 +31,7 @@
  ].map(([id,name,aliases,path])=>({id,name,aliases,path}));
  const PAIRS=[{background:'未',target:'末',hint:'“末”的上横较长；“未”的下横较长。'},{background:'末',target:'未',hint:'“未”的下横较长；“末”的上横较长。'},{background:'已',target:'己',hint:'“己”的开口较大，竖弯钩起笔较低；“已”起笔接近上部。'},{background:'己',target:'已',hint:'“已”的竖弯钩起笔接近上部；“己”的开口较大。'}];
  function shuffle(a,rng=Math.random){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
- function condition(id,settings={}){const c=CONFIG[id];if(!c)throw Error('未知项目');const preset=Object.hasOwn(c.presets,settings.preset)?settings.preset:Object.keys(c.presets)[0];const d={project:c.key,ruleVersion:VERSION,preset,rounds:c.rounds,...c.presets[preset]};if(id===8)Object.assign(d,{rows:6,cols:6,min:10,max:99});if(id===9)Object.assign(d,{count:12,observeMs:8000,maskMs:1000,answerMode:'free-recall'});if(id===10){d.grid=Object.hasOwn(c.grids,settings.grid)?settings.grid:'mobile';Object.assign(d,c.grids[d.grid]);}return d;}
+ function condition(id,settings={},ruleVersion=id===7?TRACKING_VERSION:VERSION){const c=CONFIG[id];if(!c)throw Error('未知项目');if(!(id===7?[VERSION,TRACKING_VERSION]:[VERSION]).includes(ruleVersion))throw Error('未知规则版本');const preset=Object.hasOwn(c.presets,settings.preset)?settings.preset:Object.keys(c.presets)[0];const d={project:c.key,ruleVersion,preset,rounds:c.rounds,...c.presets[preset]};if(id===7&&ruleVersion===1)d.speed=preset==='strong'?.18:.16;if(id===8)Object.assign(d,{rows:6,cols:6,min:10,max:99});if(id===9)Object.assign(d,{count:12,observeMs:8000,maskMs:1000,answerMode:'free-recall'});if(id===10){d.grid=Object.hasOwn(c.grids,settings.grid)?settings.grid:'mobile';Object.assign(d,c.grids[d.grid]);}return d;}
  function generate(id,c,rng=Math.random){
   if(id===7){const ids=Array.from({length:c.balls},(_,i)=>i);return {targets:shuffle(ids,rng).slice(0,c.targets),labels:shuffle(ids.map(i=>i+1),rng),balls:ids.map(i=>({id:i,x:.12+(i%4)*.25,y:.13+Math.floor(i/4)*.31,vx:Math.cos(i*2.4+.3)*c.speed,vy:Math.sin(i*2.4+.3)*c.speed}))};}
   if(id===8){const pool=shuffle(Array.from({length:90},(_,i)=>i+10),rng).slice(0,35);const duplicate=pool[0],values=shuffle([...pool,duplicate],rng);return {values,duplicate,answer:values.flatMap((n,i)=>n===duplicate?[i]:[])};}
@@ -49,12 +49,12 @@
  function step(balls,dt){const r=.044;dt=Math.min(.025,Math.max(0,dt));for(const b of balls){b.x+=b.vx*dt;b.y+=b.vy*dt;for(const axis of ['x','y'])if(b[axis]<r||b[axis]>1-r){b[axis]=Math.max(r,Math.min(1-r,b[axis]));b['v'+axis]*=-1;}}for(let k=0;k<3;k++)for(let i=0;i<balls.length;i++)for(let j=i+1;j<balls.length;j++){const a=balls[i],b=balls[j],dx=b.x-a.x,dy=b.y-a.y,dist=Math.hypot(dx,dy);if(dist<2*r){const nx=dist?dx/dist:1,ny=dist?dy/dist:0,push=(2*r-dist)/2+.0001;a.x-=nx*push;a.y-=ny*push;b.x+=nx*push;b.y+=ny*push;const v=(b.vx-a.vx)*nx+(b.vy-a.vy)*ny;if(v<0){a.vx+=v*nx;a.vy+=v*ny;b.vx-=v*nx;b.vy-=v*ny;}for(const p of [a,b]){p.x=Math.max(r,Math.min(1-r,p.x));p.y=Math.max(r,Math.min(1-r,p.y));}}}return balls;}
  function detail(id,c,results,status='complete'){
   const correct=results.filter(r=>r.correct).length,seconds=results.reduce((n,r)=>n+r.responseMs,0)/1000;
-  return {schema:2,ruleVersion:VERSION,project:CONFIG[id].key,mode:c.preset,params:c,condition:label(id,c),correct,total:c.rounds,errors:results.reduce((n,r)=>n+r.errors,0),seconds,status,results};
+  return {schema:2,ruleVersion:c.ruleVersion,project:CONFIG[id].key,mode:c.preset,params:c,condition:label(id,c),correct,total:c.rounds,errors:results.reduce((n,r)=>n+r.errors,0),seconds,status,results};
  }
  function label(id,c){if(id===7)return `${c.balls} 球 / ${c.targets} 目标 · 标记 ${c.markMs/1000} 秒 · 运动 ${c.motionMs/1000} 秒 · 速度 ${c.speed}`;if(id===8)return `6×6 · 两位数 · ${c.limitMs/1000} 秒`;if(id===9)return `12 件 / 缺 ${c.missing} 件 · 观察 8 秒 · 自由回忆`;return `${c.rows}×${c.cols} · ${c.limitMs/1000} 秒 · 末/未、己/已`;} 
  function cleanDetail(id,d){
-  if(!CONFIG[id]||!d||d.schema!==2||d.ruleVersion!==VERSION||d.project!==CONFIG[id].key)return;
-  const c=condition(id,{preset:d.params?.preset,grid:d.params?.grid});
+  if(!CONFIG[id]||!d||d.schema!==2||!(id===7?[VERSION,TRACKING_VERSION]:[VERSION]).includes(d.ruleVersion)||d.project!==CONFIG[id].key)return;
+  const c=condition(id,{preset:d.params?.preset,grid:d.params?.grid},d.ruleVersion);
   if(JSON.stringify(c)!==JSON.stringify(d.params)||d.total!==c.rounds||!['complete','interrupted'].includes(d.status)||!Array.isArray(d.results)||d.results.length>c.rounds||d.status==='complete'&&d.results.length!==c.rounds)return;
   const results=[];
   for(const r of d.results){
@@ -69,5 +69,5 @@
   }
   return detail(id,c,results,d.status);
  }
- root.FocusToolRules={VERSION,CONFIG,OBJECTS,PAIRS,shuffle,condition,generate,score,step,detail,label,cleanDetail};
+ root.FocusToolRules={VERSION,TRACKING_VERSION,CONFIG,OBJECTS,PAIRS,shuffle,condition,generate,score,step,detail,label,cleanDetail};
 })(globalThis);

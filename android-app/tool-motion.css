@@ -1,0 +1,20 @@
+/* Keep the original 600-unit field and disk diameter; move reusable layers only. */
+.tracking-arena { position: relative; }
+.tracking-layer { position: absolute; inset: 1px; pointer-events: none; --track-unit: .5px; }
+.tracking-ball {
+  position: absolute;
+  left: -4.1666667%;
+  top: -4.1666667%;
+  width: 8.3333333%;
+  height: 8.3333333%;
+  border-radius: 50%;
+  background: #485f80;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: bold calc(23 * var(--track-unit)) system-ui;
+  will-change: transform;
+  transition: none !important;
+}
+.tracking-ball.target { background: #a46124; outline: calc(5 * var(--track-unit)) solid #f3ca7e; outline-offset: calc(-2.5 * var(--track-unit)); }
