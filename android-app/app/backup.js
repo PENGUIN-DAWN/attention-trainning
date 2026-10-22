@@ -70,6 +70,8 @@ window.focusImportBackup = text => {
   settings = plan.settings;
   preferences = plan.preferences;
   $('reduceMotion').checked = preferences.reduced;
+  $('effectsSound').checked = !preferences.effectsMuted;
+  updateEffects();
   updateMotion();
   const inTraining = location.hash === '#home' || location.hash.startsWith('#train/');
   window.focusAndroidSuspend();

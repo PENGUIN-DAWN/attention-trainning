@@ -2,6 +2,7 @@
 
 本项目是「专注力小宇宙」，供作者自己和身边几位朋友进行注意力练习的安卓离线工具。
 
+- 默认同时只有一个写代码任务；开始报告实际目录、分支、HEAD 和未提交状态，避免多个对话同时修改同一目录。
 - 开始工作先读 [项目知识库](docs/knowledge-base/README.md)，再按任务查阅原始代码和对应技术文档。
 - 工程约定见 [CONTRIBUTING.md](CONTRIBUTING.md)；当前版本以 `android-app/AndroidManifest.xml` 为准，训练身份以 `android-app/config/trainings.json` 为准。
 - 区分当前实现、用户决定、历史材料、建议和未验证事项。旧版文档或代理记忆不能覆盖当前代码与用户最新决定。

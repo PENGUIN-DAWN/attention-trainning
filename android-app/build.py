@@ -14,6 +14,7 @@ import xml.etree.ElementTree as ET
 from prepare_assets import prepare
 from tooling import paths
 from tooling.project import registry
+from tooling.provenance import assert_new_release, reset_staging, input_hashes, context
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -33,6 +34,7 @@ def main():
     parser.add_argument('--java-home')
     parser.add_argument('--tools', type=Path, default=paths.android_root(ROOT / '.android-tools'))
     args = parser.parse_args()
+    assert_new_release()
     java_home = paths.java_home(args.java_home)
     if not (java_home / 'bin' / 'javac.exe').is_file():
         raise SystemExit('A JDK 17+ is required. Set JAVA_HOME or pass --java-home.')
@@ -56,6 +58,7 @@ def main():
     bt, android_jar = paths.android_paths(tools)
     # aapt2/zipalign on Windows need an ASCII staging path for projects with Chinese names.
     build = paths.build_dir(); build.mkdir(parents=True, exist_ok=True)
+    reset_staging(build)
     classes = build / 'classes'; classes.mkdir(exist_ok=True)
     dex = build / 'dex'; dex.mkdir(exist_ok=True)
     prepare()
@@ -102,6 +105,11 @@ def main():
     run([bt / 'zipalign.exe', '-c', '-p', '4', apk], env)
     delivered = output / ('专注力小宇宙-' + version + '.apk')
     shutil.copy2(apk, delivered)
+    (build / 'build-provenance.json').write_text(json.dumps({
+        'version': version, 'versionCode': version_code,
+        'apk_sha256': hashlib.sha256(apk.read_bytes()).hexdigest(),
+        'build_inputs': input_hashes(), 'provenance': context(),
+    }, ensure_ascii=False, indent=2), encoding='utf-8')
     info = {'app':'专注力小宇宙','version':version,'versionCode':version_code,'package':'cn.focusuniverse.offline','min_android':'8.0','target_sdk':35,'apk_bytes':apk.stat().st_size,'sha256':hashlib.sha256(apk.read_bytes()).hexdigest(),'network_permission':False,'training_modules':len(registry()),'product_baseline':'1.50','entertainment_entry':False,'backup_version':4,'offline_digit_audio':'zh-huihui-1'}
     (output / '版本与校验.json').write_text(json.dumps(info, ensure_ascii=False, indent=2), encoding='utf-8')
     print('Built:', delivered, '\nBytes:', info['apk_bytes'], '\nSHA256:', info['sha256'], flush=True)

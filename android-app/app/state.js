@@ -9,6 +9,7 @@ let activeModule = null,
   settings = {},
   preferences = {
     reduced: false,
+    effectsMuted: false,
     seen: []
   };
 let homeScroll = 0,
@@ -33,6 +34,7 @@ try {
   const saved = JSON.parse(localStorage.getItem(UI_KEY) || '{}');
   preferences = {
     reduced: saved.reduced === true,
+    effectsMuted: saved.effectsMuted === true,
     seen: Array.isArray(saved.seen) ? saved.seen.filter(n => Number.isInteger(n) && hasTraining(
       n)) : []
   };

@@ -10,7 +10,7 @@ from prepare_assets import prepare
 from tooling.project import APP, ROOT, OUT, metadata, BASELINE_VERSION
 from tooling import paths
 
-SUITES = ['training', 'tools', 'tool-edges', 'completion', 'advanced', 'advanced-edges', 'stimulus', 'motion', 'tracking-presentation','tracking-quality']
+SUITES = ['training', 'tools', 'tool-edges', 'completion', 'advanced', 'advanced-edges', 'stimulus', 'motion', 'tracking-presentation','tracking-quality', 'feedback']
 
 
 def run(args):
@@ -40,7 +40,7 @@ def test(suite='all', jobs=1):
     run([node, APP / 'tests/contracts.cjs'])
     selected = SUITES if suite == 'all' else ([] if suite == 'unit' else [suite])
     with ThreadPoolExecutor(max_workers=jobs) as pool:
-        results = [pool.submit(run, [node, APP / f'tests/{name}.cjs']) for name in selected if name not in {'ui', 'motion', 'tracking-presentation','tracking-quality'}]
+        results = [pool.submit(run, [node, APP / f'tests/{name}.cjs']) for name in selected if name not in {'ui', 'motion', 'tracking-presentation','tracking-quality', 'feedback'}]
         for result in results:
             result.result()
     # Performance checks run after other browsers finish, without concurrent test load.
@@ -50,6 +50,8 @@ def test(suite='all', jobs=1):
         run([node, APP / 'tests/tracking-presentation.cjs'])
     if suite in {'all', 'tracking-quality'}:
         run([node, APP / 'tests/tracking-quality.cjs'])
+    if suite in {'all', 'feedback'}:
+        run([node, APP / 'tests/feedback.cjs'])
     if suite in {'all', 'ui'}:
         run([node, APP / 'tests/ui.cjs'])
     if suite == 'all':
@@ -80,12 +82,15 @@ def main():
         from tooling.release import package
         package()
     elif args.command == 'release':
-        test('all', args.jobs)
-        run([sys.executable, '-X', 'utf8', APP / 'build.py'])
-        from tooling.verify import verify
-        verify()
-        from tooling.release import package
-        package()
+        from tooling.provenance import assert_new_release, release_lock
+        with release_lock():
+            assert_new_release()
+            test('all', args.jobs)
+            run([sys.executable, '-X', 'utf8', APP / 'build.py'])
+            from tooling.verify import verify
+            verify()
+            from tooling.release import package
+            package()
 
 
 if __name__ == '__main__':

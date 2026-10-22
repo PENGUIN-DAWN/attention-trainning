@@ -35,6 +35,14 @@ def verify_sources():
         assert expected[name] == change['previous_sha256'], name
         assert change['reason'], name
         expected[name] = change['sha256']
+    feedback = json.loads((APP / 'feedback-baseline-164.json').read_text(encoding='utf-8'))
+    assert feedback['previous_contract'] == 'motion-baseline-163.json'
+    assert set(feedback['changedSources']) == {'android-app/tool-ui.js', 'android-app/tool-audio.js'}
+    for name, change in feedback['changedSources'].items():
+        assert expected[name] == change['previous_sha256'], name
+        assert change['reason'], name
+        expected[name] = change['sha256']
+    expected.update(feedback['addedSources'])
     for name, digest in expected.items():
         assert hashlib.sha256((ROOT / name.replace('\\', '/')).read_bytes()).hexdigest() == digest, name
     return soft

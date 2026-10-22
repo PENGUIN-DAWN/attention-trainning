@@ -18,6 +18,7 @@ window.addEventListener('orientationchange', () => {
   updateViewport();
 });
 window.focusAndroidSuspend = () => {
+  appFeedback.suspend();
   routeVersion++;
   routeAnimation?.cancel();
   stopHomeMotion();
@@ -27,6 +28,7 @@ window.focusAndroidSuspend = () => {
   });
 };
 window.focusAndroidResume = () => {
+  appFeedback.activate();
   if (renderedModule !== activeModule) {
     routeInitialized = false;
     route();
@@ -54,6 +56,8 @@ document.addEventListener('visibilitychange', () => {
   if (document.hidden) window.focusAndroidSuspend();
   else window.focusAndroidResume();
 });
+window.addEventListener('pagehide', () => appFeedback.suspend());
+window.addEventListener('pageshow', () => appFeedback.activate());
 $('rulesButton').onclick = () => {
   if (activeModule === null || !frameReady.has(activeModule)) return;
   const id = activeModule;

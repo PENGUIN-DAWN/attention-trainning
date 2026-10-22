@@ -1,0 +1,19 @@
+{
+  "version": "1.64",
+  "previous_contract": "motion-baseline-163.json",
+  "changedSources": {
+    "android-app/tool-ui.js": {
+      "previous_sha256": "229fc13075726d6740fb43b453b363723cbd8a62b4f5a5c729f2ccb3d72b4fd2",
+      "sha256": "da205c9d02d14f2fc17af73b9957f68e712564e304a82da7293131f63eaf9316",
+      "reason": "Keep training-owned cue timing and accepted answer clicks; route all decorative sound/motion through shared feedback, with global mute independent of question audio."
+    },
+    "android-app/tool-audio.js": {
+      "previous_sha256": "b0eb38e5408f3cfad591686c8bb7682abd8158902c283d8327301c6cdd68c5d2",
+      "sha256": "ebe01433d6e496f4793d1c774ff1fff0e82ac7a7f385379e49f0fabbc909e9d6",
+      "reason": "Thin compatibility adapter retains original pop/count/confirm presets in shared offline playback."
+    }
+  },
+  "addedSources": {
+    "android-app/shared/feedback.js": "c5391c1386bac5d07a1f7e2865ef847b8188e5a19d9dbac4159be75c715fb624"
+  }
+}
