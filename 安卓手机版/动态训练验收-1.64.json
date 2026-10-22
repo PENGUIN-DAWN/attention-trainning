@@ -1,0 +1,92 @@
+{
+  "version": "1.64",
+  "html_sha256": "96ed5ce297baac99fffbdcd39f601a5ceaaf552ffb587b8b0720df7f9bf3ed7c",
+  "checks": [
+    "Tracking v4 retains speed/duration/target counts; genuine v1/v2/v3 conditions and v3 seeded generator unchanged; versions distinct; trajectories agree at simulated 60/90/120 Hz",
+    "400 seeded paths have balanced random quadrants, unique coordinates, no ball overlaps or wall escapes at 120 Hz sampling; exact collision endpoints use fewer than 250 path frames",
+    "Shared tools engine preserves conditions and seeded generators for 8–10 across all presets/grids",
+    "Real v1/v2/v3 and new v4 records survive startup, export/import and deduplication; four rules and two presets form eight comparison groups",
+    "Sequential real-clock browser samples compare 1.50/1.62/current, normal and strong/4x CPU; no per-frame transform writes with native playback, bounded clocks, no target identity cues and exact final labels",
+    "Injected 320 ms main-thread stall interrupts tracking without completing or silently simulating unseen motion; callbacks stay cancelled",
+    "Dynamic perception observes for the full requested interval with a fixed-width compositor-scaled progress bar and cancels on background"
+  ],
+  "errors": [],
+  "observations": {
+    "trajectories": {
+      "seeds": 200,
+      "presets": 2,
+      "minGap": 0.0880000613902629,
+      "maxFrames": 95
+    },
+    "oldNormal": {
+      "samples": 295,
+      "p95Ms": 6.200000000000273,
+      "maxMs": 24.199999999999818,
+      "over50ms": 0,
+      "paints": 293,
+      "clockWrites": 293,
+      "transformWrites": 0,
+      "nativeMotion": 0,
+      "phase": "motion",
+      "ballLayers": 0,
+      "layoutCount": 293,
+      "taskMs": 218.78099999999995,
+      "cpuThrottle": 1,
+      "preset": "normal"
+    },
+    "previousNormal": {
+      "samples": 299,
+      "p95Ms": 6.199999999999818,
+      "maxMs": 6.300000000000182,
+      "over50ms": 0,
+      "paints": 0,
+      "clockWrites": 19,
+      "transformWrites": 2960,
+      "nativeMotion": 0,
+      "phase": "motion",
+      "ballLayers": 10,
+      "layoutCount": 19,
+      "taskMs": 257.67600000000004,
+      "cpuThrottle": 1,
+      "preset": "normal"
+    },
+    "currentNormal": {
+      "samples": 298,
+      "p95Ms": 6.200000000000728,
+      "maxMs": 6.5,
+      "over50ms": 0,
+      "paints": 0,
+      "clockWrites": 18,
+      "transformWrites": 0,
+      "nativeMotion": 10,
+      "phase": "motion",
+      "ballLayers": 10,
+      "layoutCount": 18,
+      "taskMs": 131.70600000000005,
+      "cpuThrottle": 1,
+      "preset": "normal"
+    },
+    "currentStrongCpu4": {
+      "samples": 299,
+      "p95Ms": 6.199999999999818,
+      "maxMs": 7.199999999998909,
+      "over50ms": 0,
+      "paints": 0,
+      "clockWrites": 18,
+      "transformWrites": 0,
+      "nativeMotion": 12,
+      "phase": "motion",
+      "ballLayers": 12,
+      "layoutCount": 19,
+      "taskMs": 336.26500000000004,
+      "cpuThrottle": 4,
+      "preset": "strong"
+    },
+    "dynamic": {
+      "elapsed": 1602.300000011921,
+      "planned": 1600,
+      "widthCount": 1,
+      "transformCount": 265
+    }
+  }
+}
