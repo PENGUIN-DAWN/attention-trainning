@@ -49,3 +49,9 @@ _hub/hub.template.html 仅作历史留档，当前构建不再读取。独立发
 当前 1.62 增加第七项原配色立体高光、逐颗入场、可静音离线短音和目标确认，十球运动改为 10 秒；条件升 v3，兼容旧 v1/v2，详见 [入场与立体效果](MOTION-162.md)。音效由工具引擎在用户点击后实时合成，原第十五项数字音频保留。
 
 1.63 的 FocusTrackingPlan 解析生成连续碰撞端点，FocusTrackingView 用原生 transform 动画播放，rAF 保留时钟和取消检测；不可用时插值同一路径。新条件为规则 v4、独立追加 motion-baseline-163.json，见 [浅色与流畅运动](MOTION-163.md)。
+
+## 1.64 公共反馈与维护边界
+
+shared/feedback.js 提供离线装饰短音、可取消动效和生命周期；app/feedback.js 接普通界面，tool-audio.js 保留第七项音频接口。两个试点分别是界面设置按钮与第七项有效作答点击，各训练仍决定触发时机。第十五项题目音频与必要运动不受装饰开关接管。详见 FEEDBACK。
+
+继续使用现有原生壳、单页合成、训练注册表及存储事务，不引入大型框架。共享作用域和源码契约按任务逐步维护；未经真实问题证明，不预先重写内核。发布输入与 APK 的对应关系由 tooling/provenance.py、receipts.py 和 verify.py 共同核对。

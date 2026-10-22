@@ -21,6 +21,8 @@ def payload(page, name):
 
 
 def verify():
+    from tooling.receipts import validate
+    receipt = validate()
     meta = metadata()
     version, code = meta['version'], meta['versionCode']
     java = paths.java_home() / 'bin/java.exe'
@@ -54,6 +56,7 @@ def verify():
     assert len(payload(page, 'trainingData')) == len(registry())
     before, after = payload(previous, 'trainingPresentation'), payload(page, 'trainingPresentation')
     assert before['css'] == after['css'] and after['js'] == read('training.js')
+    assert after['feedback'] == read('shared/feedback.js')
     assert payload(page, 'digitAudio') == payload(previous, 'digitAudio')
 
     fingerprints = {}
@@ -65,12 +68,18 @@ def verify():
     assert len(set(fingerprints.values())) == 1
     staging = paths.build_dir() / f'FocusUniverse-{version}.apk'
     assert staging.read_bytes() == apk.read_bytes()
+    built = json.loads((paths.build_dir() / 'build-provenance.json').read_text(encoding='utf-8'))
+    assert built['version'] == version and built['versionCode'] == code
+    assert built['build_inputs'] == receipt['build_inputs'], 'APK build inputs differ from the tested source'
+    assert built['apk_sha256'] == hashlib.sha256(apk.read_bytes()).hexdigest()
     badging = command([tools / 'aapt.exe', 'dump', 'badging', staging])
     assert f"name='{meta['package']}' versionCode='{code}' versionName='{version}'" in badging
     permissions = command([tools / 'aapt.exe', 'dump', 'permissions', staging])
     assert 'uses-permission' not in permissions
     command([tools / 'zipalign.exe', '-c', '-p', '4', staging])
-    assert code > 11, 'Update versionCode must exceed the 1.62 release'
+    prior_codes = [json.loads(p.read_text(encoding='utf-8')).get('versionCode', 0)
+                   for p in OUT.glob('安装包验收-*.json') if p.name != f'安装包验收-{version}.json']
+    assert code > max(prior_codes, default=0), 'versionCode must exceed retained releases'
     result = {
         **meta, 'apk_bytes': apk.stat().st_size,
         'sha256': hashlib.sha256(apk.read_bytes()).hexdigest(),
@@ -79,12 +88,14 @@ def verify():
         'all_training_engines_equal_baseline': False,
         'training_contract_verified': True,
         'motion_contract': 'motion-baseline-163.json',
+        'feedback_contract': 'feedback-baseline-164.json',
         'core_presentation_and_audio_equal_baseline': False,
         'protected_css_and_audio_equal_baseline': True,
         'legacy_sources_and_apks_unchanged': True,
         'same_signing_certificate_count': len(fingerprints),
         'certificate_sha256': next(iter(fingerprints.values())),
         'apk_signature_verified': True, 'zipalign_verified': True,
+        'build_inputs': built['build_inputs'], 'provenance': built['provenance'],
         'network_permission': False, 'real_device_upgrade_tested': False,
     }
     (OUT / f'安装包验收-{version}.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')

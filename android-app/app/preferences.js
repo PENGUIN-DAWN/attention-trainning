@@ -15,7 +15,21 @@ $('reduceMotion').onchange = () => {
   }
   updateMotion();
 };
-$('preferencesButton').onclick = () => preferencesDialog.showModal();
+const soundRow = node('label', 'preference-row');
+soundRow.innerHTML = '<span>装饰音效</span><input id="effectsSound" type="checkbox">';
+preferencesDialog.querySelector('.preference-note').after(soundRow);
+soundRow.after(node('p', 'preference-note', '控制界面点击与训练装饰短音；双耳分听的题目音频独立播放。第七项仍可单独关闭装饰音效。'));
+$('effectsSound').checked = !preferences.effectsMuted;
+$('effectsSound').onchange = () => {
+  preferences.effectsMuted = !$('effectsSound').checked;
+  try { localStorage.setItem(UI_KEY, JSON.stringify(preferences)); }
+  catch { showToast('界面设置未能保存。'); }
+  updateEffects();
+};
+$('preferencesButton').onclick = () => {
+  appFeedback.click($('preferencesButton'));
+  preferencesDialog.showModal();
+};
 const help = node('dialog', 'records-dialog app-help');
 help.id = 'appHelp';
 help.setAttribute('aria-label', '使用说明');

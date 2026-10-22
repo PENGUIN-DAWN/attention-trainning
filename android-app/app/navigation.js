@@ -5,9 +5,12 @@ function moduleSource(module) {
     accent: trainingsById.get(module.id).actionAccent,
     tint: trainingsById.get(module.id).tint,
     reduced: reducedMotion(),
+    effectsMuted: preferences.effectsMuted,
     settings: settings[module.id] || {}
   };
-  const themed = module.source.replace('</head>', '<style>' + presentation.chrome +
+  const feedbackScript = '<script>' + presentation.feedback + '<' + '/script>';
+  const source = module.source.replace('</head>', feedbackScript + '</head>');
+  const themed = source.replace('</head>', '<style>' + presentation.chrome +
     '</style></head>');
   const chromeScript = '\n' + presentation.chromeUI + '\ninstallChromeUI(' + module.id + ');';
   if (engineFor(module.id) === 'advanced') {
@@ -18,7 +21,7 @@ function moduleSource(module) {
   if (engineFor(module.id) !== 'legacy') return themed.replace('</body>', '<script>installToolUI(' +
     JSON.stringify(config) + ');\n' + presentation.chromeStatus + '\ninstallChromeStatus();<' +
     '/script><script>' + chromeScript + '<' + '/script></body>');
-  return module.source.replace('</head>', '<style>' + presentation.css + '\n' + presentation
+  return source.replace('</head>', '<style>' + presentation.css + '\n' + presentation
     .chrome + '</style></head>').replace('</body>', '<script>' + presentation.js +
     '\ninstallTrainingUI(' + JSON.stringify(config) + ');<' + '/script><script>' + chromeScript + '<' + '/script></body>');
 }
@@ -74,6 +77,7 @@ async function route() {
   const requested = match ? Number(match[1]) : null;
   const id = hasTraining(requested) ? requested : null;
   if (routeInitialized && id === activeModule) return;
+  appFeedback.stop(true);
   const previous = activeModule;
   if (previous === null && id !== null) homeScroll = window.scrollY;
   if (previous !== null) sendTo(previous, {

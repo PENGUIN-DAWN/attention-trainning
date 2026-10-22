@@ -11,7 +11,7 @@
 在仓库根目录执行：
 
 ```powershell
-npm install
+npm ci --ignore-scripts
 npx playwright install chromium ffmpeg
 python -X utf8 android-app/dev.py doctor
 python -X utf8 android-app/dev.py release --jobs 3
@@ -34,7 +34,7 @@ python -X utf8 android-app/dev.py release --jobs 3
 | FOCUS_BUILD_DIR | 可选原生构建暂存目录；Windows 使用纯英文绝对路径，多工作区并行时分别指定，build 与 verify 使用同一值 |
 
 SDK 默认缓存 `.android-tools/`。签名默认读取当前用户 `.codex/app-signing/focus-universe/`。
-原生构建默认暂存到当前用户 `.cache/focus-android-build/`；多工作区同时构建须用 `FOCUS_BUILD_DIR` 隔离，避免相互覆盖。
+原生构建默认暂存到当前用户 `.cache/focus-android-build/工作区哈希/`；自定义 `FOCUS_BUILD_DIR` 时每个工作区使用不同英文路径。build 与 verify 必须使用同一值。编译前只清理已核对位于暂存目录内的 classes、dex、res、assets，避免旧文件进入新包。
 没有原签名时更新构建在下载 SDK 前即停止；不要新建签名冒充覆盖升级。
 原签名不在仓库中，克隆者无法从源码恢复签名身份。
 
@@ -63,3 +63,16 @@ archive 内历史脚本只供阅读，含旧路径和旧版本，不能作为当
 第七项独立预览为 `小球逐颗入场-版本.webm`，来自隔离浏览器且不含音轨；App 音效在运行时合成。该预览与新版完整报告一起打包，不包含作者提供的原始参考视频。
 
 1.63 追加 motion-baseline-163.json，保留旧契约。新 tracking-quality 套件同样串行，包含原生动画和缺失 API 时的降级；发布包额外包含小球流畅度验收报告。
+
+## 1.64 起的发布保护与来源
+
+- 先提交源码、测试与构建配置，再运行完整 release；凭据记录源提交、构建输入 SHA-256、Python/Node/JDK 版本，浏览器版本保留在 UI 报告。
+- 输入包含原生 Java、资源、页面源、测试、工程脚本与依赖锁文件；生成 assets、缓存和历史归档排除。源码变化使测试凭据失效。
+- 构建在暂存目录保存 build-provenance.json；verify 核对 APK 哈希及其输入与完整测试一致。APK 静态报告带入来源记录。
+- release 在测试前检查版本是否被 APK、静态验收或 ZIP 占用；versionCode 必须高于保留的静态报告。build 与 package 也分别拒绝覆盖已有交付。
+- 正式 release 使用用户缓存中的 focus-universe-release.lock；遇到锁先核对 PID 和工作区，确认原任务结束后才处理陈旧锁。
+- 构建失败后可以在同一输入与暂存目录继续 verify/package；若修改源码或已有正式产物，使用新的发布身份并重跑完整流程。
+- 1.64 公共反馈追加 feedback-baseline-164.json，位于 1.63 契约之后；tracking-quality 与 feedback 均串行执行，不并行采样性能。
+- 发布产物另行提交，标签指向最终产物提交；不修改旧版本报告冒充新运行。隔离重建允许得到不同 APK 二进制哈希，仍须核对页面、来源、签名、版本和行为。
+
+当前机器使用现有签名文件重建成功，不代表签名的独立加密备份已经恢复验证。源码恢复与手机恢复步骤见 DATA-AND-SIGNING，日常协作见 CONTRIBUTING。

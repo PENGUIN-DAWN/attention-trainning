@@ -8,6 +8,7 @@ android-app/assets/
 .vscode/
 node_modules/
 .cache/
+.codex-remote-attachments/
 .DS_Store
 Thumbs.db
 

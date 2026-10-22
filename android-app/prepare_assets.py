@@ -5,10 +5,11 @@ from descending import extend as descending_source
 from tooling.project import APP, ROOT, metadata, registry
 
 APP_SCRIPTS = [
+    'shared/feedback.js',
     'storage.js', 'arcade-rules.js', 'arcade-store.js',
     'tool-rules.js', 'advanced-rules.js',
     'app/model-types.js', 'app/registry.js', 'app/state.js', 'app/scores.js',
-    'app/ui-core.js', 'app/icons.js', 'app/visuals.js', 'app/directory.js', 'app/motion.js',
+    'app/ui-core.js', 'app/feedback.js', 'app/icons.js', 'app/visuals.js', 'app/directory.js', 'app/motion.js',
     'app/navigation.js', 'app/bridge.js', 'app/platform.js',
     'app/records.js', 'app/backup-plan.js', 'app/backup.js', 'app/guides.js',
     'app/preferences.js', 'app/start.js',
@@ -67,6 +68,7 @@ def prepare():
         modules.append(module)
 
     presentation = {
+        'feedback': read('shared/feedback.js'),
         'css': read('training.css'), 'js': read('training.js'),
         'chrome': join(['styles/tokens.css', 'styles/training-chrome.css', 'styles/dialog-motion.css']),
         'chromeStatus': read('chrome-status.js'),

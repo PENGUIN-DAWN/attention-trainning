@@ -7,16 +7,16 @@ function installToolUI(config){
  const options={7:[['normal','普通 · 10 球 / 4 目标'],['strong','加强 · 12 球 / 5 目标']],8:[['15','15 秒'],['12','12 秒']],9:[['one','缺失 1 件'],['two','缺失 2 件']],10:[['8','8 秒'],['6','6 秒'],['5','5 秒']]};
  $('preset').replaceChildren(...options[id].map(([v,t])=>new Option(t,v)));
  $('gridOption').hidden=id!==10;
- const trackingAudio=id===7?new FocusTrackingAudio():null;
+ const trackingAudio=id===7?new FocusTrackingAudio({sound:()=>!config.effectsMuted,reduced:()=>document.documentElement.dataset.reduced==='true',active:()=>state.active}):null;
  if(id===7){
-  const sound=document.createElement('label');sound.innerHTML='入场音效<select id="trackingSound"><option value="on">开启 · 轻柔短音</option><option value="off">静音</option></select>';$('setup').append(sound);
+  const sound=document.createElement('label');sound.innerHTML='装饰音效<select id="trackingSound"><option value="on">开启 · 轻柔短音</option><option value="off">静音</option></select>';$('setup').append(sound);
   $('trackingSound').value=config.settings.sound==='off'?'off':'on';
  }
  if(config.settings.preset&&options[id].some(([v])=>v===config.settings.preset))$('preset').value=config.settings.preset;
  if(id===10&&['mobile','video'].includes(config.settings.grid))$('gridSize').value=config.settings.grid;
  const settings=()=>({preset:$('preset').value,...(id===10?{grid:$('gridSize').value}:{}),...(id===7?{sound:$('trackingSound').value}:{})});
  function describe(){const c=R.condition(id,settings());$('condition').textContent=R.label(id,c)+' · 每轮 '+c.rounds+' 题';$('gridNote').hidden=id!==10||c.grid!=='video';}
- for(const field of [$('preset'),$('gridSize'),...(id===7?[$('trackingSound')]:[])])field.onchange=()=>{describe();send('focus:settings',{settings:settings()});};describe();
+ for(const field of [$('preset'),$('gridSize'),...(id===7?[$('trackingSound')]:[])])field.onchange=()=>{describe();if(trackingAudio){trackingAudio.enabled=settings().sound!=='off';trackingAudio.sync();}send('focus:settings',{settings:settings()});};describe();
  const rules={7:'倒数后小球在方框内随机均匀分布并逐个出现，再记住发光目标球。发光停止后开始同色追踪：十球档运动 10 秒，十二球档 8 秒。停止后选择目标对应编号再提交。入场和目标确认不占运动时间，音效可静音；减少动画保留逐颗出现和静态目标提示，球体运动仍是题目内容。',8:'6×6 中恰好一个两位数出现两次。选中这两个位置再提交；提交前可取消选择，限时到后才揭晓答案。',9:'同时记住 12 件物品及名称 8 秒。遮挡后，剩余物品会重新排列。输入缺失物品的名称，顺序不限；想不起来可跳过。',10:'先看指定目标字，再点击方格中唯一的目标。每题只允许一次点击，提交后锁定。8×10 为视频规模，手机上格子较小，推荐使用独立的 6×5 条件。'};
  $('rulesText').textContent=rules[id];$('rulesClose').onclick=()=>$('rules').close();
  const busy=()=>!['idle','result','aborted'].includes(state.phase);
@@ -85,12 +85,13 @@ function installToolUI(config){
   height();
  }
  function updateSubmit(){const needed=id===7?state.condition?.targets:2;$('submit').disabled=state.phase!=='answer'||(id===9?[...$('inputs').querySelectorAll('input')].some(i=>!i.value.trim()):state.selected.length!==needed);}
- function select(index,b){if(state.phase!=='answer')return;if(state.condition.limitMs&&performance.now()>=state.deadline){submit(true);return;}if(id===10){state.selected=[index];submit(false);return;}const at=state.selected.indexOf(index),max=id===7?state.condition.targets:2;if(at>=0)state.selected.splice(at,1);else if(state.selected.length<max)state.selected.push(index);for(const item of $('stimulus').querySelectorAll('button'))item.setAttribute('aria-pressed',String(state.selected.includes(Number(item.dataset.index))));updateSubmit();}
+ function select(index,b){if(state.phase!=='answer')return;if(state.condition.limitMs&&performance.now()>=state.deadline){submit(true);return;}if(id===10){state.selected=[index];submit(false);return;}const at=state.selected.indexOf(index),max=id===7?state.condition.targets:2;if(at>=0)state.selected.splice(at,1);else if(state.selected.length<max)state.selected.push(index);else return;trackingAudio?.click(b);for(const item of $('stimulus').querySelectorAll('button'))item.setAttribute('aria-pressed',String(state.selected.includes(Number(item.dataset.index))));updateSubmit();}
  function submit(timeout=false,skip=false){
   if(state.phase!=='answer')return;
   if(state.condition.limitMs&&performance.now()>=state.deadline)timeout=true;
   if(!timeout&&!skip&&id!==10&&$('submit').disabled)return;
   const responseMs=state.condition.limitMs?Math.min(state.condition.limitMs,elapsed()):elapsed();state.phase='feedback';cancelAnimationFrame(state.frame);$('stage').textContent=timeout?'时间到':'核对';$('clock').textContent=(responseMs/1000).toFixed(1)+' 秒';
+  if(!timeout&&!skip)trackingAudio?.click($('submit'));
   const answer=id===9?[...$('inputs').querySelectorAll('input')].map(i=>i.value):id===10?state.selected[0]:[...state.selected],score=R.score(id,state.question,answer,timeout,skip);
   const result={...score,responseMs,...(id===10?{pair:state.question.pair.background+'/'+state.question.pair.target}:{})};state.results.push(result);
   for(const b of $('stimulus').querySelectorAll('button'))b.disabled=true;for(const input of $('inputs').querySelectorAll('input'))input.disabled=true;$('submit').disabled=true;$('skip').disabled=true;
@@ -109,7 +110,8 @@ function installToolUI(config){
   if(d.type==='focus:suspend'){state.active=false;state.ready=false;abort();cancel();trackingAudio?.stop(true);$('start').disabled=true;}
   if(d.type==='focus:activate'){state.active=true;state.ready=false;$('start').disabled=true;document.documentElement.dataset.reduced=String(d.reduced);height();}
   if(d.type==='focus:transition-ready'){state.ready=true;$('start').disabled=false;}
-  if(d.type==='focus:motion')document.documentElement.dataset.reduced=String(d.reduced);
+  if(d.type==='focus:motion'){document.documentElement.dataset.reduced=String(d.reduced);trackingAudio?.sync();if(d.reduced)trackingView?.finishEntrance();}
+  if(d.type==='focus:effects'){config.effectsMuted=d.muted===true;trackingAudio?.sync();}
   if(d.type==='focus:help'){if(!$('rules').open)$('rules').showModal();}
   if(d.type==='focus:viewport'){height();if(document.activeElement?.tagName==='INPUT'){const rect=$('recallForm').getBoundingClientRect();send('focus:focus-input',{top:rect.top,bottom:rect.bottom});}}
   if(d.type==='focus:saved'){$('saved').textContent=d.saved?'✓ 本轮记录已保存在本机':'记录未能保存，请释放空间后重试。';$('retrySave').hidden=d.saved;}

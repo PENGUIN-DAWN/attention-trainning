@@ -16,7 +16,8 @@ import prepare_assets
 class EngineeringContracts(unittest.TestCase):
     def test_native_build_directory_can_be_isolated(self):
         with patch.dict(os.environ, {'FOCUS_BUILD_DIR': ''}):
-            self.assertEqual(paths.build_dir(), Path.home() / '.cache/focus-android-build')
+            self.assertEqual(paths.build_dir().parent, Path.home() / '.cache/focus-android-build')
+            self.assertEqual(len(paths.build_dir().name), 12)
         with tempfile.TemporaryDirectory(prefix='focus-staging-test-') as directory:
             with patch.dict(os.environ, {'FOCUS_BUILD_DIR': directory}):
                 self.assertEqual(paths.build_dir(), Path(directory).resolve())

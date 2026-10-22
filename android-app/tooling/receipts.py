@@ -3,11 +3,12 @@ from datetime import datetime, timezone
 import hashlib
 import json
 from tooling.project import APP, OUT, metadata
+from tooling.provenance import input_hashes, validate_inputs, context
 
 REPORT_NAMES = [
     '构建配置单元验收', '工程契约验收', '浏览器验收', '新增训练验收',
     '工具边界验收', '完成页补充验收', '六项新增验收', '六项边界验收',
-    '题面兼容验收', '界面与性能验收', '动态训练验收', '小球入场验收','小球流畅度验收',
+    '题面兼容验收', '界面与性能验收', '动态训练验收', '小球入场验收','小球流畅度验收', '公共反馈验收',
 ]
 
 
@@ -36,6 +37,7 @@ def collect():
         'finished_utc': datetime.now(timezone.utc).isoformat(),
         'html_sha256': page_sha, 'checks': checks,
         'reports': reports, 'test_sources': source_hashes(),
+        'build_inputs': input_hashes(), 'provenance': context(),
     }
     (OUT / f'验收运行-{version}.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2), encoding='utf-8')
     return receipt
@@ -48,6 +50,7 @@ def validate():
         raise RuntimeError('Run the complete test suite for this page before packaging.')
     if receipt['test_sources'] != source_hashes():
         raise RuntimeError('Test sources changed since the complete run. Rerun tests.')
+    validate_inputs(receipt['build_inputs'])
     for name, expected in receipt['reports'].items():
         if digest(OUT / name) != expected:
             raise RuntimeError('Report changed since the complete run: ' + name)

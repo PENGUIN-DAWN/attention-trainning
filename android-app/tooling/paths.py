@@ -1,5 +1,6 @@
 """Discover developer tools without embedding the original developer's username."""
 from pathlib import Path
+import hashlib
 import os
 import shutil
 
@@ -7,7 +8,8 @@ import shutil
 def build_dir():
     """Allow concurrent worktrees to use independent native staging directories."""
     explicit = os.environ.get('FOCUS_BUILD_DIR')
-    return Path(explicit).expanduser().resolve() if explicit else Path.home() / '.cache/focus-android-build'
+    identity = hashlib.sha256(str(Path(__file__).resolve().parents[2]).encode()).hexdigest()[:12]
+    return Path(explicit).expanduser().resolve() if explicit else Path.home() / '.cache/focus-android-build' / identity
 
 
 def node():

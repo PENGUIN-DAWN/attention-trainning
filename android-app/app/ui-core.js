@@ -47,6 +47,7 @@ function sendTo(id, data) {
 }
 
 function updateMotion() {
+  appFeedback.sync();
   document.documentElement.dataset.reduced = String(reducedMotion());
   for (const id of frames.keys()) sendTo(id, {
     type: 'focus:motion',
@@ -70,6 +71,13 @@ try {
   systemReduced = Boolean(window.FocusDevice?.systemReducedMotion?.());
 } catch {}
 mediaReduced.addEventListener('change', updateMotion);
+function updateEffects() {
+  appFeedback.sync();
+  for (const id of frames.keys()) sendTo(id, {
+    type: 'focus:effects',
+    muted: preferences.effectsMuted
+  });
+}
 
 function updateToday() {
   const completed = new Set(records.filter(r => r.detail?.status !== 'interrupted' && todayKey(r
