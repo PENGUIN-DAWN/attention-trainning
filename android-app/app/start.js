@@ -1,3 +1,4 @@
+decorateAppChrome();
 buildDirectory();
 updateToday();
 updateMotion();

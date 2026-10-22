@@ -8,7 +8,7 @@ APP_SCRIPTS = [
     'storage.js', 'arcade-rules.js', 'arcade-store.js',
     'tool-rules.js', 'advanced-rules.js',
     'app/model-types.js', 'app/registry.js', 'app/state.js', 'app/scores.js',
-    'app/ui-core.js', 'app/directory.js', 'app/motion.js',
+    'app/ui-core.js', 'app/icons.js', 'app/visuals.js', 'app/directory.js', 'app/motion.js',
     'app/navigation.js', 'app/bridge.js', 'app/platform.js',
     'app/records.js', 'app/backup-plan.js', 'app/backup.js', 'app/guides.js',
     'app/preferences.js', 'app/start.js',
@@ -69,11 +69,12 @@ def prepare():
         'css': read('training.css'), 'js': read('training.js'),
         'chrome': join(['styles/tokens.css', 'styles/training-chrome.css', 'styles/dialog-motion.css']),
         'chromeStatus': read('chrome-status.js'),
+        'chromeUI': join(['app/icons.js', 'chrome-ui.js']),
     }
     payloads = [('trainingRegistry', items), ('trainingData', modules),
                 ('trainingPresentation', presentation), ('digitAudio', json.loads(read('audio/digits.json')))]
     slots = {
-        '__APP_STYLES__': read('styles/shell.css'),
+        '__APP_STYLES__': join(['styles/tokens.css', 'styles/shell.css', 'styles/dialog-motion.css']),
         '__DATA_SCRIPTS__': '\n'.join(json_script(name, value) for name, value in payloads),
         '__APP_SCRIPTS__': join(APP_SCRIPTS).replace('__APP_VERSION__', metadata()['version']),
         '__TRAINING_COUNT__': str(len(items)),

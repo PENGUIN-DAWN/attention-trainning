@@ -1,0 +1,18 @@
+{
+  "version": "1.60",
+  "versionCode": 9,
+  "package": "cn.focusuniverse.offline",
+  "apk_bytes": 332825,
+  "sha256": "ff44ce829eb6f8a647dc1ec091bd3ac1acccf653ab8271c0315058b6d922bd11",
+  "html_sha256": "d76a8a38d0302a4ede651d183e608942af91de856d7d3e993d22314b15981635",
+  "baseline_version": "1.50",
+  "all_training_engines_equal_baseline": true,
+  "core_presentation_and_audio_equal_baseline": true,
+  "legacy_sources_and_apks_unchanged": true,
+  "same_signing_certificate_count": 9,
+  "certificate_sha256": "a29e71972abb4c5c1a80ee4df9964261903883f1f5cad09d5fefaffa7299be0a",
+  "apk_signature_verified": true,
+  "zipalign_verified": true,
+  "network_permission": false,
+  "real_device_upgrade_tested": false
+}

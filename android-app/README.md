@@ -1,6 +1,6 @@
 # 专注力小宇宙安卓离线版
 
-当前 **1.51 / versionCode 8**，十六项功能训练、深色矩形目录、离线 WebView。
+当前 **1.60 / versionCode 9**，十六项功能训练、奶油浅蓝目录、离线 WebView。
 
 - [工程首页](../README.md)
 - [架构和代码位置](../docs/ARCHITECTURE.md)

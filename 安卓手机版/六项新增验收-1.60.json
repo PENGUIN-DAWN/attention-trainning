@@ -1,0 +1,27 @@
+{
+  "version": "1.60",
+  "checks": [
+    "2000 generated full-round invariants and record round trips: 60 balanced rules/40–60% switches, 96/24 Go ratio, peripheral layouts, stereo digits/ears, 15/15 RSVP bands; breath adaptation and derived invalid frames",
+    "8-trial unrecorded switching tutorial and all 60 formal trials, wrong/timeout locking, mixed rule counts, excluded-error switch metrics; virtual clock",
+    "Full 180s planned breath session, adaptive segment progression/last trim, no countdown, no correctness/ranking, report decisions excluded from practice time; virtual clock",
+    "30 peripheral trials, distinct central/position choices, 200ms/7 distractors, both answers locked and correct; program-observed timing via virtual clock",
+    "10-trial Go/No-Go tutorial not saved, full 120 cycles/96 Go+24 No-Go, first pointer only, fixed windows, separate omissions/commissions and halves; virtual clock",
+    "30 RSVP trials, 12 measured intervals each, 15 short/15 long, randomized target slots, two responses and conditional T2 summary; virtual clock",
+    "v4 full backup export/merge, v3 old import preserves hidden entertainment and settings, malformed new trial rejected, breath filter/no-best/delete/cancel/statistics",
+    "Real browser audio clock: manual stereo confirmation gate/reject both-ears, offline PCM two channels exactly match intended digits and silent opposite check channel, all 30 switched-ear formal trials; physical headphones not tested"
+  ],
+  "observations": {
+    "switchMetrics": "单双/大小随机切换 · 60 题 · 3 秒\n切换题 28/29\n保持题 30/30\n切换额外时间 -4 毫秒\n切换中位 161 毫秒 / n=28\n保持中位 165 毫秒 / n=29\n作答用时 12.4 秒（不含刺激准备、核对等待）",
+    "goMetrics": "连续 120 项 · 96 按 / 24 不按 · 1200 毫秒窗口\n漏按 1/96\n误按 0/24\n正确抑制 24/24\n正确点击中位 170 毫秒；波动（标准差）4 毫秒\n前半段：漏按 1/46，误按 0/14\n后半段：漏按 0/50，误按 0/10\n作答用时 16.2 秒（不含刺激准备、核对等待）",
+    "audioDigital": {
+      "channels": 2,
+      "length": 24335,
+      "errorL": 0,
+      "errorR": 0,
+      "silent": 0,
+      "durationMs": 506.97916666666663
+    }
+  },
+  "errors": [],
+  "html_sha256": "d76a8a38d0302a4ede651d183e608942af91de856d7d3e993d22314b15981635"
+}

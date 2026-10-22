@@ -1,0 +1,35 @@
+{
+  "version": "1.60",
+  "versionCode": 9,
+  "package": "cn.focusuniverse.offline",
+  "complete_run": true,
+  "finished_utc": "2026-10-22T01:12:20.033123+00:00",
+  "html_sha256": "d76a8a38d0302a4ede651d183e608942af91de856d7d3e993d22314b15981635",
+  "checks": 58,
+  "reports": {
+    "构建配置单元验收-1.60.json": "a6d11dfa9c727f9c58ff51146aae193130c66bd50dc93ab10c5d9fbff9871cf6",
+    "工程契约验收-1.60.json": "26bee64d5d52f1bee9e8d6708628a7ced3f443a438b5c3c50b79fb4749637ed2",
+    "浏览器验收-1.60.json": "1e868491f83fbbc88b340fe4fc22cd9608d00ad41bbcb2135808eee6d10cec86",
+    "新增训练验收-1.60.json": "8ce195904de1480963f61b180b51395cf17a949620c14333435b6bc4f48dd286",
+    "工具边界验收-1.60.json": "0b1e6070774bbce3474a59fc2f79b379a0789598ba5b51facf3df91b45e578e4",
+    "完成页补充验收-1.60.json": "168a5826b92274ee681e2b6174b3cf0751034824850500e93f6222e460db9519",
+    "六项新增验收-1.60.json": "fe858fc2919b2d737e78532cf9dbc8bf6f079b108047d9d75a5df06d574e4dfd",
+    "六项边界验收-1.60.json": "1714b63d85fcb67fd2f8092368f216364ab8bc8ae7cdc3cbf66a4bf5a55f9723",
+    "题面兼容验收-1.60.json": "93f73155fe9c39fba725e32c65bf60ac35b6a83f8f321bc25787ebe7cb10ef43",
+    "界面与性能验收-1.60.json": "09291a8fbfaa160e04dea967c04dda9b81552ecbc8e3508914fc75d49e8bd9ee"
+  },
+  "test_sources": {
+    "tests/advanced-edges.cjs": "0c14c28e806a5a5abc28dab10859357925bbc0fec7c202f8756cf34ce7ac89b7",
+    "tests/advanced.cjs": "ad8b1ed865592c3e21dcc8a063d0118585edd80a28069462480d2bd6311d3181",
+    "tests/completion.cjs": "17b9db6f8ee1297046b4c12755493176c0d2eba6134358e499dbda3edbde1d6b",
+    "tests/contracts.cjs": "74a74361c8febdc59ad0d017d11620a6d46498f7475b37488960f4f41c395675",
+    "tests/stimulus.cjs": "20f2264d825970d7ed0a1fde07c27e120a9fe855572dee01a7c081fc2090736d",
+    "tests/support.cjs": "93fb4722b7bb50fad863b48c1d4fd2ecc34b994faff2b8d3d577ae7ffd683b17",
+    "tests/tool-edges.cjs": "59fdde3213b01a6d55b0c3dce33c8df672b517cefbf196e385c62b38ff833253",
+    "tests/tools.cjs": "aef74ce0f864852de243969ffa4f533623bb546cb7d55bbc2372fd513f2f68d7",
+    "tests/training.cjs": "8ba4d26f80530cf97c67ed608843cb977a73649ca73c35b2615650a3a521067b",
+    "tests/ui.cjs": "90c8922ed41dd42a7f46ee24ecc3ed61a1c63328f37797872bb5d103fc198b52",
+    "tests/run_unit.py": "69b53662f8524756155f771337053933b5afbadbbd3316805c40cc6cf2dcdb69",
+    "tests/test_engineering.py": "d68f7f3aba29ae97edb0fb7944ddd2eb58c9c3e6d06e41827a80322d94cbeb7b"
+  }
+}

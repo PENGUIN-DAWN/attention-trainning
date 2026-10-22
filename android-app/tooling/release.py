@@ -32,14 +32,16 @@ def package():
 
     notes = write('更新说明', f'''# 专注力小宇宙 {version}
 
-本版整理工程结构，保留 {len(registry())} 项训练和深色界面。
+本版参考作者提供的 UI 设计稿，改用奶油底色、浅蓝强调色和白色卡片，保留 {len(registry())} 项训练。
 
-- 训练名称、图标、设置白名单和示例集中到训练注册表。
-- 应用层按导航、记录、备份、引导和偏好拆分，保留明确的共享状态。
-- 安卓使用独立 HTML 模板，停止依靠替换旧网页文案组装界面。
-- 合并应用外框样式，冻结原训练题面与规则；历史脚本归档。
-- 统一开发、测试、构建、核验和交付命令，版本只读取 AndroidManifest.xml。
-- 备份先整体校验与合并，再事务写入；原存储键、来源和隐藏娱乐数据保留。
+- 首页增加离线 SVG 星球插画和首页 / 足迹 / 说明底部导航。
+- 卡片保留鼠标悬停，增加跟随指针的轻微倾斜、箭头移动和触摸按压反馈。
+- 目录逐批入场，页面进出、结果和弹窗过渡独立于训练时钟；离屏及后台停止装饰运动。
+- 导航、关闭、删除、备份等应用图标统一为内联 SVG；训练素材与项目图标保留。
+- 记录、空状态、删除确认、备份、规则、首次示例和设置统一浅色风格。
+- 启动与系统栏配色同步；原生图形使用 Android VectorDrawable，不引入位图或联网素材。
+- 减少动画开关与系统偏好继续生效，题目本身必要运动不被关闭。
+- 原存储键、备份 v4 与 v1–v4 导入兼容、来源和隐藏历史数据保留。
 
 规则、题量、观察条件、音频、计分与 {BASELINE_VERSION} 一致，不增加训练剂量或效果承诺。
 版本代码 {meta['versionCode']}，包名 `{meta['package']}`。历史 APK 保留。
@@ -67,7 +69,7 @@ APK SHA-256：`{verification['sha256']}`。
 
 覆盖原十六项流程、倒序、教学与正式分离、计时/后台/快速操作、记录删除、旧备份合并、
 导入失败与事务写入、保存重试、减少动画、小屏布局、题面兼容与音频离线资源。
-规则随机性质检查沿用既有套件；新增 Python 5 项与工程契约 4 组。
+规则随机性质检查沿用既有套件；本次包括 Python 5 项与工程契约 4 组。
 训练嵌入引擎、核心题面 CSS/JS、内置音频与 {BASELINE_VERSION} 一致，受保护源文件哈希一致。
 
 ## 浏览器软件测量
@@ -98,7 +100,8 @@ APK SHA-256：`{verification['sha256']}`。
 
 - `android-app/config/trainings.json`：唯一训练元数据注册表，稳定编号和字符串键。
 - `android-app/templates/app.html`：安卓专用外框模板，不修改已发布网页。
-- `android-app/app/`：registry/state/scores/ui-core/directory/motion/navigation/bridge/platform/records/backup-plan/backup/guides/preferences/start。
+- `android-app/app/`：注册、状态、导航、记录、备份、引导与设置；icons.js 为应用 SVG 图标，visuals.js 为装饰插画与导航绑定。
+- `android-app/chrome-ui.js`：只处理训练外围图标和结果装饰，不修改训练引擎、刺激和时钟。
 - `android-app/styles/`：tokens、shell、training-chrome、dialog-motion；训练刺激样式独立保留。
 - `android-app/tooling/`：版本、工具路径发现、APK 校验、完整测试凭据与发布归档。
 - `android-app/tests/`：当前版本无关的验收；`dev.py` 是统一入口。
@@ -115,7 +118,7 @@ APK SHA-256：`{verification['sha256']}`。
     assert screenshots and video.is_file()
     gallery = OUT / f'页面预览-{version}.html'
     figures = ''.join(f'<figure><img loading="lazy" src="{html.escape(p.name)}" alt="{html.escape(p.stem)}"><figcaption>{html.escape(p.stem)}</figcaption></figure>' for p in screenshots)
-    gallery.write_text(f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{version} 页面预览</title><style>body{{background:#0d121b;color:#eef4fc;font:16px system-ui;margin:24px}}main{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}}figure{{margin:0}}img,video{{max-width:100%;max-height:720px;border-radius:16px}}p{{color:#a7b5c8}}</style><h1>专注力小宇宙 {version}</h1><p>隔离浏览器真实页面；成绩为测试数据。视频捕获帧率不代表设备渲染帧率。</p><video controls src="{video.name}"></video><main>{figures}</main></html>''', encoding='utf-8')
+    gallery.write_text(f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{version} 页面预览</title><style>body{{background:#faf6f0;color:#244b73;font:16px system-ui;margin:24px}}main{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}}figure{{margin:0}}img,video{{max-width:100%;max-height:720px;border-radius:16px;border:1px solid #dce6ec}}p{{color:#596f80}}</style><h1>专注力小宇宙 {version}</h1><p>隔离浏览器真实页面；成绩为测试数据。视频捕获帧率不代表设备渲染帧率。</p><video controls src="{video.name}"></video><main>{figures}</main></html>''', encoding='utf-8')
     files = [apk, notes, install, report, architecture, gallery, video, *screenshots,
              OUT / f'安装包验收-{version}.json', OUT / f'验收运行-{version}.json',
              *[OUT / f'{name}-{version}.json' for name in REPORT_NAMES]]
